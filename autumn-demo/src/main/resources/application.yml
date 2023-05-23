@@ -1,0 +1,16 @@
+server:
+  port: 8082
+  servlet:
+    context-path: /
+spring:
+  application:
+    name: autumn-demo
+  profiles:
+    active: sa-token,redis
+  cloud:
+    nacos:
+      #nacos服务地址
+      server-addr: 127.0.0.1:8848
+      discovery:
+        #指定注册中心地址
+        server-addr: ${spring.cloud.nacos.server-addr}
