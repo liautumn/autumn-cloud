@@ -13,6 +13,7 @@
         <module>autumn-gateway</module>
         <module>autumn-system</module>
         <module>autumn-common</module>
+        <module>autumn-auth</module>
         <module>autumn-demo</module>
     </modules>
 
