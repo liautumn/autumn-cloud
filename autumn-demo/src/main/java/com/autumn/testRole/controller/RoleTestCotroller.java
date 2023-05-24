@@ -1,4 +1,4 @@
-package com.autumn.login.controller;
+package com.autumn.testRole.controller;
 
 import cn.dev33.satoken.annotation.SaCheckRole;
 import org.springframework.web.bind.annotation.GetMapping;

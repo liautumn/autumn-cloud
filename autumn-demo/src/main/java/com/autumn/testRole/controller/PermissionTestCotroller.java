@@ -1,4 +1,4 @@
-package com.autumn.login.controller;
+package com.autumn.testRole.controller;
 
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.dev33.satoken.annotation.SaIgnore;

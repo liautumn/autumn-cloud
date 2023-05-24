@@ -1,10 +1,10 @@
 server:
-  port: 8081
+  port: 8082
   servlet:
-    context-path: /system
+    context-path: /demo
 spring:
   application:
-    name: autumn-system
+    name: autumn-demo
   profiles:
     # 配置环境
     active: dev
@@ -24,7 +24,7 @@ spring:
         # 所属组
         group: DEFAULT_GROUP
         # 配置名称-dev
-        prefix: autumn-system
+        prefix: autumn-demo
         # 指定格式
         file-extension: yml
         # 扩展配置
