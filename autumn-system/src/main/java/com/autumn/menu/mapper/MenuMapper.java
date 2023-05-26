@@ -3,6 +3,8 @@ package com.autumn.menu.mapper;
 import com.autumn.menu.entity.Menu;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
+import java.util.List;
+
 /**
 * @author Administrator
 * @description 针对表【sys_menu(菜单权限表)】的数据库操作Mapper
@@ -11,6 +13,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 */
 public interface MenuMapper extends BaseMapper<Menu> {
 
+    List<Menu> getMenuPermsList(String loginId);
 }
 
 

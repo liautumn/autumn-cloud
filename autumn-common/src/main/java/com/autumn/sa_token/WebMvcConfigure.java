@@ -1,4 +1,4 @@
-package com.autumn.config;
+package com.autumn.sa_token;
 
 import cn.dev33.satoken.interceptor.SaInterceptor;
 import cn.dev33.satoken.stp.StpUtil;

@@ -1,5 +1,6 @@
 package com.autumn.role.service;
 
+import com.autumn.result.Result;
 import com.autumn.role.entity.Role;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -9,5 +10,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 * @createDate 2023-05-25 14:19:47
 */
 public interface RoleService extends IService<Role> {
+
+    Result getRolelist();
 
 }

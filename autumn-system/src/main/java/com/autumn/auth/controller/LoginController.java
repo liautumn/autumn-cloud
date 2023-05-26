@@ -6,9 +6,9 @@ import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.crypto.SecureUtil;
 import com.autumn.auth.entity.LoginDto;
 import com.autumn.auth.entity.LoginVo;
+import com.autumn.result.Result;
 import com.autumn.user.entity.User;
 import com.autumn.user.service.UserService;
-import com.autumn.utils.Result;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
 

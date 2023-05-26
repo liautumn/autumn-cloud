@@ -1,8 +1,12 @@
-package com.autumn.config;
+package com.autumn.sa_token;
 
 import cn.dev33.satoken.stp.StpInterface;
+import cn.dev33.satoken.stp.StpUtil;
+import com.alibaba.fastjson2.JSON;
+import com.autumn.redis.RedisUtils;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,15 +16,16 @@ import java.util.List;
 @Component
 public class StpInterfaceImpl implements StpInterface {
 
+    @Resource
+    private RedisUtils redisUtils;
+
     /**
      * 返回一个账号所拥有的权限码集合
      */
     @Override
     public List<String> getPermissionList(Object loginId, String loginType) {
-        List<String> list = new ArrayList<String>();
-        list.add("user-add");
-        list.add("user-update");
-        list.add("user-get");
+        Object o = redisUtils.get(loginId + "_permissionList");
+        List<String> list = o != null ? JSON.parseObject(String.valueOf(o), List.class) : new ArrayList<>();
         return list;
     }
 
@@ -29,8 +34,8 @@ public class StpInterfaceImpl implements StpInterface {
      */
     @Override
     public List<String> getRoleList(Object loginId, String loginType) {
-        List<String> list = new ArrayList<String>();
-        list.add("admin");
+        Object o = redisUtils.get(StpUtil.getLoginId() + "_roleList");
+        List<String> list = o != null ? JSON.parseObject(String.valueOf(o), List.class) : new ArrayList<>();
         return list;
     }
 

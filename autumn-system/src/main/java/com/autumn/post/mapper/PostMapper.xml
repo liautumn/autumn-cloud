@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.autumn.system.post.mapper.PostMapper">
+<mapper namespace="com.autumn.post.mapper.PostMapper">
 
     <resultMap id="BaseResultMap" type="com.autumn.post.entity.Post">
         <id property="postId" column="post_id" jdbcType="BIGINT"/>

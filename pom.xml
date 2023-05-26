@@ -13,7 +13,6 @@
         <module>autumn-gateway</module>
         <module>autumn-system</module>
         <module>autumn-common</module>
-        <module>autumn-auth</module>
         <module>autumn-demo</module>
     </modules>
 
@@ -35,18 +34,12 @@
         <sa-token.version>1.34.0</sa-token.version>
         <commons-pool2.version>2.11.1</commons-pool2.version>
         <hutool.version>5.8.18</hutool.version>
-        <autumn-auth.version>1.0-SNAPSHOT</autumn-auth.version>
+        <autumn-core.version>1.0-SNAPSHOT</autumn-core.version>
         <autumn-common.version>1.0-SNAPSHOT</autumn-common.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
-
-            <dependency>
-                <groupId>com.autumn</groupId>
-                <artifactId>autumn-auth</artifactId>
-                <version>${autumn-auth.version}</version>
-            </dependency>
 
             <dependency>
                 <groupId>com.autumn</groupId>

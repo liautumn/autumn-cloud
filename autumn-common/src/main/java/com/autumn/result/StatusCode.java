@@ -1,4 +1,4 @@
-package com.autumn.utils;
+package com.autumn.result;
 
 public enum StatusCode {
     /*

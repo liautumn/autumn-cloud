@@ -3,7 +3,7 @@ package com.autumn.user.controller;
 import cn.hutool.crypto.SecureUtil;
 import com.autumn.user.entity.User;
 import com.autumn.user.service.UserService;
-import com.autumn.utils.Result;
+import com.autumn.result.Result;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PostMapping;

@@ -1,4 +1,4 @@
-package com.autumn.config;
+package com.autumn.exceptions;
 
 import cn.dev33.satoken.exception.DisableServiceException;
 import cn.dev33.satoken.exception.NotLoginException;
@@ -15,9 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -34,7 +32,6 @@ public class AllExceptionCongig {
         Map codeMap = new HashMap();
 
         // 打印堆栈，以供调试
-        System.out.println("全局异常---------------");
         e.printStackTrace();
 
         // 不同异常返回不同状态码

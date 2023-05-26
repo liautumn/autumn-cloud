@@ -31,15 +31,11 @@
 
         <dependency>
             <groupId>com.autumn</groupId>
-            <artifactId>autumn-auth</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.autumn</groupId>
             <artifactId>autumn-common</artifactId>
         </dependency>
 
 
     </dependencies>
+
 
 </project>

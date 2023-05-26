@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.autumn.system.user.mapper.UserMapper">
+<mapper namespace="com.autumn.user.mapper.UserMapper">
 
     <resultMap id="BaseResultMap" type="com.autumn.user.entity.User">
         <id property="userId" column="user_id" jdbcType="BIGINT"/>
