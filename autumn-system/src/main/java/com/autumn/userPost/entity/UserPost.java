@@ -18,7 +18,7 @@ public class UserPost implements Serializable {
     /**
      * 用户ID
      */
-    @TableId(value = "user_id")
+    @TableField(value = "user_id")
     private Long userId;
 
     /**

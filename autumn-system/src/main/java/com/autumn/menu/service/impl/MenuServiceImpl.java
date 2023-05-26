@@ -39,7 +39,19 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu>
             return Result.fail("当前用户ID为空");
         }
         List<Menu> list = menuMapper.getMenuPermsList(loginId);
-        List<String> collect = list.stream().map(role -> role.getPerms()).collect(Collectors.toList());
+        List<String> collect = list.stream().map(menu -> menu.getPerms()).collect(Collectors.toList());
+        return Result.success(collect);
+    }
+
+    @Override
+    public Result getBtnsList() {
+        //获取当前用户id
+        String loginId = String.valueOf(StpUtil.getLoginId());
+        if ("".equals(loginId)) {
+            return Result.fail("当前用户ID为空");
+        }
+        List<Menu> list = menuMapper.getBtnPermsList(loginId);
+        List<String> collect = list.stream().map(menu -> menu.getPerms()).collect(Collectors.toList());
         //存入redis
         boolean b = redisUtils.set(loginId + "_permissionList", JSON.toJSONString(collect));
         if (b) {

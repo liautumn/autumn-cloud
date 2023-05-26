@@ -13,4 +13,5 @@ public interface MenuService extends IService<Menu> {
 
     Result getMenuList();
 
+    Result getBtnsList();
 }

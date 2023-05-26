@@ -1,6 +1,7 @@
 package com.autumn.user.service;
 
 import com.autumn.user.entity.User;
+import com.autumn.result.Result;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -9,5 +10,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @createDate 2023-05-25 13:48:41
  */
 public interface UserService extends IService<User> {
+
+    Result delete(String ids);
 
 }

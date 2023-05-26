@@ -6,8 +6,8 @@ import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.crypto.SecureUtil;
 import com.autumn.auth.entity.LoginDto;
 import com.autumn.auth.entity.LoginVo;
-import com.autumn.result.Result;
 import com.autumn.user.entity.User;
+import com.autumn.result.Result;
 import com.autumn.user.service.UserService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.springframework.beans.BeanUtils;
@@ -41,6 +41,7 @@ public class LoginController {
             if (pass.equals(user.getPassword())) {
                 StpUtil.login(user.getUserId(), new SaLoginModel().setDevice("PC").setIsLastingCookie(true));
                 SaTokenInfo tokenInfo = StpUtil.getTokenInfo();
+                StpUtil.getSession().set("user", user);
                 LoginVo loginVo = new LoginVo();
                 BeanUtils.copyProperties(user, loginVo);
                 Map data = new HashMap();

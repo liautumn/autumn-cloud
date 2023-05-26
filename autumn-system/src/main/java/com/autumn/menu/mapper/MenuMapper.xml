@@ -46,7 +46,21 @@
              sys_user_role urole
              on menu.menu_id = rmenu.menu_id and menu.status = '0'
                  and urole.role_id = rmenu.role_id
-        where urole.user_id = #{loginId}
+        where menu.menu_type = 'C'
+          and urole.user_id = #{loginId}
+    </select>
+
+    <select id="getBtnPermsList" resultType="com.autumn.menu.entity.Menu">
+        select menu.perms perms
+        from sys_menu menu
+                 inner join
+             sys_role_menu rmenu
+                 inner join
+             sys_user_role urole
+             on menu.menu_id = rmenu.menu_id and menu.status = '0'
+                 and urole.role_id = rmenu.role_id
+        where menu.menu_type = 'F'
+          and urole.user_id = #{loginId}
     </select>
 
 </mapper>

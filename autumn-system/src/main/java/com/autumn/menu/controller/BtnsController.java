@@ -1,38 +1,23 @@
 package com.autumn.menu.controller;
 
-import com.alibaba.fastjson.JSON;
-import org.springframework.web.bind.annotation.GetMapping;
+import com.autumn.menu.service.MenuService;
+import com.autumn.result.Result;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Map;
+import javax.annotation.Resource;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/btn")
 public class BtnsController {
 
-    @GetMapping("/buttons")
-    public Map menu(){
-        return JSON.parseObject("{\n" +
-                "    \"code\": 200,\n" +
-                "    \"msg\": \"成功\",\n" +
-                "    \"data\": {\n" +
-                "        \"useProTable\": [\n" +
-                "            \"add\",\n" +
-                "            \"batchAdd\",\n" +
-                "            \"export\",\n" +
-                "            \"batchDelete\",\n" +
-                "            \"status\"\n" +
-                "        ],\n" +
-                "        \"authButton\": [\n" +
-                "            \"add\",\n" +
-                "            \"edit\",\n" +
-                "            \"delete\",\n" +
-                "            \"import\",\n" +
-                "            \"export\"\n" +
-                "        ]\n" +
-                "    }\n" +
-                "}", Map.class);
+    @Resource
+    private MenuService menuService;
+
+    @PostMapping("/getBtnsList")
+    public Result getBtnsList() {
+        return menuService.getBtnsList();
     }
 
 }
