@@ -13,6 +13,7 @@
         <module>autumn-gateway</module>
         <module>autumn-system</module>
         <module>autumn-common</module>
+        <module>autumn-api</module>
         <module>autumn-demo</module>
     </modules>
 
@@ -34,12 +35,20 @@
         <sa-token.version>1.34.0</sa-token.version>
         <commons-pool2.version>2.11.1</commons-pool2.version>
         <hutool.version>5.8.18</hutool.version>
+        <fastjson2.version>2.0.32</fastjson2.version>
         <autumn-core.version>1.0-SNAPSHOT</autumn-core.version>
         <autumn-common.version>1.0-SNAPSHOT</autumn-common.version>
+        <autumn-api.version>1.0-SNAPSHOT</autumn-api.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+
+            <dependency>
+                <groupId>com.autumn</groupId>
+                <artifactId>autumn-api</artifactId>
+                <version>${autumn-api.version}</version>
+            </dependency>
 
             <dependency>
                 <groupId>com.autumn</groupId>
@@ -104,6 +113,12 @@
                 <artifactId>hutool-all</artifactId>
                 <version>${hutool.version}</version>
             </dependency>
+
+            <dependency>
+            <groupId>com.alibaba.fastjson2</groupId>
+            <artifactId>fastjson2</artifactId>
+            <version>${fastjson2.version}</version>
+        </dependency>
 
         </dependencies>
     </dependencyManagement>
