@@ -14,13 +14,13 @@ spring:
       server-addr: 127.0.0.1:8848
       discovery:
         # 配置的命名空间
-        namespace: e982d5e2-173a-4200-8223-4bbe8ea8f56c
+        namespace: ${spring.profiles.active}
         #指定注册中心地址
         server-addr: ${spring.cloud.nacos.server-addr}
       config:
         server-addr: ${spring.cloud.nacos.server-addr}
         # 配置的命名空间
-        namespace: e982d5e2-173a-4200-8223-4bbe8ea8f56c
+        namespace: ${spring.profiles.active}
         # 所属组
         group: DEFAULT_GROUP
         # 配置名称-dev
