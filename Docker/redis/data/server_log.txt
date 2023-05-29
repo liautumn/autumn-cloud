@@ -138,3 +138,28 @@
 1:signal-handler (1685255109) Received SIGTERM scheduling shutdown...
 1:M 28 May 2023 06:25:09.961 # User requested shutdown...
 1:M 28 May 2023 06:25:09.964 # Redis is now ready to exit, bye bye...
+1:C 29 May 2023 00:59:47.302 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+1:C 29 May 2023 00:59:47.316 # Redis version=7.0.11, bits=64, commit=00000000, modified=0, pid=1, just started
+1:C 29 May 2023 00:59:47.316 # Configuration loaded
+1:M 29 May 2023 00:59:47.318 * monotonic clock: POSIX clock_gettime
+                _._                                                  
+           _.-``__ ''-._                                             
+      _.-``    `.  `_.  ''-._           Redis 7.0.11 (00000000/0) 64 bit
+  .-`` .-```.  ```\/    _.,_ ''-._                                  
+ (    '      ,       .-`  | `,    )     Running in standalone mode
+ |`-._`-...-` __...-.``-._|'` _.-'|     Port: 6379
+ |    `-._   `._    /     _.-'    |     PID: 1
+  `-._    `-._  `-./  _.-'    _.-'                                   
+ |`-._`-._    `-.__.-'    _.-'_.-'|                                  
+ |    `-._`-._        _.-'_.-'    |           https://redis.io       
+  `-._    `-._`-.__.-'_.-'    _.-'                                   
+ |`-._`-._    `-.__.-'    _.-'_.-'|                                  
+ |    `-._`-._        _.-'_.-'    |                                  
+  `-._    `-._`-.__.-'_.-'    _.-'                                   
+      `-._    `-.__.-'    _.-'                                       
+          `-._        _.-'                                           
+              `-.__.-'                                               
+
+1:M 29 May 2023 00:59:47.319 # Server initialized
+1:M 29 May 2023 00:59:47.320 # WARNING Memory overcommit must be enabled! Without it, a background save or replication may fail under low memory condition. Being disabled, it can can also cause failures without low memory condition, see https://github.com/jemalloc/jemalloc/issues/1328. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+1:M 29 May 2023 00:59:47.321 * Ready to accept connections

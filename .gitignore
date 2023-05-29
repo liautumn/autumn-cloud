@@ -20,6 +20,7 @@ logs/
 *.iml
 *.ipr
 rebel.xml
+/Docker/mysql/data/**
 
 ### NetBeans ###
 /nbproject/private/

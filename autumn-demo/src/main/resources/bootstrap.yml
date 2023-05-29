@@ -12,6 +12,10 @@ spring:
     nacos:
       # nacos服务地址
       server-addr: 127.0.0.1:8848
+      # nacos管理员账号
+      username: nacos
+      # nacos管理员密码
+      password: nacos
       discovery:
         # 配置的命名空间
         namespace: ${spring.profiles.active}
@@ -19,6 +23,10 @@ spring:
         server-addr: ${spring.cloud.nacos.server-addr}
       config:
         server-addr: ${spring.cloud.nacos.server-addr}
+        # nacos管理员账号
+        username: nacos
+        # nacos管理员密码
+        password: nacos
         # 配置的命名空间
         namespace: ${spring.profiles.active}
         # 所属组
