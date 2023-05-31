@@ -21,6 +21,7 @@ logs/
 *.ipr
 rebel.xml
 /Docker/mysql/data/**
+/Docker/redis/data/**
 
 ### NetBeans ###
 /nbproject/private/
@@ -37,4 +38,3 @@ build/
 /.mvn
 
 ### resources ###
-
