@@ -80,7 +80,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                 BeanUtils.copyProperties(user, loginVo);
                 Map data = new HashMap();
                 data.put("userInfo", loginVo);
-                data.put("access_token", tokenInfo.tokenValue);
+                data.put("token", tokenInfo.tokenValue);
                 return Result.success(data);
             } else {
                 return Result.fail("密码错误");

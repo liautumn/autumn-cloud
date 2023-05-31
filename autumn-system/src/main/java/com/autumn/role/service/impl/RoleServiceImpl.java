@@ -2,7 +2,7 @@ package com.autumn.role.service.impl;
 
 import cn.dev33.satoken.stp.StpUtil;
 import com.alibaba.fastjson2.JSON;
-import com.autumn.redis.RedisUtils;
+import com.autumn.redis.RedisUtil;
 import com.autumn.result.Result;
 import com.autumn.role.entity.Role;
 import com.autumn.role.mapper.RoleMapper;
@@ -26,7 +26,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
     @Resource
     private RoleMapper roleMapper;
     @Resource
-    private RedisUtils redisUtils;
+    private RedisUtil redisUtil;
     @Resource
     private StpInterfaceImpl stpInterface;
 
@@ -40,7 +40,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
         List<Role> list = roleMapper.getRoleKeyList(loginId);
         List<String> collect = list.stream().map(role -> role.getRoleKey()).collect(Collectors.toList());
         //存入redis
-        boolean b = redisUtils.set(loginId + "_roleList", JSON.toJSONString(collect));
+        boolean b = redisUtil.set(loginId + "_roleList", JSON.toJSONString(collect));
         if (b) {
             stpInterface.getRoleList(loginId, null);
             return Result.success(collect);

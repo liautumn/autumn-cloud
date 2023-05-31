@@ -36,6 +36,7 @@
         <commons-pool2.version>2.11.1</commons-pool2.version>
         <hutool.version>5.8.18</hutool.version>
         <fastjson2.version>2.0.32</fastjson2.version>
+        <redisson.version>3.16.1</redisson.version>
         <autumn-core.version>1.0-SNAPSHOT</autumn-core.version>
         <autumn-common.version>1.0-SNAPSHOT</autumn-common.version>
         <autumn-api.version>1.0-SNAPSHOT</autumn-api.version>
@@ -119,6 +120,13 @@
                 <artifactId>fastjson2</artifactId>
                 <version>${fastjson2.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>org.redisson</groupId>
+                <artifactId>redisson-spring-boot-starter</artifactId>
+                <version>${redisson.version}</version>
+            </dependency>
+
 
         </dependencies>
     </dependencyManagement>
