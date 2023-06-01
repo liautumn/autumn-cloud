@@ -10,12 +10,12 @@ import javax.annotation.Resource;
 
 @RestController
 @RequestMapping("/btn")
-public class BtnsController {
+public class BtnController {
 
     @Resource
     private MenuService menuService;
 
-    @PostMapping("/getBtnsList")
+    @PostMapping
     public Result getBtnsList() {
         return menuService.getBtnsList();
     }

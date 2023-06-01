@@ -1,17 +1,26 @@
 package com.autumn.menu.service;
 
 import com.autumn.menu.entity.Menu;
+import com.autumn.menu.entity.MenuDto;
 import com.autumn.result.Result;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
-* @author Administrator
-* @description 针对表【sys_menu(菜单权限表)】的数据库操作Service
-* @createDate 2023-05-25 14:01:20
-*/
+ * @author Administrator
+ * @description 针对表【sys_menu(菜单权限表)】的数据库操作Service
+ * @createDate 2023-05-31 14:56:54
+ */
 public interface MenuService extends IService<Menu> {
 
     Result getMenuList();
 
     Result getBtnsList();
+
+    Result selectMenu(MenuDto menuDto);
+
+    Result insertMenu(MenuDto menuDto);
+
+    Result updateMenu(MenuDto menuDto);
+
+    Result deleteMenu(String ids);
 }

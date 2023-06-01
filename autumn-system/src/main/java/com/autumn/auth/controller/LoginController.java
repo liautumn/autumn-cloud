@@ -4,7 +4,6 @@ import cn.dev33.satoken.stp.StpUtil;
 import com.autumn.auth.entity.LoginDto;
 import com.autumn.result.Result;
 import com.autumn.user.service.UserService;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,7 +25,7 @@ public class LoginController {
     @PostMapping("/logout")
     public Result logout() {
         StpUtil.logout();
-        return Result.success("退出登录成功");
+        return Result.success();
     }
 
 }

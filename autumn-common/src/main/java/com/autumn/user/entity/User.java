@@ -89,7 +89,7 @@ public class User implements Serializable {
     private String status;
 
     /**
-     * 删除标志（0代表存在 2代表删除）
+     * 删除标志（0代表删除 1代表存在）
      */
     @TableField(value = "del_flag")
     @TableLogic

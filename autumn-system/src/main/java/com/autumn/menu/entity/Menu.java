@@ -4,15 +4,17 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import lombok.Data;
 
 /**
  * 菜单权限表
+ *
  * @TableName sys_menu
  */
-@TableName(value ="sys_menu")
+@TableName(value = "sys_menu")
 @Data
 public class Menu implements Serializable {
     /**
@@ -22,22 +24,10 @@ public class Menu implements Serializable {
     private Long menuId;
 
     /**
-     * 菜单名称
-     */
-    @TableField(value = "menu_name")
-    private String menuName;
-
-    /**
      * 父菜单ID
      */
     @TableField(value = "parent_id")
     private Long parentId;
-
-    /**
-     * 显示顺序
-     */
-    @TableField(value = "order_num")
-    private Integer orderNum;
 
     /**
      * 路由地址
@@ -46,43 +36,85 @@ public class Menu implements Serializable {
     private String path;
 
     /**
+     * name
+     */
+    @TableField(value = "name")
+    private String name;
+
+    /**
+     * 重定向地址
+     */
+    @TableField(value = "redirect")
+    private String redirect;
+
+    /**
      * 组件路径
      */
     @TableField(value = "component")
     private String component;
 
     /**
-     * 路由参数
+     * 菜单图标
      */
-    @TableField(value = "query")
-    private String query;
+    @TableField(value = "icon")
+    private String icon;
+
+    /**
+     * 菜单名称
+     */
+    @TableField(value = "title")
+    private String title;
+
+    /**
+     * 活动菜单
+     */
+    @TableField(value = "active_menu")
+    private String activeMenu;
 
     /**
      * 是否为外链（0是 1否）
      */
-    @TableField(value = "is_frame")
-    private Integer isFrame;
+    @TableField(value = "is_link")
+    private String isLink;
 
     /**
-     * 是否缓存（0缓存 1不缓存）
+     * 是否隐藏（0是 1否）
      */
-    @TableField(value = "is_cache")
-    private Integer isCache;
+    @TableField(value = "is_hide")
+    private String isHide;
 
     /**
-     * 菜单类型（M目录 C菜单 F按钮）
+     * 是否全屏显示（0是 1否）
+     */
+    @TableField(value = "is_full")
+    private String isFull;
+
+    /**
+     * affix（0是 1否）
+     */
+    @TableField(value = "is_affix")
+    private String isAffix;
+
+    /**
+     * 是否缓存（0是 1否）
+     */
+    @TableField(value = "is_keep_alive")
+    private String isKeepAlive;
+
+    /**
+     * 显示顺序
+     */
+    @TableField(value = "order_num")
+    private Integer orderNum;
+
+    /**
+     * 菜单类型（0目录 1菜单 2按钮）
      */
     @TableField(value = "menu_type")
     private String menuType;
 
     /**
-     * 菜单状态（0显示 1隐藏）
-     */
-    @TableField(value = "visible")
-    private String visible;
-
-    /**
-     * 菜单状态（0正常 1停用）
+     * 是否停用（0是 1否）
      */
     @TableField(value = "status")
     private String status;
@@ -94,10 +126,22 @@ public class Menu implements Serializable {
     private String perms;
 
     /**
-     * 菜单图标
+     * 路由参数
      */
-    @TableField(value = "icon")
-    private String icon;
+    @TableField(value = "query")
+    private String query;
+
+    /**
+     * 备注
+     */
+    @TableField(value = "remark")
+    private String remark;
+
+    /**
+     * 删除标志（0代表删除 1代表存在）
+     */
+    @TableField(value = "del_flag")
+    private String delFlag;
 
     /**
      * 创建者
@@ -122,12 +166,6 @@ public class Menu implements Serializable {
      */
     @TableField(value = "update_time")
     private LocalDateTime updateTime;
-
-    /**
-     * 备注
-     */
-    @TableField(value = "remark")
-    private String remark;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

@@ -6,16 +6,17 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import java.util.List;
 
 /**
-* @author Administrator
-* @description 针对表【sys_menu(菜单权限表)】的数据库操作Mapper
-* @createDate 2023-05-25 14:01:20
-* @Entity com.autumn.system.menu.entity.Menu
-*/
+ * @author Administrator
+ * @description 针对表【sys_menu(菜单权限表)】的数据库操作Mapper
+ * @createDate 2023-05-31 14:56:54
+ * @Entity com.autumn.menu.entity.Menu
+ */
 public interface MenuMapper extends BaseMapper<Menu> {
 
-    List<Menu> getMenuPermsList(String loginId);
+    List<Menu> getMenuList(Long loginId);
 
     List<Menu> getBtnPermsList(String loginId);
+
 }
 
 
