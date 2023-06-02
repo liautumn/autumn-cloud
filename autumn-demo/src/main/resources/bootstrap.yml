@@ -1,5 +1,5 @@
 server:
-  port: 8083
+  port: 8082
   servlet:
     context-path: /demo
 spring:
@@ -7,15 +7,15 @@ spring:
     name: autumn-demo
   profiles:
     # 配置环境
-    active: dev
+    active: '@profile.name@'
   cloud:
     nacos:
       # nacos服务地址
-      server-addr: 127.0.0.1:8848
+      server-addr: '@nacos.server-addr@'
       # nacos管理员账号
-      username: nacos
+      username: '@nacos.username@'
       # nacos管理员密码
-      password: nacos
+      password: '@nacos.password@'
       discovery:
         # 配置的命名空间
         namespace: ${spring.profiles.active}
@@ -24,20 +24,20 @@ spring:
       config:
         server-addr: ${spring.cloud.nacos.server-addr}
         # nacos管理员账号
-        username: nacos
+        username: '@nacos.username@'
         # nacos管理员密码
-        password: nacos
+        password: '@nacos.password@'
         # 配置的命名空间
         namespace: ${spring.profiles.active}
         # 所属组
-        group: DEFAULT_GROUP
+        group: '@nacos.config.group@'
         # 配置名称-dev
-        prefix: autumn-demo
+        prefix: ${spring.application.name}
         # 指定格式
         file-extension: yml
         # 扩展配置
         extension-configs:
-            # redis 配置
+          # redis 配置
           - data-id: redis-config.yml
             group: DEFAULT_GROUP
             refresh: true
@@ -49,8 +49,7 @@ spring:
           - data-id: mybatis-plus-config.yml
             group: DEFAULT_GROUP
             refresh: true
-            # 全局配置文件
+          # 全局配置文件
           - data-id: global-config.yml
             group: DEFAULT_GROUP
             refresh: true
-

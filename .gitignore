@@ -20,8 +20,6 @@ logs/
 *.iml
 *.ipr
 rebel.xml
-/Docker/mysql/data/**
-/Docker/redis/data/**
 
 ### NetBeans ###
 /nbproject/private/
@@ -38,3 +36,10 @@ build/
 /.mvn
 
 ### resources ###
+
+### Docker ###
+/Docker/minio/data/
+/Docker/mysql/data/
+/Docker/mysql/logs/
+/Docker/nacos/logs/
+/Docker/redis/data/

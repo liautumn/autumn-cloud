@@ -7,15 +7,15 @@ spring:
     name: autumn-gateway
   profiles:
     # 配置环境
-    active: dev
+    active: '@profile.name@'
   cloud:
     nacos:
       # nacos服务地址
-      server-addr: 127.0.0.1:8848
+      server-addr: '@nacos.server-addr@'
       # nacos管理员账号
-      username: nacos
+      username: '@nacos.username@'
       # nacos管理员密码
-      password: nacos
+      password: '@nacos.password@'
       discovery:
         # 配置的命名空间
         namespace: ${spring.profiles.active}
@@ -26,12 +26,12 @@ spring:
         # 配置的命名空间
         namespace: ${spring.profiles.active}
         # nacos管理员账号
-        username: nacos
+        username: '@nacos.username@'
         # nacos管理员密码
-        password: nacos
+        password: '@nacos.password@'
         # 所属组
-        group: DEFAULT_GROUP
+        group: '@nacos.config.group@'
         # 配置名称-dev
-        prefix: autumn-gateway
+        prefix: ${spring.application.name}
         # 指定格式
         file-extension: yml
