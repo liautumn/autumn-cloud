@@ -1,0 +1,55 @@
+server:
+  port: 8081
+  servlet:
+    context-path: /system
+spring:
+  application:
+    name: autumn-system
+  profiles:
+    # 配置环境
+    active: '@profile.name@'
+  cloud:
+    nacos:
+      # nacos服务地址
+      server-addr: '@nacos.server-addr@'
+      # nacos管理员账号
+      username: '@nacos.username@'
+      # nacos管理员密码
+      password: '@nacos.password@'
+      discovery:
+        # 配置的命名空间
+        namespace: ${spring.profiles.active}
+        # 指定注册中心地址
+        server-addr: ${spring.cloud.nacos.server-addr}
+      config:
+        server-addr: ${spring.cloud.nacos.server-addr}
+        # nacos管理员账号
+        username: '@nacos.username@'
+        # nacos管理员密码
+        password: '@nacos.password@'
+        # 配置的命名空间
+        namespace: ${spring.profiles.active}
+        # 所属组
+        group: '@nacos.config.group@'
+        # 配置名称-dev
+        prefix: ${spring.application.name}
+        # 指定格式
+        file-extension: yml
+        # 扩展配置
+        extension-configs:
+          # redis 配置
+          - data-id: redis-config.yml
+            group: DEFAULT_GROUP
+            refresh: true
+            # 导入sa-token配置
+          - data-id: sa-token-config.yml
+            group: DEFAULT_GROUP
+            refresh: true
+            # 导入mybatis-plus配置
+          - data-id: mybatis-plus-config.yml
+            group: DEFAULT_GROUP
+            refresh: true
+          # 全局配置文件
+          - data-id: global-config.yml
+            group: DEFAULT_GROUP
+            refresh: true

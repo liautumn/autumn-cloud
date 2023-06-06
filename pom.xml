@@ -11,6 +11,7 @@
 
     <modules>
         <module>autumn-gateway</module>
+        <module>autumn-auth</module>
         <module>autumn-system</module>
         <module>autumn-common</module>
         <module>autumn-api</module>

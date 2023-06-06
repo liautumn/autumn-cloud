@@ -1,4 +1,4 @@
-package com.autumn.auth.entity;
+package com.autumn.user.entity;
 
 import lombok.Data;
 

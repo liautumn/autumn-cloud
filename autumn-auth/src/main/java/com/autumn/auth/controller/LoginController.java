@@ -1,8 +1,8 @@
 package com.autumn.auth.controller;
 
 import cn.dev33.satoken.stp.StpUtil;
-import com.autumn.auth.entity.LoginDto;
 import com.autumn.result.Result;
+import com.autumn.user.entity.LoginDto;
 import com.autumn.user.service.UserService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
