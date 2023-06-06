@@ -1,7 +1,9 @@
 package com.autumn.menu.service;
 
 import com.autumn.menu.entity.Menu;
-import com.autumn.menu.entity.MenuDto;
+import com.autumn.menu.entity.MenuInsertDto;
+import com.autumn.menu.entity.MenuSelectDto;
+import com.autumn.menu.entity.MenuUpdateDto;
 import com.autumn.result.Result;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -16,11 +18,11 @@ public interface MenuService extends IService<Menu> {
 
     Result getBtnsList();
 
-    Result selectMenu(MenuDto menuDto);
+    Result selectMenu(MenuSelectDto menuSelectDto);
 
-    Result insertMenu(MenuDto menuDto);
+    Result insertMenu(MenuInsertDto menuInsertDto);
 
-    Result updateMenu(MenuDto menuDto);
+    Result updateMenu(MenuUpdateDto menuUpdateDto);
 
     Result deleteMenu(String ids);
 }

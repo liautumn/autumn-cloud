@@ -8,11 +8,12 @@ import cn.hutool.core.lang.tree.TreeUtil;
 import com.alibaba.fastjson2.JSON;
 import com.autumn.dictionary.Dictionary;
 import com.autumn.menu.entity.Menu;
-import com.autumn.menu.entity.MenuDto;
+import com.autumn.menu.entity.MenuInsertDto;
+import com.autumn.menu.entity.MenuSelectDto;
+import com.autumn.menu.entity.MenuUpdateDto;
 import com.autumn.menu.mapper.MenuMapper;
 import com.autumn.menu.service.MenuService;
 import com.autumn.page.ResData;
-import com.autumn.page.ResPage;
 import com.autumn.redis.RedisUtil;
 import com.autumn.result.Result;
 import com.autumn.sa_token.LoginInfoData;
@@ -106,8 +107,8 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     }
 
     @Override
-    public Result selectMenu(MenuDto menuDto) {
-        Page<Menu> page = PageHelper.offsetPage(menuDto.getPageNum(), menuDto.getPageSize());
+    public Result selectMenu(MenuSelectDto menuSelectDto) {
+        Page<Menu> page = PageHelper.offsetPage(menuSelectDto.getPageNum(), menuSelectDto.getPageSize());
         LambdaQueryWrapper<Menu> queryWrapper = new LambdaQueryWrapper<Menu>()
                 .orderByAsc(Menu::getOrderNum);
         List<Menu> menus = menuMapper.selectList(queryWrapper);
@@ -124,25 +125,30 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     }
 
     @Override
-    public Result insertMenu(MenuDto menuDto) {
+    public Result insertMenu(MenuInsertDto menuInsertDto) {
         Menu menu = new Menu();
-        BeanUtils.copyProperties(menuDto, menu);
+        BeanUtils.copyProperties(menuInsertDto, menu);
         int i = menuMapper.insert(menu);
         return i > 0 ? Result.success() : Result.fail();
     }
 
     @Override
-    public Result updateMenu(MenuDto menuDto) {
+    public Result updateMenu(MenuUpdateDto menuUpdateDto) {
         Menu menu = new Menu();
-        BeanUtils.copyProperties(menuDto, menu);
+        BeanUtils.copyProperties(menuUpdateDto, menu);
         int i = menuMapper.updateById(menu);
         return i > 0 ? Result.success() : Result.fail();
     }
 
     @Override
     public Result deleteMenu(String ids) {
-        String[] idList = ids.split(",");
-        int i = menuMapper.deleteBatchIds(Arrays.asList(idList));
+        String[] split = ids.split(",");
+        List<Long> idList = Arrays.stream(split).map(s -> Long.parseLong(s.trim())).collect(Collectors.toList());
+        int i = 0;
+        for (Long id : idList) {
+            Menu menu = new Menu().setMenuId(id).setDelFlag("0");
+            i += menuMapper.updateById(menu);
+        }
         return i > 0 ? Result.success() : Result.fail();
     }
 

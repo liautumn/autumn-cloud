@@ -1,14 +1,16 @@
 package com.autumn.menu.controller;
 
-import cn.dev33.satoken.annotation.SaCheckDisable;
 import cn.dev33.satoken.annotation.SaIgnore;
-import com.autumn.menu.entity.MenuDto;
+import com.autumn.menu.entity.MenuInsertDto;
+import com.autumn.menu.entity.MenuSelectDto;
+import com.autumn.menu.entity.MenuUpdateDto;
 import com.autumn.menu.service.MenuService;
 import com.autumn.result.Result;
-import org.springframework.data.repository.query.Param;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.validation.constraints.NotBlank;
 
 @RestController
 @RequestMapping("/menu")
@@ -32,31 +34,31 @@ public class MenuController {
      */
     @GetMapping("/select")
     @SaIgnore
-    public Result selectMenu(MenuDto menuDto) {
-        return menuService.selectMenu(menuDto);
+    public Result selectMenu(MenuSelectDto menuSelectDto) {
+        return menuService.selectMenu(menuSelectDto);
     }
 
     /**
      * 菜单新增
      */
     @PostMapping("/insert")
-    public Result insertMenu(MenuDto menuDto) {
-        return menuService.insertMenu(menuDto);
+    public Result insertMenu(@RequestBody @Validated MenuInsertDto menuInsertDto) {
+        return menuService.insertMenu(menuInsertDto);
     }
 
     /**
      * 菜单修改
      */
     @PostMapping("/update")
-    public Result updateMenu(MenuDto menuDto) {
-        return menuService.updateMenu(menuDto);
+    public Result updateMenu(@RequestBody @Validated MenuUpdateDto menuUpdateDto) {
+        return menuService.updateMenu(menuUpdateDto);
     }
 
     /**
      * 菜单删除
      */
-    @PostMapping("/delete")
-    public Result deleteMenu(String ids) {
+    @GetMapping("/delete")
+    public Result deleteMenu(@RequestParam("ids") String ids) {
         return menuService.deleteMenu(ids);
     }
 
