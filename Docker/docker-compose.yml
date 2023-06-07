@@ -70,7 +70,7 @@ services:
   autumn-nacos:
     hostname: "autumn-nacos"
     container_name: autumn-nacos
-    image: nacos/nacos-server:1.4.1
+    image: nacos/nacos-server:2.1.0
     build:
       context: ./nacos
     environment:

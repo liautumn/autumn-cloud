@@ -21,7 +21,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.3.2.RELEASE</version>
+        <version>2.3.12.RELEASE</version>
     </parent>
 
     <properties>
@@ -30,8 +30,8 @@
         <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <snakeyaml.version>1.33</snakeyaml.version>
-        <spring.cloud.version>Hoxton.SR9</spring.cloud.version>
-        <spring.cloud.alibaba.version>2.2.6.RELEASE</spring.cloud.alibaba.version>
+        <spring.cloud.version>Hoxton.SR12</spring.cloud.version>
+        <spring.cloud.alibaba.version>2.2.9.RELEASE</spring.cloud.alibaba.version>
         <mysql.version>8.0.27</mysql.version>
         <lombok.version>1.18.26</lombok.version>
         <mybatis-plus.version>3.5.3</mybatis-plus.version>
@@ -205,7 +205,7 @@
             <properties>
                 <!--当前环境-->
                 <profile.name>dev</profile.name>
-                <nacos.server-addr>100.75.77.47:8848</nacos.server-addr>
+                <nacos.server-addr>127.0.0.1:8848</nacos.server-addr>
                 <nacos.username>nacos</nacos.username>
                 <nacos.password>nacos</nacos.password>
                 <nacos.config.group>DEFAULT_GROUP</nacos.config.group>
