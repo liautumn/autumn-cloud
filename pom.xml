@@ -217,7 +217,7 @@
             <properties>
                 <!--当前环境-->
                 <profile.name>test</profile.name>
-                <nacos.server-addr>100.75.77.47:8848</nacos.server-addr>
+                <nacos.server-addr>autumn-nacos:8848</nacos.server-addr>
                 <nacos.username>nacos</nacos.username>
                 <nacos.password>nacos</nacos.password>
                 <nacos.config.group>DEFAULT_GROUP</nacos.config.group>
@@ -229,7 +229,7 @@
             <properties>
                 <!--当前环境-->
                 <profile.name>prod</profile.name>
-                <nacos.server-addr>100.75.77.47:8848</nacos.server-addr>
+                <nacos.server-addr>autumn-nacos:8848</nacos.server-addr>
                 <nacos.username>nacos</nacos.username>
                 <nacos.password>nacos</nacos.password>
                 <nacos.config.group>DEFAULT_GROUP</nacos.config.group>
