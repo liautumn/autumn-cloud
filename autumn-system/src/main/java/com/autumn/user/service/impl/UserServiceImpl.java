@@ -27,9 +27,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Resource
     private UserMapper userMapper;
 
-    @Value("${autumn.password.salt}")
-    private String salt;
-
     @Override
     public Result delete(String ids) {
         List<String> list = new ArrayList(Arrays.asList(ids.split(",")));
@@ -41,18 +38,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public Result select() {
         List<User> users = userMapper.selectList(null);
         return Result.success(users);
-    }
-
-    @Override
-    public Result insert(User user) {
-        String pass = SecureUtil.pbkdf2(user.getPassword().toCharArray(), salt.getBytes());
-        user.setPassword(pass);
-        LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<User>().eq(User::getUserName, user.getUserName());
-        if (userMapper.selectOne(queryWrapper) != null) {
-            return Result.fail("用户名已存在");
-        } else {
-            return userMapper.insert(user) > 0 ? Result.success() : Result.fail();
-        }
     }
 
     @Override

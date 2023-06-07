@@ -15,8 +15,6 @@ public interface UserService extends IService<User> {
 
     Result select();
 
-    Result insert(User user);
-
     Result updateUser(User user);
 
 }

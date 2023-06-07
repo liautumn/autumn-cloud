@@ -25,6 +25,7 @@ public class MenuController {
      * @return
      */
     @GetMapping("/list")
+    @SaIgnore
     public Result getMenuList() {
         return menuService.getMenuList();
     }
@@ -33,7 +34,6 @@ public class MenuController {
      * 菜单查询
      */
     @GetMapping("/select")
-    @SaIgnore
     public Result selectMenu(MenuSelectDto menuSelectDto) {
         return menuService.selectMenu(menuSelectDto);
     }

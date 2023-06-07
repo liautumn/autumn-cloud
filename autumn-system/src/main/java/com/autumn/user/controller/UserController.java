@@ -15,11 +15,6 @@ public class UserController {
     @Resource
     private UserService userService;
 
-    @PostMapping("/insert")
-    public Result insert(@RequestBody User user) {
-        return userService.insert(user);
-    }
-
     @GetMapping("/delete")
     public Result delete(@NotBlank(message = "用户id不能为空") String ids) {
         return userService.delete(ids);

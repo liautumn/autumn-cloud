@@ -12,7 +12,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface UserService extends IService<User> {
 
-    Result delete(String ids);
+    Result delete(String id);
 
     Result insert(User user);
 

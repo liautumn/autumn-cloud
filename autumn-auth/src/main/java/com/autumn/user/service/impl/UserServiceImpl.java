@@ -18,7 +18,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Administrator
@@ -35,10 +36,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     private String salt;
 
     @Override
-    public Result delete(String ids) {
-        List<String> list = new ArrayList(Arrays.asList(ids.split(",")));
-        int batchIds = userMapper.deleteBatchIds(list);
-        return Result.success(batchIds);
+    public Result delete(String id) {
+        int i = userMapper.deleteById(id);
+        return i > 0 ? Result.success() : Result.fail();
     }
 
     @Override

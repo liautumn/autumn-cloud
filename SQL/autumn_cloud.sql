@@ -85,7 +85,7 @@ CREATE TABLE `sys_menu` (
   `update_by` varchar(64) DEFAULT '' COMMENT '更新者',
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`menu_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COMMENT='菜单权限表';
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COMMENT='菜单权限表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -94,7 +94,7 @@ CREATE TABLE `sys_menu` (
 
 LOCK TABLES `sys_menu` WRITE;
 /*!40000 ALTER TABLE `sys_menu` DISABLE KEYS */;
-INSERT INTO `sys_menu` VALUES (1,0,'1','1',NULL,NULL,'#','1','','1','1','1','1','1',0,'','1',NULL,NULL,'','1','',NULL,'',NULL),(2,1,'2','2',NULL,NULL,'#','2','','1','1','1','1','1',0,'','1',NULL,NULL,'','1','',NULL,'',NULL),(3,1,'3','3',NULL,NULL,'#','3','','1','1','1','1','1',0,'','1',NULL,NULL,'','1','',NULL,'',NULL);
+INSERT INTO `sys_menu` VALUES (1,0,'1','1',NULL,NULL,'#','1','','1','1','1','1','1',0,'','1',NULL,NULL,'','1','',NULL,'',NULL),(2,1,'2','2',NULL,NULL,'#','2','','1','1','1','1','1',0,'','1',NULL,NULL,'','1','',NULL,'',NULL),(3,1,'3','3',NULL,NULL,'#','3','','1','1','1','1','1',0,'','1',NULL,NULL,'','1','',NULL,'',NULL),(8,0,'/test1','测试1','','/test1','#','11','nostrud','1','1','1','1','1',0,'','1',NULL,'','','1','admin','2023-06-06 17:07:02','admin','2023-06-06 17:57:10'),(9,0,'/test','测试','','/test','#','11','nostrud','1','1','1','1','1',0,'','1',NULL,'','','1','admin','2023-06-07 10:41:22','',NULL);
 /*!40000 ALTER TABLE `sys_menu` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -332,4 +332,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-06-05 18:05:00
+-- Dump completed on 2023-06-07 10:44:01
