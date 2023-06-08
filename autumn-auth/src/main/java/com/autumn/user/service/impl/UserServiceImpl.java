@@ -6,9 +6,7 @@ import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.crypto.SecureUtil;
 import com.autumn.result.Result;
-import com.autumn.user.entity.LoginDto;
-import com.autumn.user.entity.LoginVo;
-import com.autumn.user.entity.User;
+import com.autumn.user.entity.*;
 import com.autumn.user.mapper.UserMapper;
 import com.autumn.user.service.UserService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -36,25 +34,29 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     private String salt;
 
     @Override
-    public Result delete(String id) {
+    public Result deleteUser(String id) {
         int i = userMapper.deleteById(id);
         return i > 0 ? Result.success() : Result.fail();
     }
 
     @Override
-    public Result insert(User user) {
-        String pass = SecureUtil.pbkdf2(user.getPassword().toCharArray(), salt.getBytes());
-        user.setPassword(pass);
-        LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<User>().eq(User::getUserName, user.getUserName());
+    public Result insertUser(UserInsertDto userInsertDto) {
+        LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<User>().eq(User::getUserName, userInsertDto.getUserName());
         if (userMapper.selectOne(queryWrapper) != null) {
             return Result.fail("用户名已存在");
         } else {
+            String pass = SecureUtil.pbkdf2(userInsertDto.getPassword().toCharArray(), salt.getBytes());
+            userInsertDto.setPassword(pass);
+            User user = new User();
+            BeanUtils.copyProperties(userInsertDto, user);
             return userMapper.insert(user) > 0 ? Result.success() : Result.fail();
         }
     }
 
     @Override
-    public Result updateUser(User user) {
+    public Result updateUser(UserUpdateDto userUpdateDto) {
+        User user = new User();
+        BeanUtils.copyProperties(userUpdateDto, user);
         return userMapper.updateById(user) > 0 ? Result.success() : Result.fail();
     }
 

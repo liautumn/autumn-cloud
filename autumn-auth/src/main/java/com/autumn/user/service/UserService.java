@@ -3,6 +3,8 @@ package com.autumn.user.service;
 import com.autumn.result.Result;
 import com.autumn.user.entity.LoginDto;
 import com.autumn.user.entity.User;
+import com.autumn.user.entity.UserInsertDto;
+import com.autumn.user.entity.UserUpdateDto;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -12,11 +14,11 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface UserService extends IService<User> {
 
-    Result delete(String id);
+    Result deleteUser(String id);
 
-    Result insert(User user);
+    Result insertUser(UserInsertDto userInsertDto);
 
-    Result updateUser(User user);
+    Result updateUser(UserUpdateDto userUpdateDto);
 
     Result login(LoginDto login);
 }
