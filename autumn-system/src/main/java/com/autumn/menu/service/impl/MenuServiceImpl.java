@@ -121,7 +121,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         });
         // 0表示最顶层的id是0
         List<Tree<String>> treeList = TreeUtil.build(nodeList, "0");
-        return ResData.setDataTotal(treeList, page.getTotal());
+        return ResData.setDataTotal(page, treeList);
     }
 
     @Override

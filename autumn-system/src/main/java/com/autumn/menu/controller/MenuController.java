@@ -24,7 +24,7 @@ public class MenuController {
      *
      * @return
      */
-    @GetMapping("/list")
+    @PostMapping("/list")
     @SaIgnore
     public Result getMenuList() {
         return menuService.getMenuList();
@@ -33,8 +33,8 @@ public class MenuController {
     /**
      * 菜单查询
      */
-    @GetMapping("/select")
-    public Result selectMenu(MenuSelectDto menuSelectDto) {
+    @PostMapping("/select")
+    public Result selectMenu(@RequestBody MenuSelectDto menuSelectDto) {
         return menuService.selectMenu(menuSelectDto);
     }
 

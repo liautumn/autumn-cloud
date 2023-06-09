@@ -10,13 +10,23 @@ import lombok.NoArgsConstructor;
 public class ResPage {
 
     /**
-     * 数据
-     */
-    private Object list;
-
-    /**
      * 总数
      */
     private Long total = 0L;
+
+    /**
+     * 页码
+     */
+    private Integer pageNum = 0;
+
+    /**
+     * 条数
+     */
+    private Integer pageSize = 10;
+
+    /**
+     * 数据
+     */
+    private Object list;
 
 }

@@ -1,11 +1,12 @@
 package com.autumn.page;
 
 import com.autumn.result.Result;
+import com.github.pagehelper.Page;
 
 public class ResData {
 
-    public static Result setDataTotal(Object data, Long total) {
-        ResPage resPage = new ResPage(data, total);
+    public static Result setDataTotal(Page page, Object data) {
+        ResPage resPage = new ResPage(page.getTotal(), page.getPageNum(), page.getPageSize(), data);
         return Result.success(resPage);
     }
 
