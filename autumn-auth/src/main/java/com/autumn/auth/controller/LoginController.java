@@ -33,7 +33,7 @@ public class LoginController {
      *
      * @return
      */
-    @GetMapping("/logout")
+    @PostMapping("/logout")
     public Result logout() {
         StpUtil.logout();
         return Result.success();
