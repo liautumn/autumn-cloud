@@ -25,6 +25,7 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.util.Arrays;
@@ -112,16 +113,20 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         LambdaQueryWrapper<Menu> queryWrapper = new LambdaQueryWrapper<Menu>()
                 .orderByAsc(Menu::getOrderNum);
         List<Menu> menus = menuMapper.selectList(queryWrapper);
-        // 构建node列表
-        List<TreeNode<String>> nodeList = CollUtil.newArrayList();
-        menus.stream().forEach(menu -> {
-            Map map = JSON.parseObject(JSON.toJSONString(menu), Map.class);
-            map.remove("parentId");
-            nodeList.add(new TreeNode<>(String.valueOf(menu.getMenuId()), String.valueOf(menu.getParentId()), null, null).setExtra(map));
-        });
-        // 0表示最顶层的id是0
-        List<Tree<String>> treeList = TreeUtil.build(nodeList, "0");
-        return ResData.setDataTotal(page, treeList);
+        if (!CollectionUtils.isEmpty(menus)) {
+            // 构建node列表
+            List<TreeNode<String>> nodeList = CollUtil.newArrayList();
+            menus.stream().forEach(menu -> {
+                Map map = JSON.parseObject(JSON.toJSONString(menu), Map.class);
+                map.remove("parentId");
+                nodeList.add(new TreeNode<>(String.valueOf(menu.getMenuId()), String.valueOf(menu.getParentId()), null, null).setExtra(map));
+            });
+            // 0表示最顶层的id是0
+            List<Tree<String>> treeList = TreeUtil.build(nodeList, "0");
+            return ResData.setDataTotal(page, treeList);
+        }else {
+            return ResData.setDataTotal(page);
+        }
     }
 
     @Override

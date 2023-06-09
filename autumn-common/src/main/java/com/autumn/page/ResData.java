@@ -10,4 +10,9 @@ public class ResData {
         return Result.success(resPage);
     }
 
+    public static Result setDataTotal(Page page) {
+        ResPage resPage = new ResPage(page.getTotal(), page.getPageNum(), page.getPageSize(), null);
+        return Result.success(resPage);
+    }
+
 }
