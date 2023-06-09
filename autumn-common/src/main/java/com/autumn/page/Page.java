@@ -11,7 +11,7 @@ public class Page {
     /**
      * 页码
      */
-    private Integer pageNum = 0;
+    private Integer pageNum = 1;
 
     /**
      * 条数

@@ -75,11 +75,11 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
             meta.put("icon", menu.getIcon());
             meta.put("title", menu.getTitle());
             meta.put("activeMenu", menu.getActiveMenu());
-            meta.put("isLink", menu.getIsLink());
-            meta.put("isHide", menu.getIsHide());
-            meta.put("isFull", menu.getIsFull());
-            meta.put("isAffix", menu.getIsAffix());
-            meta.put("isKeepAlive", menu.getIsKeepAlive());
+            meta.put("isLink", menu.getIsLink().equals("0") ? true : false);
+            meta.put("isHide", menu.getIsHide().equals("0") ? true : false);
+            meta.put("isFull", menu.getIsFull().equals("0") ? true : false);
+            meta.put("isAffix", menu.getIsAffix().equals("0") ? true : false);
+            meta.put("isKeepAlive", menu.getIsKeepAlive().equals("0") ? true : false);
             data.put("meta", meta);
             nodeList.add(new TreeNode<>(String.valueOf(menu.getMenuId()), String.valueOf(menu.getParentId()), menu.getName(), null).setExtra(data));
         });
@@ -109,7 +109,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
 
     @Override
     public Result selectMenu(MenuSelectDto menuSelectDto) {
-        Page<Menu> page = PageHelper.offsetPage(menuSelectDto.getPageNum(), menuSelectDto.getPageSize());
+        Page<Menu> page = PageHelper.startPage(menuSelectDto.getPageNum(), menuSelectDto.getPageSize());
         LambdaQueryWrapper<Menu> queryWrapper = new LambdaQueryWrapper<Menu>()
                 .orderByAsc(Menu::getOrderNum);
         List<Menu> menus = menuMapper.selectList(queryWrapper);
@@ -149,11 +149,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     public Result deleteMenu(String ids) {
         String[] split = ids.split(",");
         List<Long> idList = Arrays.stream(split).map(s -> Long.parseLong(s.trim())).collect(Collectors.toList());
-        int i = 0;
-        for (Long id : idList) {
-            Menu menu = new Menu().setMenuId(id).setDelFlag("0");
-            i += menuMapper.updateById(menu);
-        }
+        int i = menuMapper.deleteBatchIds(idList);
         return i > 0 ? Result.success() : Result.fail();
     }
 

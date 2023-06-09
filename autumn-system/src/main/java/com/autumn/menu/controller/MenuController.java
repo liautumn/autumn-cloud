@@ -24,8 +24,7 @@ public class MenuController {
      *
      * @return
      */
-    @PostMapping("/list")
-    @SaIgnore
+    @GetMapping("/list")
     public Result getMenuList() {
         return menuService.getMenuList();
     }
