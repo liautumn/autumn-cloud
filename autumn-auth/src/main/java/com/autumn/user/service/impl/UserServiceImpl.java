@@ -69,7 +69,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         if (user != null) {
             String pass = SecureUtil.pbkdf2(password.toCharArray(), salt.getBytes());
             if (pass.equals(user.getPassword())) {
-                StpUtil.login(user.getId(), new SaLoginModel().setDevice("PC").setIsLastingCookie(true));
+                StpUtil.login(user.getId(), new SaLoginModel().setDevice("PC").setIsLastingCookie(login.getIsRemember()));
                 SaTokenInfo tokenInfo = StpUtil.getTokenInfo();
                 StpUtil.getSession().set("user", user);
                 LoginVo loginVo = new LoginVo();

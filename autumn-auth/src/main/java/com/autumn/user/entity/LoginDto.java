@@ -20,5 +20,10 @@ public class LoginDto implements Serializable {
     @NotBlank(message = "密码不能为空")
     private String password;
 
+    /**
+     * 记住我标记（true记住 false不记住）
+     */
+    private Boolean isRemember = false;
+
     private static final long serialVersionUID = 1L;
 }

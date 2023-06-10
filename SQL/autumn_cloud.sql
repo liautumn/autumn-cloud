@@ -52,6 +52,37 @@ INSERT INTO `sys_dept` VALUES ('100',0,'0','若依科技',0,'若依','1588888888
 UNLOCK TABLES;
 
 --
+-- Table structure for table `sys_dict_type`
+--
+
+DROP TABLE IF EXISTS `sys_dict_type`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sys_dict_type` (
+  `id` varchar(50) NOT NULL COMMENT '字典类型表ID',
+  `dict_name` varchar(100) DEFAULT NULL COMMENT '字典名称',
+  `dict_type` varchar(100) DEFAULT NULL COMMENT '字典类型',
+  `status` char(1) DEFAULT '1' COMMENT '是否停用（0是 1否）',
+  `remark` text COMMENT '备注',
+  `del_flag` char(1) DEFAULT '1' COMMENT '删除标志（0代表删除 1代表存在）',
+  `create_by` varchar(64) DEFAULT '' COMMENT '创建者',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(64) DEFAULT '' COMMENT '修改者',
+  `update_time` datetime DEFAULT NULL COMMENT '修改时间'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='字典类型表';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sys_dict_type`
+--
+
+LOCK TABLES `sys_dict_type` WRITE;
+/*!40000 ALTER TABLE `sys_dict_type` DISABLE KEYS */;
+INSERT INTO `sys_dict_type` VALUES ('1667436134579306497','是否','whether','1','是否状态','1','admin','2023-06-10 15:38:49','',NULL),('1667436790484566018','性别','sex','1','性别','1','admin','2023-06-10 15:41:25','admin','2023-06-10 15:41:35');
+/*!40000 ALTER TABLE `sys_dict_type` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `sys_menu`
 --
 
@@ -94,7 +125,7 @@ CREATE TABLE `sys_menu` (
 
 LOCK TABLES `sys_menu` WRITE;
 /*!40000 ALTER TABLE `sys_menu` DISABLE KEYS */;
-INSERT INTO `sys_menu` VALUES ('1',0,'/home/index','home',NULL,'/home/index','HomeFilled','首页','','1','1','1','1','0',1,'1','1',NULL,NULL,'','1','admin','2023-06-09 20:52:29','admin','2023-06-10 10:41:32'),('2',0,'/system',NULL,NULL,NULL,'Tools','系统管理','','1','1','1','1','0',2,'0','1',NULL,NULL,'','1','admin','2023-06-09 20:52:29','admin','2023-06-10 10:43:31'),('3',2,'/system/menuMange','menuMange',NULL,'/system/menuMange/menuList','Menu','菜单管理','','1','1','1','1','0',1,'1','1',NULL,NULL,'','1','admin','2023-06-09 20:52:29','admin','2023-06-10 10:43:59');
+INSERT INTO `sys_menu` VALUES ('1',0,'/home/index','home',NULL,'/home/index','HomeFilled','首页','','1','1','1','1','0',1,'1','1',NULL,NULL,'','1','admin','2023-06-09 20:52:29','admin','2023-06-10 10:41:32'),('1667422148022546434',2,'/system/dictManage','dict',NULL,'/system/dictManage/dictList','Reading','字典管理','','1','1','1','1','1',2,'','1',NULL,NULL,'','1','admin','2023-06-10 14:43:14','admin','2023-06-10 14:43:30'),('2',0,'/system',NULL,NULL,NULL,'Tools','系统管理','','1','1','1','1','0',2,'0','1',NULL,NULL,'','1','admin','2023-06-09 20:52:29','admin','2023-06-10 10:43:31'),('3',2,'/system/menuMange','menuMange',NULL,'/system/menuMange/menuList','Menu','菜单管理','','1','1','1','1','0',1,'1','1',NULL,NULL,'','1','admin','2023-06-09 20:52:29','admin','2023-06-10 10:43:59');
 /*!40000 ALTER TABLE `sys_menu` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -332,4 +363,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-06-10 11:26:06
+-- Dump completed on 2023-06-10 16:37:07

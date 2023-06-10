@@ -42,7 +42,7 @@ CREATE TABLE `config_info` (
   `encrypted_data_key` text COLLATE utf8_bin NOT NULL COMMENT '秘钥',
   PRIMARY KEY (`id`),
   UNIQUE KEY `uk_configinfo_datagrouptenant` (`data_id`,`group_id`,`tenant_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='config_info';
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='config_info';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -401,4 +401,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-06-07 10:54:42
+-- Dump completed on 2023-06-10 16:37:20
