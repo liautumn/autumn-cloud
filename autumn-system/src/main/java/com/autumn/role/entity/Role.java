@@ -18,8 +18,8 @@ public class Role implements Serializable {
     /**
      * 角色ID
      */
-    @TableId(value = "role_id", type = IdType.AUTO)
-    private Long roleId;
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
+    private String id;
 
     /**
      * 角色名称
@@ -49,13 +49,13 @@ public class Role implements Serializable {
      * 菜单树选择项是否关联显示
      */
     @TableField(value = "menu_check_strictly")
-    private Integer menuCheckStrictly;
+    private String menuCheckStrictly;
 
     /**
      * 部门树选择项是否关联显示
      */
     @TableField(value = "dept_check_strictly")
-    private Integer deptCheckStrictly;
+    private String deptCheckStrictly;
 
     /**
      * 角色状态（0正常 1停用）

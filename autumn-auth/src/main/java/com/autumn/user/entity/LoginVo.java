@@ -10,12 +10,12 @@ public class LoginVo implements Serializable {
     /**
      * 用户ID
      */
-    private Long userId;
+    private String id;
 
     /**
      * 部门ID
      */
-    private Long deptId;
+    private String deptId;
 
     /**
      * 用户账号

@@ -12,8 +12,8 @@ public class MenuInsertDto implements Serializable {
     /**
      * 父菜单ID
      */
-    @NotNull(message = "父菜单ID不能为空")
-    private Long parentId;
+    @NotBlank(message = "父菜单ID不能为空")
+    private String parentId;
 
     /**
      * 路由地址

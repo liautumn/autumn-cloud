@@ -1,29 +1,33 @@
 package com.autumn.menu.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 @Data
 public class MenuUpdateDto implements Serializable {
     /**
      * 菜单ID
      */
-    @NotNull(message = "菜单ID不能为空")
-    private Long menuId;
+    @NotBlank(message = "菜单ID不能为空")
+    private String id;
 
     /**
      * 父菜单ID
      */
-    @NotNull(message = "父菜单ID不能为空")
-    private Long parentId;
+    @NotBlank(message = "父菜单ID不能为空")
+    private String parentId;
 
     /**
      * 路由地址
      */
-    @NotBlank(message = "路由地址不能为空")
     private String path;
 
     /**
@@ -49,7 +53,6 @@ public class MenuUpdateDto implements Serializable {
     /**
      * 菜单名称
      */
-    @NotBlank(message = "菜单名称不能为空")
     private String title;
 
     /**
@@ -83,10 +86,34 @@ public class MenuUpdateDto implements Serializable {
     private String isKeepAlive;
 
     /**
+     * 显示顺序
+     */
+    private Integer orderNum;
+
+    /**
+     * 菜单类型（0目录 1菜单 2按钮）
+     */
+    private String menuType;
+
+    /**
+     * 是否停用（0是 1否）
+     */
+    private String status;
+
+    /**
+     * 权限标识
+     */
+    private String perms;
+
+    /**
      * 路由参数
      */
     private String query;
 
+    /**
+     * 备注
+     */
+    private String remark;
 
     private static final long serialVersionUID = 1L;
 }

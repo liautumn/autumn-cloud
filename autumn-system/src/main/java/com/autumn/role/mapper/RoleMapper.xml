@@ -5,13 +5,13 @@
 <mapper namespace="com.autumn.role.mapper.RoleMapper">
 
     <resultMap id="BaseResultMap" type="com.autumn.role.entity.Role">
-        <id property="roleId" column="role_id" jdbcType="BIGINT"/>
+        <id property="id" column="id" jdbcType="VARCHAR"/>
         <result property="roleName" column="role_name" jdbcType="VARCHAR"/>
         <result property="roleKey" column="role_key" jdbcType="VARCHAR"/>
         <result property="roleSort" column="role_sort" jdbcType="INTEGER"/>
         <result property="dataScope" column="data_scope" jdbcType="CHAR"/>
-        <result property="menuCheckStrictly" column="menu_check_strictly" jdbcType="TINYINT"/>
-        <result property="deptCheckStrictly" column="dept_check_strictly" jdbcType="TINYINT"/>
+        <result property="menuCheckStrictly" column="menu_check_strictly" jdbcType="VARCHAR"/>
+        <result property="deptCheckStrictly" column="dept_check_strictly" jdbcType="VARCHAR"/>
         <result property="status" column="status" jdbcType="CHAR"/>
         <result property="delFlag" column="del_flag" jdbcType="CHAR"/>
         <result property="createBy" column="create_by" jdbcType="VARCHAR"/>

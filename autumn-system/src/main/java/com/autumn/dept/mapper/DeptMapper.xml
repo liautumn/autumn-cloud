@@ -5,8 +5,8 @@
 <mapper namespace="com.autumn.dept.mapper.DeptMapper">
 
     <resultMap id="BaseResultMap" type="com.autumn.dept.entity.Dept">
-        <id property="deptId" column="dept_id" jdbcType="BIGINT"/>
-        <result property="parentId" column="parent_id" jdbcType="BIGINT"/>
+        <id property="id" column="id" jdbcType="VARCHAR"/>
+        <result property="parentId" column="parent_id" jdbcType="VARCHAR"/>
         <result property="ancestors" column="ancestors" jdbcType="VARCHAR"/>
         <result property="deptName" column="dept_name" jdbcType="VARCHAR"/>
         <result property="orderNum" column="order_num" jdbcType="INTEGER"/>
@@ -22,7 +22,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        dept_id
+        id
         ,parent_id,ancestors,
         dept_name,order_num,leader,
         phone,email,status,

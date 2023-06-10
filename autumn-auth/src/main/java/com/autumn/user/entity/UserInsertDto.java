@@ -11,7 +11,7 @@ public class UserInsertDto implements Serializable {
     /**
      * 用户账号
      */
-    @NotBlank(message = "用户ID不能为空")
+    @NotBlank(message = "用户账号不能为空")
     private String userName;
 
     /**

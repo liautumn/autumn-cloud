@@ -5,7 +5,7 @@
 <mapper namespace="com.autumn.post.mapper.PostMapper">
 
     <resultMap id="BaseResultMap" type="com.autumn.post.entity.Post">
-        <id property="postId" column="post_id" jdbcType="BIGINT"/>
+        <id property="id" column="id" jdbcType="VARCHAR"/>
         <result property="postCode" column="post_code" jdbcType="VARCHAR"/>
         <result property="postName" column="post_name" jdbcType="VARCHAR"/>
         <result property="postSort" column="post_sort" jdbcType="INTEGER"/>
@@ -18,8 +18,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        post_id
-        ,post_code,post_name,
+        id,post_code,post_name,
         post_sort,status,create_by,
         create_time,update_by,update_time,
         remark

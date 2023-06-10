@@ -4,7 +4,6 @@ import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 @Data
 public class UserUpdateDto implements Serializable {
@@ -12,12 +11,12 @@ public class UserUpdateDto implements Serializable {
      * 用户ID
      */
     @NotBlank(message = "用户ID不能为空")
-    private Long userId;
+    private String id;
 
     /**
      * 部门ID
      */
-    private Long deptId;
+    private String deptId;
 
     /**
      * 用户账号

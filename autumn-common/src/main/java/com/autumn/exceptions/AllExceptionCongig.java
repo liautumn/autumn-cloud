@@ -35,20 +35,20 @@ public class AllExceptionCongig {
         e.printStackTrace();
 
         // 不同异常返回不同状态码
-        if (e instanceof NotLoginException) {    // 如果是未登录异常
+        if (e instanceof NotLoginException) {    // 如果是未登录异常 e.getMessage()
             NotLoginException ee = (NotLoginException) e;
             codeMap.put("code", 2001);
-            codeMap.put("msg", "未登录 " + ee.getMessage());
+            codeMap.put("msg", "会话已失效请重新登录");
             return codeMap;
-        } else if (e instanceof NotRoleException) {        // 如果是角色异常
+        } else if (e instanceof NotRoleException) {        // 如果是角色异常 ee.getRole()
             NotRoleException ee = (NotRoleException) e;
             codeMap.put("code", 2002);
-            codeMap.put("msg", "无此角色：" + ee.getRole());
+            codeMap.put("msg", "无此角色");
             return codeMap;
-        } else if (e instanceof NotPermissionException) {    // 如果是权限异常
+        } else if (e instanceof NotPermissionException) {    // 如果是权限异常 ee.getCode()
             NotPermissionException ee = (NotPermissionException) e;
             codeMap.put("code", 2003);
-            codeMap.put("msg", "无此权限：" + ee.getCode());
+            codeMap.put("msg", "权限不足");
             return codeMap;
         } else if (e instanceof DisableServiceException) {    // 如果是被封禁异常
             DisableServiceException ee = (DisableServiceException) e;

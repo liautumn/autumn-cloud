@@ -10,12 +10,12 @@ public class MenuVo implements Serializable {
     /**
      * 菜单ID
      */
-    private Long menuId;
+    private String id;
 
     /**
      * 父菜单ID
      */
-    private Long parentId;
+    private String parentId;
 
     /**
      * 路由地址

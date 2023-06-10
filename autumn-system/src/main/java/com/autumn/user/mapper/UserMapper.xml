@@ -5,8 +5,8 @@
 <mapper namespace="com.autumn.user.mapper.UserMapper">
 
     <resultMap id="BaseResultMap" type="com.autumn.user.entity.User">
-        <id property="userId" column="user_id" jdbcType="BIGINT"/>
-        <result property="deptId" column="dept_id" jdbcType="BIGINT"/>
+        <id property="id" column="id" jdbcType="VARCHAR"/>
+        <result property="deptId" column="dept_id" jdbcType="VARCHAR"/>
         <result property="userName" column="user_name" jdbcType="VARCHAR"/>
         <result property="nickName" column="nick_name" jdbcType="VARCHAR"/>
         <result property="userType" column="user_type" jdbcType="VARCHAR"/>
@@ -27,8 +27,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        user_id
-        ,dept_id,user_name,
+        id,dept_id,user_name,
         nick_name,user_type,email,
         phonenumber,sex,avatar,
         password,status,del_flag,

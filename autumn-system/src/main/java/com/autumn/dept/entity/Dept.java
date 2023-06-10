@@ -20,14 +20,14 @@ public class Dept implements Serializable {
     /**
      * 部门id
      */
-    @TableId(value = "dept_id", type = IdType.AUTO)
-    private Long deptId;
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
+    private String id;
 
     /**
      * 父部门id
      */
     @TableField(value = "parent_id")
-    private Long parentId;
+    private String parentId;
 
     /**
      * 祖级列表
@@ -101,6 +101,5 @@ public class Dept implements Serializable {
     @TableField(value = "update_time")
     private LocalDateTime updateTime;
 
-    @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 }

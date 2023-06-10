@@ -19,14 +19,14 @@ public class Menu implements Serializable {
     /**
      * 菜单ID
      */
-    @TableId(value = "menu_id", type = IdType.AUTO)
-    private Long menuId;
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
+    private String id;
 
     /**
      * 父菜单ID
      */
     @TableField(value = "parent_id")
-    private Long parentId;
+    private String parentId;
 
     /**
      * 路由地址
@@ -166,6 +166,5 @@ public class Menu implements Serializable {
     @TableField(value = "update_time", fill = FieldFill.UPDATE)
     private LocalDateTime updateTime;
 
-    @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 }

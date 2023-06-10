@@ -62,7 +62,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
                     .orderByAsc(Menu::getOrderNum);
             list = menuMapper.selectList(queryWrapper);
         } else {
-            list = menuMapper.getMenuList(userInfo.getUserId());
+            list = menuMapper.getMenuList(userInfo.getId());
         }
         // 构建node列表
         List<TreeNode<String>> nodeList = CollUtil.newArrayList();
@@ -81,7 +81,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
             meta.put("isAffix", menu.getIsAffix().equals("0") ? true : false);
             meta.put("isKeepAlive", menu.getIsKeepAlive().equals("0") ? true : false);
             data.put("meta", meta);
-            nodeList.add(new TreeNode<>(String.valueOf(menu.getMenuId()), String.valueOf(menu.getParentId()), menu.getName(), null).setExtra(data));
+            nodeList.add(new TreeNode<>(menu.getId(), menu.getParentId(), menu.getName(), null).setExtra(data));
         });
         // 0表示最顶层的id是0
         List<Tree<String>> treeList = TreeUtil.build(nodeList, "0");
@@ -119,7 +119,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
             menus.stream().forEach(menu -> {
                 Map map = JSON.parseObject(JSON.toJSONString(menu), Map.class);
                 map.remove("parentId");
-                nodeList.add(new TreeNode<>(String.valueOf(menu.getMenuId()), String.valueOf(menu.getParentId()), null, null).setExtra(map));
+                nodeList.add(new TreeNode<>(menu.getId(), menu.getParentId(), null, null).setExtra(map));
             });
             // 0表示最顶层的id是0
             List<Tree<String>> treeList = TreeUtil.build(nodeList, "0");
@@ -147,8 +147,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
 
     @Override
     public Result deleteMenu(String ids) {
-        String[] split = ids.split(",");
-        List<Long> idList = Arrays.stream(split).map(s -> Long.parseLong(s.trim())).collect(Collectors.toList());
+        List<String> idList = Arrays.asList(ids.split(","));
         int i = menuMapper.deleteBatchIds(idList);
         return i > 0 ? Result.success() : Result.fail();
     }

@@ -13,7 +13,7 @@ import java.util.List;
  */
 public interface MenuMapper extends BaseMapper<Menu> {
 
-    List<Menu> getMenuList(Long loginId);
+    List<Menu> getMenuList(String loginId);
 
     List<Menu> getBtnPermsList(String loginId);
 

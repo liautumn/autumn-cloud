@@ -5,8 +5,8 @@
 <mapper namespace="com.autumn.menu.mapper.MenuMapper">
 
     <resultMap id="BaseResultMap" type="com.autumn.menu.entity.Menu">
-        <id property="menuId" column="menu_id" jdbcType="BIGINT"/>
-        <result property="parentId" column="parent_id" jdbcType="BIGINT"/>
+        <id property="id" column="id" jdbcType="VARCHAR"/>
+        <result property="parentId" column="parent_id" jdbcType="VARCHAR"/>
         <result property="path" column="path" jdbcType="VARCHAR"/>
         <result property="name" column="name" jdbcType="VARCHAR"/>
         <result property="redirect" column="redirect" jdbcType="VARCHAR"/>
@@ -33,8 +33,18 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        menu_id
-        ,parent_id,path,
+        id,parent_id,path,
+        name,redirect,component,
+        icon,title,active_menu,is_link,
+        is_hide,is_full,is_affix,
+        is_keep_alive,order_num,menu_type,
+        status,perms,query,
+        remark,del_flag,create_by,
+        create_time,update_by,update_time
+    </sql>
+
+    <sql id="getMenuList_Column_List">
+        menu.id,parent_id,path,
         name,redirect,component,
         icon,title,active_menu,is_link,
         is_hide,is_full,is_affix,
@@ -46,7 +56,7 @@
 
     <select id="getMenuList" resultMap="BaseResultMap">
         select
-        <include refid="Base_Column_List"></include>
+        <include refid="getMenuList_Column_List"/>
         from sys_menu menu
         inner join
         sys_role_menu rmenu

@@ -20,8 +20,8 @@ public class Post implements Serializable {
     /**
      * 岗位ID
      */
-    @TableId(value = "post_id", type = IdType.AUTO)
-    private Long postId;
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
+    private String id;
 
     /**
      * 岗位编码

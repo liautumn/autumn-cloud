@@ -25,14 +25,14 @@ public class User implements Serializable {
     /**
      * 用户ID
      */
-    @TableId(value = "user_id", type = IdType.AUTO)
-    private Long userId;
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
+    private String id;
 
     /**
      * 部门ID
      */
     @TableField(value = "dept_id")
-    private Long deptId;
+    private String deptId;
 
     /**
      * 用户账号
