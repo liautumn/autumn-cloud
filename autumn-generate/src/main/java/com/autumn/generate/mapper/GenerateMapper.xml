@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.autumn.generate.mapper.GenerateMapper">
+
+
+    <select id="selectColumnsByTableName" resultType="com.autumn.generate.entity.Columns">
+        select column_name    columnName,
+               CASE
+                   WHEN data_type = 'char' THEN 'String'
+                   WHEN data_type = 'varchar' THEN 'String'
+                   WHEN data_type = 'tinyint' THEN 'Byte'
+                   WHEN data_type = 'smallint' THEN 'Short'
+                   WHEN data_type = 'int' THEN 'Integer'
+                   WHEN data_type = 'float' THEN 'Float'
+                   WHEN data_type = 'bigint' THEN 'Long'
+                   WHEN data_type = 'double' THEN 'Double'
+                   WHEN data_type = 'bit' THEN 'Boolean'
+                   WHEN data_type = 'text' THEN 'String'
+                   WHEN data_type = 'longtext' THEN 'String'
+                   WHEN data_type = 'date' THEN 'Date'
+                   WHEN data_type = 'time' THEN 'Date'
+                   WHEN data_type = 'datetime' THEN 'LocalDateTime'
+                   ELSE 'String'
+                   END        dataType,
+               CASE
+                   WHEN data_type = 'char' THEN 'CHAR'
+                   WHEN data_type = 'varchar' THEN 'VARCHAR'
+                   WHEN data_type = 'tinyint' THEN 'TINYINT'
+                   WHEN data_type = 'smallint' THEN 'SMALLINT'
+                   WHEN data_type = 'int' THEN 'INTEGER'
+                   WHEN data_type = 'float' THEN 'FLOAT'
+                   WHEN data_type = 'bigint' THEN 'BIGINT'
+                   WHEN data_type = 'double' THEN 'DOUBLE'
+                   WHEN data_type = 'bit' THEN 'BOOLEAN'
+                   WHEN data_type = 'text' THEN 'VARCHAR'
+                   WHEN data_type = 'longtext' THEN 'LONGVARCHAR'
+                   WHEN data_type = 'date' THEN 'DATE'
+                   WHEN data_type = 'time' THEN 'TIME'
+                   WHEN data_type = 'datetime' THEN 'TIMESTAMP'
+                   ELSE 'String'
+                   END        jdbcType,
+               column_comment columnComment
+        from information_schema.columns
+        where table_schema = (select database())
+          and table_name = #{tableName}
+    </select>
+
+    <select id="selectTablesByTableName" resultType="com.autumn.generate.entity.Tables">
+        select TABLE_NAME    tableName,
+               TABLE_COMMENT tableComment
+        from information_schema.TABLES
+        where TABLE_NAME = #{tableName}
+          and TABLE_SCHEMA = #{databaseName}
+    </select>
+
+</mapper>

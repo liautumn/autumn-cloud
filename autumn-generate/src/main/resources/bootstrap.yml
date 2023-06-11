@@ -1,17 +1,13 @@
 server:
-  port: 8082
+  port: 8083
   servlet:
-    context-path: /system
+    context-path: /generate
 spring:
   application:
-    name: autumn-system
+    name: autumn-generate
   profiles:
     # 配置环境
-    active: '@profile.name@'
-  servlet:
-    multipart:
-    max-file-size: 100MB
-    max-request-size: 100MB
+    active: dev
   cloud:
     nacos:
       # nacos服务地址
@@ -57,12 +53,3 @@ spring:
           - data-id: global-config.yml
             group: DEFAULT_GROUP
             refresh: true
-minio:
-  #Minio服务所在地址
-  endpoint: http://127.0.0.1:9000
-  #访问的key
-  accessKey: R8fI3CYwoJVXQ9TAGkPb
-  #访问的秘钥
-  secretKey: nCalwY7rgJRLRGA5gKyyjyKY9jJNryGyOqWgEnf8
-  #存储桶名称
-  bucketName: files
