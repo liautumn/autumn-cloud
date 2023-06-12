@@ -15,6 +15,11 @@ import java.time.LocalDateTime;
 public class DictTypeSelectDto extends Page implements Serializable {
 
     /**
+     * ID
+     */
+    private String id;
+
+    /**
      * 字典名称
      */
     private String dictName;

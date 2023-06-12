@@ -15,11 +15,9 @@ import com.autumn.springConfig.StaticMethodGetBean;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import io.minio.*;
 import io.minio.messages.Bucket;
-import org.springframework.util.FastByteArrayOutputStream;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
