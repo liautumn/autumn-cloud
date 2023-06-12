@@ -18,7 +18,7 @@ public class UploadController {
 
     @GetMapping("/view")
     @SaIgnore
-    public Result preview(@RequestParam("filesIds") String filesIds) {
+    public Result view(@RequestParam("filesIds") String filesIds) {
         return Result.successData(UploadUtil.filesIdsTofiles(filesIds));
     }
 
@@ -31,8 +31,8 @@ public class UploadController {
 
     @GetMapping("/download")
     @SaIgnore
-    public Result download(@RequestParam("filesId") String filesId, HttpServletResponse res) {
-        UploadUtil.download(filesId, res);
+    public Result download(@RequestParam("filesId") String filesId, HttpServletResponse response) {
+        UploadUtil.download(filesId, response);
         return Result.success();
     }
 

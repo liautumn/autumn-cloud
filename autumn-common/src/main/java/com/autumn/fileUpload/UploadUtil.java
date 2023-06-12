@@ -21,6 +21,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URLEncoder;
 import java.util.*;
 
 /**
@@ -234,40 +238,63 @@ public class UploadUtil {
         return null;
     }
 
+
     /**
-     * 文件下载
+     * 下载文件
      *
-     * @param fileId 文件名称
-     * @return Boolean
+     * @param fileId
+     * @param response
      */
-    public static void download(String fileId, HttpServletResponse res) {
-        MinioConfig minioConfig = StaticMethodGetBean.getBean(MinioConfig.class);
+    public static void download(String fileId, HttpServletResponse response) {
         MinioClient minioClient = StaticMethodGetBean.getBean(MinioClient.class);
-        //查询
-        FilesMapper filesMapper = StaticMethodGetBean.getBean(FilesMapper.class);
-        Files files = filesMapper.selectById(fileId);
-        GetObjectArgs objectArgs = GetObjectArgs.builder().bucket(minioConfig.getBucketName())
-                .object(fileId).build();
-        try (GetObjectResponse response = minioClient.getObject(objectArgs)) {
-            byte[] buf = new byte[1024];
-            int len;
-            try (FastByteArrayOutputStream os = new FastByteArrayOutputStream()) {
-                while ((len = response.read(buf)) != -1) {
-                    os.write(buf, 0, len);
-                }
-                os.flush();
-                byte[] bytes = os.toByteArray();
-                res.setCharacterEncoding("utf-8");
-                // 设置强制下载不打开
-                // res.setContentType("application/force-download");
-                res.addHeader("Content-Disposition", "attachment;fileName=" + files.getFileNameBefore());
-                try (ServletOutputStream stream = res.getOutputStream()) {
-                    stream.write(bytes);
-                    stream.flush();
-                }
+        MinioConfig minioConfig = StaticMethodGetBean.getBean(MinioConfig.class);
+        InputStream inputStream = null;
+        OutputStream outputStream = null;
+        try {
+            if (StringUtils.isEmpty(fileId)) {
+                response.setHeader("Content-type", "text/html;charset=UTF-8");
+                String data = "文件下载失败";
+                OutputStream ps = response.getOutputStream();
+                ps.write(data.getBytes("UTF-8"));
+                return;
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+            //查询
+            FilesMapper filesMapper = StaticMethodGetBean.getBean(FilesMapper.class);
+            Files files = filesMapper.selectById(fileId);
+            outputStream = response.getOutputStream();
+            // 获取文件对象
+            inputStream = minioClient.getObject(GetObjectArgs.builder().bucket("files").object(files.getFileNameAfter()).build());
+            byte buf[] = new byte[1024];
+            int length = 0;
+            response.reset();
+            response.setHeader("Content-Disposition", "attachment;filename=" +
+                    URLEncoder.encode(files.getFileNameBefore().substring(files.getFileNameBefore().lastIndexOf("/") + 1), "UTF-8"));
+            response.setContentType("application/octet-stream");
+            response.setCharacterEncoding("UTF-8");
+            // 输出文件
+            while ((length = inputStream.read(buf)) > 0) {
+                outputStream.write(buf, 0, length);
+            }
+            System.out.println("下载成功");
+            inputStream.close();
+        } catch (Throwable ex) {
+            response.setHeader("Content-type", "text/html;charset=UTF-8");
+            String data = "文件下载失败";
+            try {
+                OutputStream ps = response.getOutputStream();
+                ps.write(data.getBytes("UTF-8"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } finally {
+            try {
+                outputStream.close();
+                if (inputStream != null) {
+                    inputStream.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 

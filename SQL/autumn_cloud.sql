@@ -23,22 +23,22 @@ DROP TABLE IF EXISTS `sys_dept`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sys_dept` (
-  `id` varchar(50) NOT NULL COMMENT '部门id',
+  `id` varchar(50) CHARACTER SET utf8mb4 NOT NULL COMMENT '部门id',
   `parent_id` bigint(20) DEFAULT '0' COMMENT '父部门id',
-  `ancestors` varchar(50) DEFAULT '' COMMENT '祖级列表',
-  `dept_name` varchar(30) DEFAULT '' COMMENT '部门名称',
+  `ancestors` varchar(50) CHARACTER SET utf8mb4 DEFAULT '' COMMENT '祖级列表',
+  `dept_name` varchar(30) CHARACTER SET utf8mb4 DEFAULT '' COMMENT '部门名称',
   `order_num` int(11) DEFAULT '0' COMMENT '显示顺序',
-  `leader` varchar(20) DEFAULT NULL COMMENT '负责人',
-  `phone` varchar(11) DEFAULT NULL COMMENT '联系电话',
-  `email` varchar(50) DEFAULT NULL COMMENT '邮箱',
-  `status` char(1) DEFAULT '0' COMMENT '是否停用（0是 1否）',
-  `del_flag` char(1) DEFAULT '1' COMMENT '删除标志（0代表删除 1代表存在）',
-  `create_by` varchar(64) DEFAULT '' COMMENT '创建者',
+  `leader` varchar(20) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '负责人',
+  `phone` varchar(11) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '联系电话',
+  `email` varchar(50) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '邮箱',
+  `status` char(1) CHARACTER SET utf8mb4 DEFAULT '0' COMMENT '是否停用（0是 1否）',
+  `del_flag` char(1) CHARACTER SET utf8mb4 DEFAULT '1' COMMENT '删除标志（0代表删除 1代表存在）',
+  `create_by` varchar(64) CHARACTER SET utf8mb4 DEFAULT '' COMMENT '创建者',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `update_by` varchar(64) DEFAULT '' COMMENT '更新者',
+  `update_by` varchar(64) CHARACTER SET utf8mb4 DEFAULT '' COMMENT '更新者',
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='部门表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='部门表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -59,17 +59,17 @@ DROP TABLE IF EXISTS `sys_dict_type`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sys_dict_type` (
-  `id` varchar(50) NOT NULL COMMENT '字典类型表ID',
-  `dict_name` varchar(100) DEFAULT NULL COMMENT '字典名称',
-  `dict_type` varchar(100) DEFAULT NULL COMMENT '字典类型',
-  `status` char(1) DEFAULT '1' COMMENT '是否停用（0是 1否）',
-  `remark` text COMMENT '备注',
-  `del_flag` char(1) DEFAULT '1' COMMENT '删除标志（0代表删除 1代表存在）',
-  `create_by` varchar(64) DEFAULT '' COMMENT '创建者',
+  `id` varchar(50) CHARACTER SET utf8mb4 NOT NULL COMMENT '字典类型表ID',
+  `dict_name` varchar(100) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '字典名称',
+  `dict_type` varchar(100) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '字典类型',
+  `status` char(1) CHARACTER SET utf8mb4 DEFAULT '1' COMMENT '是否停用（0是 1否）',
+  `remark` text CHARACTER SET utf8mb4 COMMENT '备注',
+  `del_flag` char(1) CHARACTER SET utf8mb4 DEFAULT '1' COMMENT '删除标志（0代表删除 1代表存在）',
+  `create_by` varchar(64) CHARACTER SET utf8mb4 DEFAULT '' COMMENT '创建者',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `update_by` varchar(64) DEFAULT '' COMMENT '修改者',
+  `update_by` varchar(64) CHARACTER SET utf8mb4 DEFAULT '' COMMENT '修改者',
   `update_time` datetime DEFAULT NULL COMMENT '修改时间'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='字典类型表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='字典类型表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -83,6 +83,38 @@ INSERT INTO `sys_dict_type` VALUES ('1667436134579306497','是否','whether','1'
 UNLOCK TABLES;
 
 --
+-- Table structure for table `sys_files`
+--
+
+DROP TABLE IF EXISTS `sys_files`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sys_files` (
+  `id` varchar(50) CHARACTER SET utf8mb4 NOT NULL COMMENT 'ID',
+  `file_name_before` text CHARACTER SET utf8mb4 COMMENT '上传前文件名称',
+  `file_name_after` text CHARACTER SET utf8mb4 COMMENT '上传后文件名称',
+  `file_size` varchar(50) CHARACTER SET utf8mb4 DEFAULT '' COMMENT '文件大小',
+  `upload_by` varchar(64) CHARACTER SET utf8mb4 DEFAULT '' COMMENT '上传者',
+  `del_flag` char(1) CHARACTER SET utf8mb4 DEFAULT '1' COMMENT '删除标志（0代表删除 1代表存在）',
+  `create_by` varchar(64) CHARACTER SET utf8mb4 DEFAULT '' COMMENT '创建者',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(64) CHARACTER SET utf8mb4 DEFAULT '' COMMENT '更新者',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='文件上传记录表';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sys_files`
+--
+
+LOCK TABLES `sys_files` WRITE;
+/*!40000 ALTER TABLE `sys_files` DISABLE KEYS */;
+INSERT INTO `sys_files` VALUES ('1668084718983237633','微信图片_20230508153714.jpg','20230612103603-12c64c9f-ca16-493e-aff5-be3dad4c76ac.jpg','32999','','1','admin','2023-06-12 10:36:03','',NULL),('1668087615028514817','微信图片_20230508153714.jpg','20230612104733-14eac28a-04b4-4eda-af0c-2d9639e237dd.jpg','32999','','1','admin','2023-06-12 10:47:34','',NULL),('1668087884785176577','微信图片_20230508153714.jpg','20230612104837-fe6b605e-65c1-4e89-9813-fa2462df5330.jpg','32999','','1','admin','2023-06-12 10:48:38','',NULL),('1668089565182742530','微信图片_20230508153714.jpg','20230612105517-10657c6e-eb84-47a7-ad51-d20ceeb1e9ab.jpg','32999','','1','admin','2023-06-12 10:55:19','',NULL),('1668193515395375105','微信图片_20230508153714.jpg','20230612174822-a2905462-48ab-4f4e-9667-591e71f0d2c2.jpg','32999','','1','admin','2023-06-12 17:48:22','',NULL);
+/*!40000 ALTER TABLE `sys_files` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `sys_menu`
 --
 
@@ -90,33 +122,33 @@ DROP TABLE IF EXISTS `sys_menu`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sys_menu` (
-  `id` varchar(50) NOT NULL COMMENT '菜单ID',
+  `id` varchar(50) CHARACTER SET utf8mb4 NOT NULL COMMENT '菜单ID',
   `parent_id` bigint(20) DEFAULT '0' COMMENT '父菜单ID',
-  `path` varchar(200) DEFAULT '' COMMENT '路由地址',
-  `name` varchar(50) DEFAULT '' COMMENT '菜单 name',
-  `redirect` varchar(255) DEFAULT NULL COMMENT '重定向地址',
-  `component` varchar(255) DEFAULT NULL COMMENT '组件路径',
-  `icon` varchar(100) DEFAULT '#' COMMENT '菜单图标',
-  `title` varchar(50) NOT NULL COMMENT '菜单名称',
-  `active_menu` varchar(200) DEFAULT '' COMMENT '活动菜单',
-  `is_link` char(1) DEFAULT '1' COMMENT '是否为外链（0是 1否）',
-  `is_hide` char(1) DEFAULT '1' COMMENT '是否隐藏（0是 1否）',
-  `is_full` char(1) DEFAULT '1' COMMENT '是否全屏显示（0是 1否）',
-  `is_affix` char(1) DEFAULT '1' COMMENT 'affix（0是 1否）',
-  `is_keep_alive` char(1) DEFAULT '1' COMMENT '是否缓存（0是 1否）',
+  `path` varchar(200) CHARACTER SET utf8mb4 DEFAULT '' COMMENT '路由地址',
+  `name` varchar(50) CHARACTER SET utf8mb4 DEFAULT '' COMMENT '菜单 name',
+  `redirect` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '重定向地址',
+  `component` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '组件路径',
+  `icon` varchar(100) CHARACTER SET utf8mb4 DEFAULT '#' COMMENT '菜单图标',
+  `title` varchar(50) CHARACTER SET utf8mb4 NOT NULL COMMENT '菜单名称',
+  `active_menu` varchar(200) CHARACTER SET utf8mb4 DEFAULT '' COMMENT '活动菜单',
+  `is_link` char(1) CHARACTER SET utf8mb4 DEFAULT '1' COMMENT '是否为外链（0是 1否）',
+  `is_hide` char(1) CHARACTER SET utf8mb4 DEFAULT '1' COMMENT '是否隐藏（0是 1否）',
+  `is_full` char(1) CHARACTER SET utf8mb4 DEFAULT '1' COMMENT '是否全屏显示（0是 1否）',
+  `is_affix` char(1) CHARACTER SET utf8mb4 DEFAULT '1' COMMENT 'affix（0是 1否）',
+  `is_keep_alive` char(1) CHARACTER SET utf8mb4 DEFAULT '1' COMMENT '是否缓存（0是 1否）',
   `order_num` int(11) DEFAULT '0' COMMENT '显示顺序',
-  `menu_type` char(1) DEFAULT '' COMMENT '菜单类型（0目录 1菜单 2按钮）',
-  `status` char(1) DEFAULT '1' COMMENT '是否停用（0是 1否）',
-  `perms` varchar(100) DEFAULT NULL COMMENT '权限标识',
-  `query` varchar(255) DEFAULT NULL COMMENT '路由参数',
-  `remark` varchar(500) DEFAULT '' COMMENT '备注',
-  `del_flag` char(1) DEFAULT '1' COMMENT '删除标志（0代表删除 1代表存在）',
-  `create_by` varchar(64) DEFAULT '' COMMENT '创建者',
+  `menu_type` char(1) CHARACTER SET utf8mb4 DEFAULT '' COMMENT '菜单类型（0目录 1菜单 2按钮）',
+  `status` char(1) CHARACTER SET utf8mb4 DEFAULT '1' COMMENT '是否停用（0是 1否）',
+  `perms` varchar(100) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '权限标识',
+  `query` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '路由参数',
+  `remark` varchar(500) CHARACTER SET utf8mb4 DEFAULT '' COMMENT '备注',
+  `del_flag` char(1) CHARACTER SET utf8mb4 DEFAULT '1' COMMENT '删除标志（0代表删除 1代表存在）',
+  `create_by` varchar(64) CHARACTER SET utf8mb4 DEFAULT '' COMMENT '创建者',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `update_by` varchar(64) DEFAULT '' COMMENT '更新者',
+  `update_by` varchar(64) CHARACTER SET utf8mb4 DEFAULT '' COMMENT '更新者',
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='菜单权限表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='菜单权限表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -137,19 +169,19 @@ DROP TABLE IF EXISTS `sys_post`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sys_post` (
-  `id` varchar(50) NOT NULL COMMENT '岗位ID',
-  `post_code` varchar(64) NOT NULL COMMENT '岗位编码',
-  `post_name` varchar(50) NOT NULL COMMENT '岗位名称',
+  `id` varchar(50) CHARACTER SET utf8mb4 NOT NULL COMMENT '岗位ID',
+  `post_code` varchar(64) CHARACTER SET utf8mb4 NOT NULL COMMENT '岗位编码',
+  `post_name` varchar(50) CHARACTER SET utf8mb4 NOT NULL COMMENT '岗位名称',
   `post_sort` int(11) NOT NULL COMMENT '显示顺序',
-  `remark` varchar(500) DEFAULT NULL COMMENT '备注',
-  `status` char(1) NOT NULL DEFAULT '1' COMMENT '是否停用（0是 1否）',
-  `del_flag` char(1) DEFAULT '1' COMMENT '删除标志（0代表删除 1代表存在）',
-  `create_by` varchar(64) DEFAULT '' COMMENT '创建者',
+  `remark` varchar(500) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '备注',
+  `status` char(1) CHARACTER SET utf8mb4 NOT NULL DEFAULT '1' COMMENT '是否停用（0是 1否）',
+  `del_flag` char(1) CHARACTER SET utf8mb4 DEFAULT '1' COMMENT '删除标志（0代表删除 1代表存在）',
+  `create_by` varchar(64) CHARACTER SET utf8mb4 DEFAULT '' COMMENT '创建者',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `update_by` varchar(64) DEFAULT '' COMMENT '更新者',
+  `update_by` varchar(64) CHARACTER SET utf8mb4 DEFAULT '' COMMENT '更新者',
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='岗位信息表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='岗位信息表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -170,22 +202,22 @@ DROP TABLE IF EXISTS `sys_role`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sys_role` (
-  `id` varchar(50) NOT NULL COMMENT '角色ID',
-  `role_name` varchar(30) NOT NULL COMMENT '角色名称',
-  `role_key` varchar(100) NOT NULL COMMENT '角色权限字符串',
+  `id` varchar(50) CHARACTER SET utf8mb4 NOT NULL COMMENT '角色ID',
+  `role_name` varchar(30) CHARACTER SET utf8mb4 NOT NULL COMMENT '角色名称',
+  `role_key` varchar(100) CHARACTER SET utf8mb4 NOT NULL COMMENT '角色权限字符串',
   `role_sort` int(11) NOT NULL COMMENT '显示顺序',
-  `data_scope` char(1) DEFAULT '1' COMMENT '数据范围（1：全部数据权限 2：自定数据权限 3：本部门数据权限 4：本部门及以下数据权限）',
-  `menu_check_strictly` char(1) DEFAULT '1' COMMENT '菜单树选择项是否关联显示（0是 1否）',
-  `dept_check_strictly` char(1) DEFAULT '1' COMMENT '部门树选择项是否关联显示（0是 1否）',
-  `remark` varchar(500) DEFAULT NULL COMMENT '备注',
-  `status` char(1) NOT NULL DEFAULT '1' COMMENT '是否停用（0是 1否）',
-  `del_flag` char(1) DEFAULT '1' COMMENT '删除标志（0代表删除 1代表存在）',
-  `create_by` varchar(64) DEFAULT '' COMMENT '创建者',
+  `data_scope` char(1) CHARACTER SET utf8mb4 DEFAULT '1' COMMENT '数据范围（1：全部数据权限 2：自定数据权限 3：本部门数据权限 4：本部门及以下数据权限）',
+  `menu_check_strictly` char(1) CHARACTER SET utf8mb4 DEFAULT '1' COMMENT '菜单树选择项是否关联显示（0是 1否）',
+  `dept_check_strictly` char(1) CHARACTER SET utf8mb4 DEFAULT '1' COMMENT '部门树选择项是否关联显示（0是 1否）',
+  `remark` varchar(500) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '备注',
+  `status` char(1) CHARACTER SET utf8mb4 NOT NULL DEFAULT '1' COMMENT '是否停用（0是 1否）',
+  `del_flag` char(1) CHARACTER SET utf8mb4 DEFAULT '1' COMMENT '删除标志（0代表删除 1代表存在）',
+  `create_by` varchar(64) CHARACTER SET utf8mb4 DEFAULT '' COMMENT '创建者',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `update_by` varchar(64) DEFAULT '' COMMENT '更新者',
+  `update_by` varchar(64) CHARACTER SET utf8mb4 DEFAULT '' COMMENT '更新者',
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='角色信息表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='角色信息表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -205,16 +237,16 @@ DROP TABLE IF EXISTS `sys_role_dept`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sys_role_dept` (
-  `id` varchar(50) NOT NULL COMMENT '角色部门关联表ID',
-  `role_id` varchar(50) NOT NULL COMMENT '角色ID',
-  `dept_id` varchar(50) NOT NULL COMMENT '部门ID',
-  `del_flag` char(1) DEFAULT '1' COMMENT '删除标志（0代表删除 1代表存在）',
-  `create_by` varchar(64) DEFAULT '' COMMENT '创建者',
+  `id` varchar(50) CHARACTER SET utf8mb4 NOT NULL COMMENT '角色部门关联表ID',
+  `role_id` varchar(50) CHARACTER SET utf8mb4 NOT NULL COMMENT '角色ID',
+  `dept_id` varchar(50) CHARACTER SET utf8mb4 NOT NULL COMMENT '部门ID',
+  `del_flag` char(1) CHARACTER SET utf8mb4 DEFAULT '1' COMMENT '删除标志（0代表删除 1代表存在）',
+  `create_by` varchar(64) CHARACTER SET utf8mb4 DEFAULT '' COMMENT '创建者',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `update_by` varchar(64) DEFAULT '' COMMENT '更新者',
+  `update_by` varchar(64) CHARACTER SET utf8mb4 DEFAULT '' COMMENT '更新者',
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='角色和部门关联表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='角色和部门关联表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -234,16 +266,16 @@ DROP TABLE IF EXISTS `sys_role_menu`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sys_role_menu` (
-  `id` varchar(50) NOT NULL COMMENT '角色菜单关联表ID',
-  `role_id` varchar(50) NOT NULL COMMENT '角色ID',
-  `menu_id` varchar(50) NOT NULL COMMENT '菜单ID',
-  `del_flag` char(1) DEFAULT '1' COMMENT '删除标志（0代表删除 1代表存在）',
-  `create_by` varchar(64) DEFAULT '' COMMENT '创建者',
+  `id` varchar(50) CHARACTER SET utf8mb4 NOT NULL COMMENT '角色菜单关联表ID',
+  `role_id` varchar(50) CHARACTER SET utf8mb4 NOT NULL COMMENT '角色ID',
+  `menu_id` varchar(50) CHARACTER SET utf8mb4 NOT NULL COMMENT '菜单ID',
+  `del_flag` char(1) CHARACTER SET utf8mb4 DEFAULT '1' COMMENT '删除标志（0代表删除 1代表存在）',
+  `create_by` varchar(64) CHARACTER SET utf8mb4 DEFAULT '' COMMENT '创建者',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `update_by` varchar(64) DEFAULT '' COMMENT '更新者',
+  `update_by` varchar(64) CHARACTER SET utf8mb4 DEFAULT '' COMMENT '更新者',
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='角色和菜单关联表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='角色和菜单关联表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -263,27 +295,27 @@ DROP TABLE IF EXISTS `sys_user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sys_user` (
-  `id` varchar(50) NOT NULL COMMENT '用户ID',
-  `dept_id` varchar(50) DEFAULT NULL COMMENT '部门ID',
-  `user_name` varchar(30) NOT NULL COMMENT '用户账号',
-  `nick_name` varchar(30) NOT NULL COMMENT '用户昵称',
-  `user_type` varchar(2) DEFAULT '00' COMMENT '用户类型（00系统用户）',
-  `email` varchar(50) DEFAULT '' COMMENT '用户邮箱',
-  `phonenumber` varchar(11) DEFAULT '' COMMENT '手机号码',
-  `sex` char(1) DEFAULT '' COMMENT '用户性别（0男 1女 2未知）',
-  `avatar` varchar(100) DEFAULT '' COMMENT '头像地址',
-  `password` varchar(200) NOT NULL COMMENT '密码',
-  `remark` varchar(500) DEFAULT '' COMMENT '备注',
-  `status` char(1) DEFAULT '0' COMMENT '帐号状态（0正常 1停用）',
-  `login_ip` varchar(128) DEFAULT '' COMMENT '最后登录IP',
+  `id` varchar(50) CHARACTER SET utf8mb4 NOT NULL COMMENT '用户ID',
+  `dept_id` varchar(50) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '部门ID',
+  `user_name` varchar(30) CHARACTER SET utf8mb4 NOT NULL COMMENT '用户账号',
+  `nick_name` varchar(30) CHARACTER SET utf8mb4 NOT NULL COMMENT '用户昵称',
+  `user_type` varchar(2) CHARACTER SET utf8mb4 DEFAULT '00' COMMENT '用户类型（00系统用户）',
+  `email` varchar(50) CHARACTER SET utf8mb4 DEFAULT '' COMMENT '用户邮箱',
+  `phonenumber` varchar(11) CHARACTER SET utf8mb4 DEFAULT '' COMMENT '手机号码',
+  `sex` char(1) CHARACTER SET utf8mb4 DEFAULT '' COMMENT '用户性别（0男 1女 2未知）',
+  `avatar` varchar(100) CHARACTER SET utf8mb4 DEFAULT '' COMMENT '头像地址',
+  `password` varchar(200) CHARACTER SET utf8mb4 NOT NULL COMMENT '密码',
+  `remark` varchar(500) CHARACTER SET utf8mb4 DEFAULT '' COMMENT '备注',
+  `status` char(1) CHARACTER SET utf8mb4 DEFAULT '0' COMMENT '帐号状态（0正常 1停用）',
+  `login_ip` varchar(128) CHARACTER SET utf8mb4 DEFAULT '' COMMENT '最后登录IP',
   `login_date` datetime DEFAULT NULL COMMENT '最后登录时间',
-  `del_flag` char(1) DEFAULT '1' COMMENT '删除标志（0代表删除 1代表存在）',
-  `create_by` varchar(64) DEFAULT '' COMMENT '创建者',
+  `del_flag` char(1) CHARACTER SET utf8mb4 DEFAULT '1' COMMENT '删除标志（0代表删除 1代表存在）',
+  `create_by` varchar(64) CHARACTER SET utf8mb4 DEFAULT '' COMMENT '创建者',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `update_by` varchar(64) DEFAULT '' COMMENT '更新者',
+  `update_by` varchar(64) CHARACTER SET utf8mb4 DEFAULT '' COMMENT '更新者',
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户信息表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用户信息表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -307,13 +339,13 @@ CREATE TABLE `sys_user_post` (
   `user_role_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `user_id` bigint(20) NOT NULL COMMENT '用户ID',
   `post_id` bigint(20) NOT NULL COMMENT '岗位ID',
-  `del_flag` char(1) DEFAULT '1' COMMENT '删除标志（0代表删除 1代表存在）',
-  `create_by` varchar(64) DEFAULT '' COMMENT '创建者',
+  `del_flag` char(1) CHARACTER SET utf8mb4 DEFAULT '1' COMMENT '删除标志（0代表删除 1代表存在）',
+  `create_by` varchar(64) CHARACTER SET utf8mb4 DEFAULT '' COMMENT '创建者',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `update_by` varchar(64) DEFAULT '' COMMENT '更新者',
+  `update_by` varchar(64) CHARACTER SET utf8mb4 DEFAULT '' COMMENT '更新者',
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`user_role_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户与岗位关联表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用户与岗位关联表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -333,16 +365,16 @@ DROP TABLE IF EXISTS `sys_user_role`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sys_user_role` (
-  `id` varchar(50) NOT NULL COMMENT '用户角色关联表ID',
-  `user_id` varchar(50) NOT NULL COMMENT '用户ID',
-  `role_id` varchar(50) NOT NULL COMMENT '角色ID',
-  `del_flag` char(1) DEFAULT '1' COMMENT '删除标志（0代表删除 1代表存在）',
-  `create_by` varchar(64) DEFAULT '' COMMENT '创建者',
+  `id` varchar(50) CHARACTER SET utf8mb4 NOT NULL COMMENT '用户角色关联表ID',
+  `user_id` varchar(50) CHARACTER SET utf8mb4 NOT NULL COMMENT '用户ID',
+  `role_id` varchar(50) CHARACTER SET utf8mb4 NOT NULL COMMENT '角色ID',
+  `del_flag` char(1) CHARACTER SET utf8mb4 DEFAULT '1' COMMENT '删除标志（0代表删除 1代表存在）',
+  `create_by` varchar(64) CHARACTER SET utf8mb4 DEFAULT '' COMMENT '创建者',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `update_by` varchar(64) DEFAULT '' COMMENT '更新者',
+  `update_by` varchar(64) CHARACTER SET utf8mb4 DEFAULT '' COMMENT '更新者',
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户和角色关联表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用户和角色关联表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -363,4 +395,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-06-11 20:24:06
+-- Dump completed on 2023-06-12 18:12:34
