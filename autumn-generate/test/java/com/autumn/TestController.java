@@ -23,7 +23,7 @@ public class TestController {
     public void getTest() {
         GenDto genDto = new GenDto();
         genDto.setDatabaseName("autumn_cloud");
-        genDto.setTableName("sys_dict_type");
+        genDto.setTableName("sys_files");
         Result generate = generateService.generate(genDto);
         System.out.printf("=====", generate);
     }

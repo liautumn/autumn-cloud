@@ -1,16 +1,15 @@
-package com.autumn.minio;
+package com.autumn.fileUpload.minio;
 
 import cn.hutool.core.date.DateUtil;
-import com.alibaba.nacos.common.utils.UuidUtils;
+import cn.hutool.core.lang.UUID;
 import io.minio.*;
 import io.minio.http.Method;
 import io.minio.messages.Bucket;
 import io.minio.messages.Item;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.FastByteArrayOutputStream;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
@@ -22,9 +21,8 @@ import java.util.List;
 @Component
 @Slf4j
 public class MinioUtil {
-    @Autowired
+    @Resource
     private MinioConfig prop;
-
     @Resource
     private MinioClient minioClient;
 
@@ -100,10 +98,10 @@ public class MinioUtil {
      */
     public String upload(MultipartFile file) {
         String originalFilename = file.getOriginalFilename();
-        if (StringUtils.isBlank(originalFilename)) {
+        if (StringUtils.isEmpty(originalFilename)) {
             throw new RuntimeException();
         }
-        String fileName = UuidUtils.generateUuid() + originalFilename.substring(originalFilename.lastIndexOf("."));
+        String fileName = UUID.fastUUID() + originalFilename.substring(originalFilename.lastIndexOf("."));
         String objectName = DateUtil.format(DateUtil.date(), "yyyyMMddHHmmss") + "-" + fileName;
         try {
             PutObjectArgs objectArgs = PutObjectArgs.builder().bucket(prop.getBucketName()).object(objectName)

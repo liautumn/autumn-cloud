@@ -43,7 +43,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public Result insertUser(UserInsertDto userInsertDto) {
         LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<User>().eq(User::getUserName, userInsertDto.getUserName());
         if (userMapper.selectOne(queryWrapper) != null) {
-            return Result.fail("用户名已存在");
+            return Result.failMsg("用户名已存在");
         } else {
             String pass = SecureUtil.pbkdf2(userInsertDto.getPassword().toCharArray(), salt.getBytes());
             userInsertDto.setPassword(pass);
@@ -77,12 +77,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                 Map data = new HashMap();
                 data.put("userInfo", loginVo);
                 data.put("token", tokenInfo.tokenValue);
-                return Result.success(data);
+                return Result.successData(data);
             } else {
-                return Result.fail("密码错误");
+                return Result.failMsg("密码错误");
             }
         } else {
-            return Result.fail("用户不存在");
+            return Result.failMsg("用户不存在");
         }
     }
 }

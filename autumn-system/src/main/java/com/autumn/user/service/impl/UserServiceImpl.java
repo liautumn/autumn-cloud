@@ -31,13 +31,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public Result delete(String ids) {
         List<String> list = new ArrayList(Arrays.asList(ids.split(",")));
         int batchIds = userMapper.deleteBatchIds(list);
-        return Result.success(batchIds);
+        return Result.successData(batchIds);
     }
 
     @Override
     public Result select() {
         List<User> users = userMapper.selectList(null);
-        return Result.success(users);
+        return Result.successData(users);
     }
 
     @Override

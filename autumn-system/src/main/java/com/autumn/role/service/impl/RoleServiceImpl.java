@@ -35,7 +35,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
         //获取当前用户id
         String loginId = String.valueOf(StpUtil.getLoginId());
         if ("".equals(loginId)) {
-            return Result.fail("当前用户ID为空");
+            return Result.failMsg("当前用户ID为空");
         }
         List<Role> list = roleMapper.getRoleKeyList(loginId);
         List<String> collect = list.stream().map(role -> role.getRoleKey()).collect(Collectors.toList());
@@ -43,9 +43,9 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
         boolean b = redisUtil.set(loginId + "_roleList", JSON.toJSONString(collect));
         if (b) {
             stpInterface.getRoleList(loginId, null);
-            return Result.success(collect);
+            return Result.successData(collect);
         } else {
-            return Result.fail("获取角色权限失败");
+            return Result.failMsg("获取角色权限失败");
         }
     }
 }

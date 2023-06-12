@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="${rootPath}.${entityName?uncap_first}.mapper.DictTypeMapper">
+<mapper namespace="${rootPath}.${entityName?uncap_first}.mapper.${entityName}Mapper">
 
-    <resultMap id="BaseResultMap" type="${rootPath}.${entityName?uncap_first}.entity.DictType">
+    <resultMap id="BaseResultMap" type="${rootPath}.${entityName?uncap_first}.entity.${entityName}">
     <#list columns as value>
         <result property="${dashedToCamel(value.columnName)}" column="${value.columnName}" jdbcType="${value.jdbcType}"/>
     </#list>

@@ -54,7 +54,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         //获取当前用户id
         User userInfo = LoginInfoData.getUserInfo();
         if (userInfo == null) {
-            return Result.fail("当前用户为空");
+            return Result.failMsg("当前用户为空");
         }
         List<Menu> list = null;
         if (Dictionary.adminFlag.equals(userInfo.getUserType())) {
@@ -85,7 +85,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         });
         // 0表示最顶层的id是0
         List<Tree<String>> treeList = TreeUtil.build(nodeList, "0");
-        return Result.success(treeList);
+        return Result.successData(treeList);
     }
 
     @Override
@@ -93,7 +93,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         //获取当前用户id
         String loginId = String.valueOf(StpUtil.getLoginId());
         if ("".equals(loginId)) {
-            return Result.fail("当前用户ID为空");
+            return Result.failMsg("当前用户ID为空");
         }
         List<Menu> list = menuMapper.getBtnPermsList(loginId);
         List<String> collect = list.stream().map(menu -> menu.getPerms()).collect(Collectors.toList());
@@ -101,9 +101,9 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         boolean b = redisUtil.set(loginId + "_permissionList", JSON.toJSONString(collect));
         if (b) {
             stpInterface.getRoleList(loginId, null);
-            return Result.success(collect);
+            return Result.successData(collect);
         } else {
-            return Result.fail("获取菜单按钮权限失败");
+            return Result.failMsg("获取菜单按钮权限失败");
         }
     }
 

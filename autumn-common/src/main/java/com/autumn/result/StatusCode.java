@@ -11,7 +11,7 @@ public enum StatusCode {
     ;
 
 
-    private int code;
+    private Integer code;
     private String msg;
 
     StatusCode(int code, String msg) {

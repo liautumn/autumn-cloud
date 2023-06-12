@@ -57,12 +57,3 @@ spring:
           - data-id: global-config.yml
             group: DEFAULT_GROUP
             refresh: true
-minio:
-  #Minio服务所在地址
-  endpoint: http://127.0.0.1:9000
-  #访问的key
-  accessKey: R8fI3CYwoJVXQ9TAGkPb
-  #访问的秘钥
-  secretKey: nCalwY7rgJRLRGA5gKyyjyKY9jJNryGyOqWgEnf8
-  #存储桶名称
-  bucketName: files

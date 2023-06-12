@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class Result {
 
-    private int code;
+    private Integer code;
     private String msg;
     private Object data;
 
@@ -19,11 +19,11 @@ public class Result {
         return new Result(StatusCode.SUCCESS.getCode(), StatusCode.SUCCESS.getMsg(), null);
     }
 
-    public static Result success(String msg) {
+    public static Result successMsg(String msg) {
         return new Result(StatusCode.SUCCESS.getCode(), msg, null);
     }
 
-    public static Result success(Object data) {
+    public static Result successData(Object data) {
         return new Result(StatusCode.SUCCESS.getCode(), StatusCode.SUCCESS.getMsg(), data);
     }
 
@@ -35,23 +35,23 @@ public class Result {
         return new Result(StatusCode.ERROR.getCode(), StatusCode.ERROR.getMsg(), null);
     }
 
-    public static Result fail(int code) {
+    public static Result failCode(int code) {
         return new Result(code, StatusCode.ERROR.getMsg(), null);
     }
 
-    public static Result fail(String msg) {
+    public static Result failMsg(String msg) {
         return new Result(StatusCode.ERROR.getCode(), msg, null);
     }
 
-    public static Result fail(Object data) {
+    public static Result failData(Object data) {
         return new Result(StatusCode.ERROR.getCode(), StatusCode.ERROR.getMsg(), data);
     }
 
-    public static Result fail(int code, String msg) {
+    public static Result failMsg(int code, String msg) {
         return new Result(code, msg, null);
     }
 
-    public static Result fail(int code, Object data) {
+    public static Result failData(int code, Object data) {
         return new Result(code, StatusCode.ERROR.getMsg(), data);
     }
 

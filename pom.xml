@@ -43,6 +43,7 @@
         <redisson.version>3.16.1</redisson.version>
         <pagehelper.version>1.4.6</pagehelper.version>
         <shardingsphere.version>5.3.1</shardingsphere.version>
+        <minio.version>8.2.1</minio.version>
         <autumn-core.version>1.0</autumn-core.version>
         <autumn-common.version>1.0</autumn-common.version>
         <autumn-api.version>1.0</autumn-api.version>
@@ -143,6 +144,12 @@
                 <groupId>org.apache.shardingsphere</groupId>
                 <artifactId>shardingsphere-jdbc-core</artifactId>
                 <version>${shardingsphere.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.minio</groupId>
+                <artifactId>minio</artifactId>
+                <version>${minio.version}</version>
             </dependency>
 
         </dependencies>
