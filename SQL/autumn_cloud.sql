@@ -52,6 +52,45 @@ INSERT INTO `sys_dept` VALUES ('100',0,'0','若依科技',0,'若依','1588888888
 UNLOCK TABLES;
 
 --
+-- Table structure for table `sys_dict_data`
+--
+
+DROP TABLE IF EXISTS `sys_dict_data`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sys_dict_data` (
+  `id` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '字典数据表ID',
+  `parent_id` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0' COMMENT '父节点ID',
+  `dict_type_id` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '字典类型表ID',
+  `dict_label` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '数据标签',
+  `dict_value` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '数据键值',
+  `dict_sort` int(11) DEFAULT NULL COMMENT '显示排序',
+  `dict_type` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '数据类型',
+  `css_class` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '样式属性',
+  `echo_class` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '回显样式',
+  `is_default` char(1) COLLATE utf8mb4_unicode_ci DEFAULT '1' COMMENT '是否默认（0是 1否）',
+  `status` char(1) COLLATE utf8mb4_unicode_ci DEFAULT '1' COMMENT '是否停用（0是 1否）',
+  `remark` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '备注',
+  `del_flag` char(1) COLLATE utf8mb4_unicode_ci DEFAULT '1' COMMENT '删除标志（0代表删除 1代表存在）',
+  `create_by` varchar(64) COLLATE utf8mb4_unicode_ci DEFAULT '' COMMENT '创建者',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(64) COLLATE utf8mb4_unicode_ci DEFAULT '' COMMENT '更新者',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='字典数据表';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sys_dict_data`
+--
+
+LOCK TABLES `sys_dict_data` WRITE;
+/*!40000 ALTER TABLE `sys_dict_data` DISABLE KEYS */;
+INSERT INTO `sys_dict_data` VALUES ('1668438545397800961','0','1667436790484566018','男','0',1,'sex','1','1','1','1','1','1','admin','2023-06-13 10:02:02','admin','2023-06-13 10:03:37'),('1668438662158835714','0','1667436790484566018','女','1',2,'sex','2','1','1','1','1','1','admin','2023-06-13 10:02:30','admin','2023-06-13 10:03:32'),('1668438753632411649','0','1667436134579306497','是','0',1,'whether','1','1','1','1','1','1','admin','2023-06-13 10:02:52','',NULL),('1668438845705773058','0','1667436134579306497','否','1',2,'whether','1','1','1','1','1','1','admin','2023-06-13 10:03:14','',NULL);
+/*!40000 ALTER TABLE `sys_dict_data` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `sys_dict_type`
 --
 
@@ -157,7 +196,7 @@ CREATE TABLE `sys_menu` (
 
 LOCK TABLES `sys_menu` WRITE;
 /*!40000 ALTER TABLE `sys_menu` DISABLE KEYS */;
-INSERT INTO `sys_menu` VALUES ('1',0,'/home/index','home',NULL,'/home/index','HomeFilled','首页','','1','1','1','1','0',1,'1','1',NULL,NULL,'','1','admin','2023-06-09 20:52:29','admin','2023-06-10 10:41:32'),('1667422148022546434',2,'/system/dictManage','dict',NULL,'/system/dictManage/dictList','Reading','字典管理','','1','1','1','1','1',2,'','1',NULL,NULL,'','1','admin','2023-06-10 14:43:14','admin','2023-06-10 14:43:30'),('2',0,'/system',NULL,NULL,NULL,'Tools','系统管理','','1','1','1','1','0',2,'0','1',NULL,NULL,'','1','admin','2023-06-09 20:52:29','admin','2023-06-10 10:43:31'),('3',2,'/system/menuMange','menuMange',NULL,'/system/menuMange/menuList','Menu','菜单管理','','1','1','1','1','0',1,'1','1',NULL,NULL,'','1','admin','2023-06-09 20:52:29','admin','2023-06-10 10:43:59');
+INSERT INTO `sys_menu` VALUES ('1',0,'/home/index','home',NULL,'/home/index','HomeFilled','首页','','1','1','1','1','0',1,'1','1',NULL,NULL,'','1','admin','2023-06-09 20:52:29','admin','2023-06-10 10:41:32'),('1667422148022546434',2,'/system/dictManage','dict',NULL,'/system/dictManage/dictList','Reading','字典管理','','1','1','1','1','1',2,'','1',NULL,NULL,'','1','admin','2023-06-10 14:43:14','admin','2023-06-10 14:43:30'),('1668556011188789249',2,'/system/dictManage/dictDataList','dictName','','/system/dictManage/dictDataList','List','字典数据','','1','1','1','1','1',0,'','1',NULL,'','','1','admin','2023-06-13 17:48:48','',NULL),('2',0,'/system',NULL,NULL,NULL,'Tools','系统管理','','1','1','1','1','0',2,'0','1',NULL,NULL,'','1','admin','2023-06-09 20:52:29','admin','2023-06-10 10:43:31'),('3',2,'/system/menuMange','menuMange',NULL,'/system/menuMange/menuList','Menu','菜单管理','','1','1','1','1','0',1,'1','1',NULL,NULL,'','1','admin','2023-06-09 20:52:29','admin','2023-06-10 10:43:59');
 /*!40000 ALTER TABLE `sys_menu` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -395,4 +434,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-06-12 18:12:34
+-- Dump completed on 2023-06-13 18:16:46
