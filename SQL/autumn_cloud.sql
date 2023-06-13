@@ -86,7 +86,7 @@ CREATE TABLE `sys_dict_data` (
 
 LOCK TABLES `sys_dict_data` WRITE;
 /*!40000 ALTER TABLE `sys_dict_data` DISABLE KEYS */;
-INSERT INTO `sys_dict_data` VALUES ('1668438545397800961','0','1667436790484566018','男','0',1,'sex','1','1','1','1','1','1','admin','2023-06-13 10:02:02','admin','2023-06-13 10:03:37'),('1668438662158835714','0','1667436790484566018','女','1',2,'sex','2','1','1','1','1','1','admin','2023-06-13 10:02:30','admin','2023-06-13 10:03:32'),('1668438753632411649','0','1667436134579306497','是','0',1,'whether','1','1','1','1','1','1','admin','2023-06-13 10:02:52','',NULL),('1668438845705773058','0','1667436134579306497','否','1',2,'whether','1','1','1','1','1','1','admin','2023-06-13 10:03:14','',NULL);
+INSERT INTO `sys_dict_data` VALUES ('1668438545397800961','0','1667436790484566018','男','0',1,'sex','1','1','1','1','1','1','admin','2023-06-13 10:02:02','admin','2023-06-13 10:03:37'),('1668438662158835714','0','1667436790484566018','女','1',2,'sex','2','1','1','1','1','1','admin','2023-06-13 10:02:30','admin','2023-06-13 10:03:32'),('1668438753632411649','0','1667436134579306497','是','0',1,'whether','1','1','1','1','1','1','admin','2023-06-13 10:02:52','',NULL),('1668438845705773058','0','1667436134579306497','否','1',2,'whether','1','1','1','1','1','1','admin','2023-06-13 10:03:14','',NULL),('1668604213654315009','0','1667436790484566018','未知','2',3,'sex','1','1','1','1','1','1','admin','2023-06-13 21:00:20','',NULL);
 /*!40000 ALTER TABLE `sys_dict_data` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -196,7 +196,7 @@ CREATE TABLE `sys_menu` (
 
 LOCK TABLES `sys_menu` WRITE;
 /*!40000 ALTER TABLE `sys_menu` DISABLE KEYS */;
-INSERT INTO `sys_menu` VALUES ('1',0,'/home/index','home',NULL,'/home/index','HomeFilled','首页','','1','1','1','1','0',1,'1','1',NULL,NULL,'','1','admin','2023-06-09 20:52:29','admin','2023-06-10 10:41:32'),('1667422148022546434',2,'/system/dictManage','dict',NULL,'/system/dictManage/dictList','Reading','字典管理','','1','1','1','1','1',2,'','1',NULL,NULL,'','1','admin','2023-06-10 14:43:14','admin','2023-06-10 14:43:30'),('1668556011188789249',2,'/system/dictManage/dictDataList','dictName','','/system/dictManage/dictDataList','List','字典数据','','1','1','1','1','1',0,'','1',NULL,'','','1','admin','2023-06-13 17:48:48','',NULL),('2',0,'/system',NULL,NULL,NULL,'Tools','系统管理','','1','1','1','1','0',2,'0','1',NULL,NULL,'','1','admin','2023-06-09 20:52:29','admin','2023-06-10 10:43:31'),('3',2,'/system/menuMange','menuMange',NULL,'/system/menuMange/menuList','Menu','菜单管理','','1','1','1','1','0',1,'1','1',NULL,NULL,'','1','admin','2023-06-09 20:52:29','admin','2023-06-10 10:43:59');
+INSERT INTO `sys_menu` VALUES ('1',0,'/home/index','home',NULL,'/home/index','HomeFilled','首页','','1','1','1','0','1',1,'1','1',NULL,NULL,'','1','admin','2023-06-09 20:52:29','admin','2023-06-13 21:32:11'),('1667422148022546434',2,'/system/dictManage','dict',NULL,'/system/dictManage/dictList','Reading','字典管理',NULL,'1','1','1','1','1',2,'1','1',NULL,NULL,'','1','admin','2023-06-10 14:43:14','admin','2023-06-13 22:03:20'),('1668556011188789249',1667422148022546434,'/system/dictDataManage','dictName',NULL,'/system/dictManage/dictDataList','List','字典数据','/system/dictManage','1','0','1','1','1',3,'1','1',NULL,NULL,'','1','admin','2023-06-13 17:48:48','admin','2023-06-13 22:44:12'),('1668607595978809345',0,'https://www.baidu.com','link','','','Lollipop','测试外链','','0','1','1','1','1',3,'1','1',NULL,NULL,'','1','admin','2023-06-13 21:13:47','admin','2023-06-13 22:38:57'),('2',0,'/system','system','/system/menuMange',NULL,'Tools','系统管理','','1','1','1','1','1',2,'0','1',NULL,NULL,'','1','admin','2023-06-09 20:52:29','admin','2023-06-13 22:02:33'),('3',2,'/system/menuMange','menuMange',NULL,'/system/menuMange/menuList','Menu','菜单管理','','1','1','1','1','1',1,'1','1',NULL,NULL,'','1','admin','2023-06-09 20:52:29','admin','2023-06-13 21:09:05');
 /*!40000 ALTER TABLE `sys_menu` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -434,4 +434,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-06-13 18:16:46
+-- Dump completed on 2023-06-13 22:46:01

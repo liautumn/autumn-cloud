@@ -39,8 +39,8 @@ public class DictDataServiceImpl extends ServiceImpl<DictDataMapper, DictData> i
     public Result selectDictData(DictDataSelectDto dictDataTypeSelectDto) {
         Page<DictData> page = PageHelper.startPage(dictDataTypeSelectDto.getPageNum(), dictDataTypeSelectDto.getPageSize());
         LambdaQueryWrapper<DictData> queryWrapper = new LambdaQueryWrapper<DictData>()
-                .eq(!StringUtils.isEmpty(dictDataTypeSelectDto.getDictTypeId()), DictData::getDictTypeId, dictDataTypeSelectDto.getDictTypeId())
-                .orderByDesc(DictData::getCreateTime);
+                .eq(DictData::getDictTypeId, dictDataTypeSelectDto.getDictTypeId())
+                .orderByAsc(DictData::getDictSort);
         List<DictData> dictDataTypeList = dictDataTypeMapper.selectList(queryWrapper);
         return ResData.setDataTotal(page, dictDataTypeList);
     }

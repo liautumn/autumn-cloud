@@ -57,8 +57,9 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
             return Result.failMsg("当前用户为空");
         }
         List<Menu> list = null;
-        if (Dictionary.adminFlag.equals(userInfo.getUserType())) {
+        if (Dictionary.ADMINFLAG.equals(userInfo.getUserType())) {
             LambdaQueryWrapper queryWrapper = new LambdaQueryWrapper<Menu>()
+                    .eq(Menu::getStatus, Dictionary.NO)
                     .orderByAsc(Menu::getOrderNum);
             list = menuMapper.selectList(queryWrapper);
         } else {
@@ -75,16 +76,16 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
             meta.put("icon", menu.getIcon());
             meta.put("title", menu.getTitle());
             meta.put("activeMenu", menu.getActiveMenu());
-            meta.put("isLink", menu.getIsLink().equals("0") ? true : false);
-            meta.put("isHide", menu.getIsHide().equals("0") ? true : false);
-            meta.put("isFull", menu.getIsFull().equals("0") ? true : false);
-            meta.put("isAffix", menu.getIsAffix().equals("0") ? true : false);
-            meta.put("isKeepAlive", menu.getIsKeepAlive().equals("0") ? true : false);
+            meta.put("isLink", menu.getIsLink().equals(Dictionary.YES) ? menu.getPath() : "");
+            meta.put("isHide", menu.getIsHide().equals(Dictionary.YES) ? true : false);
+            meta.put("isFull", menu.getIsFull().equals(Dictionary.YES) ? true : false);
+            meta.put("isAffix", menu.getIsAffix().equals(Dictionary.YES) ? true : false);
+            meta.put("isKeepAlive", menu.getIsKeepAlive().equals(Dictionary.YES) ? true : false);
             data.put("meta", meta);
             nodeList.add(new TreeNode<>(menu.getId(), menu.getParentId(), menu.getName(), null).setExtra(data));
         });
         // 0表示最顶层的id是0
-        List<Tree<String>> treeList = TreeUtil.build(nodeList, "0");
+        List<Tree<String>> treeList = TreeUtil.build(nodeList, Dictionary.ROOTID);
         return Result.successData(treeList);
     }
 
@@ -122,7 +123,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
                 nodeList.add(new TreeNode<>(menu.getId(), menu.getParentId(), null, null).setExtra(map));
             });
             // 0表示最顶层的id是0
-            List<Tree<String>> treeList = TreeUtil.build(nodeList, "0");
+            List<Tree<String>> treeList = TreeUtil.build(nodeList, Dictionary.YES);
             return ResData.setDataTotal(page, treeList);
         }else {
             return ResData.setDataTotal(page);
