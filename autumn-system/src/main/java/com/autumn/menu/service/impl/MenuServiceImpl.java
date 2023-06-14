@@ -8,6 +8,8 @@ import cn.hutool.core.lang.tree.TreeUtil;
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.fastjson2.JSON;
 import com.autumn.dictionary.Dictionary;
+import com.autumn.easyExcel.CustomRowHeightColWidthHandler;
+import com.autumn.easyExcel.RowHeightColWidthModel;
 import com.autumn.menu.entity.Menu;
 import com.autumn.menu.entity.MenuInsertDto;
 import com.autumn.menu.entity.MenuSelectDto;
@@ -158,7 +160,6 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     public void exportMenu(MenuSelectDto menuSelectDto, HttpServletResponse response) {
         List<Menu> menus = new ArrayList<>();
         if (!menuSelectDto.getTempFlag()) {
-            Page<Menu> page = PageHelper.startPage(menuSelectDto.getPageNum(), menuSelectDto.getPageSize());
             LambdaQueryWrapper<Menu> queryWrapper = new LambdaQueryWrapper<Menu>()
                     .orderByAsc(Menu::getOrderNum);
             menus = menuMapper.selectList(queryWrapper);
@@ -169,7 +170,22 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
             // 这里URLEncoder.encode可以防止中文乱码 当然和easyexcel没有关系
             String fileName = URLEncoder.encode("菜单列表", "UTF-8").replaceAll("\\+", "%20");
             response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + fileName + ".xlsx");
-            EasyExcel.write(response.getOutputStream(), Menu.class).sheet("菜单").doWrite(menus);
+
+            List<RowHeightColWidthModel> rowHeightColWidthList = new ArrayList<>();
+            String sheetName="菜单";
+            //设置行高
+//            rowHeightColWidthList.add(RowHeightColWidthModel.createRowHeightModel(sheetName, 0, 20f));
+            //隐藏行
+//            rowHeightColWidthList.add(RowHeightColWidthModel.createHideRowModel(sheetName, 2));
+            //设置列宽
+            rowHeightColWidthList.add(RowHeightColWidthModel.createColWidthModel(sheetName, 0, 20));
+            //隐藏列
+            rowHeightColWidthList.add(RowHeightColWidthModel.createHideColModel(sheetName, 0));
+
+            EasyExcel.write(response.getOutputStream(), Menu.class)
+                    .sheet("菜单")
+                    .registerWriteHandler(new CustomRowHeightColWidthHandler(rowHeightColWidthList))
+                    .doWrite(menus);
         } catch (Exception e) {
             e.getMessage();
         }
@@ -182,7 +198,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     public Result importMenu(MultipartFile file) {
         try {
             EasyExcel.read(file.getInputStream(), Menu.class, new MenuDataListener(menuService)).sheet("菜单").doRead();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.getMessage();
         }
         return Result.success();
