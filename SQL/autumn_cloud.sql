@@ -164,16 +164,16 @@ CREATE TABLE `sys_menu` (
   `id` varchar(50) CHARACTER SET utf8mb4 NOT NULL COMMENT '菜单ID',
   `parent_id` bigint(20) DEFAULT '0' COMMENT '父菜单ID',
   `path` varchar(200) CHARACTER SET utf8mb4 DEFAULT '' COMMENT '路由地址',
-  `name` varchar(50) CHARACTER SET utf8mb4 DEFAULT '' COMMENT '菜单 name',
+  `name` varchar(50) CHARACTER SET utf8mb4 DEFAULT '' COMMENT '路由 name (对应页面组件 name, 可用作 KeepAlive 缓存标识 && 按钮权限筛选)',
   `redirect` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '重定向地址',
   `component` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '组件路径',
   `icon` varchar(100) CHARACTER SET utf8mb4 DEFAULT '#' COMMENT '菜单图标',
   `title` varchar(50) CHARACTER SET utf8mb4 NOT NULL COMMENT '菜单名称',
-  `active_menu` varchar(200) CHARACTER SET utf8mb4 DEFAULT '' COMMENT '活动菜单',
+  `active_menu` varchar(200) CHARACTER SET utf8mb4 DEFAULT '' COMMENT '当前路由为详情页时，需要高亮的菜单',
   `is_link` char(1) CHARACTER SET utf8mb4 DEFAULT '1' COMMENT '是否为外链（0是 1否）',
   `is_hide` char(1) CHARACTER SET utf8mb4 DEFAULT '1' COMMENT '是否隐藏（0是 1否）',
   `is_full` char(1) CHARACTER SET utf8mb4 DEFAULT '1' COMMENT '是否全屏显示（0是 1否）',
-  `is_affix` char(1) CHARACTER SET utf8mb4 DEFAULT '1' COMMENT 'affix（0是 1否）',
+  `is_affix` char(1) CHARACTER SET utf8mb4 DEFAULT '1' COMMENT '是否固定页（0是 1否）',
   `is_keep_alive` char(1) CHARACTER SET utf8mb4 DEFAULT '1' COMMENT '是否缓存（0是 1否）',
   `order_num` int(11) DEFAULT '0' COMMENT '显示顺序',
   `menu_type` char(1) CHARACTER SET utf8mb4 DEFAULT '' COMMENT '菜单类型（0目录 1菜单 2按钮）',
@@ -196,7 +196,7 @@ CREATE TABLE `sys_menu` (
 
 LOCK TABLES `sys_menu` WRITE;
 /*!40000 ALTER TABLE `sys_menu` DISABLE KEYS */;
-INSERT INTO `sys_menu` VALUES ('1',0,'/home/index','home',NULL,'/home/index','HomeFilled','首页','','1','1','1','0','1',1,'1','1',NULL,NULL,'','1','admin','2023-06-09 20:52:29','admin','2023-06-13 21:32:11'),('1667422148022546434',2,'/system/dictManage','dict',NULL,'/system/dictManage/dictList','Reading','字典管理',NULL,'1','1','1','1','1',2,'1','1',NULL,NULL,'','1','admin','2023-06-10 14:43:14','admin','2023-06-13 22:03:20'),('1668556011188789249',1667422148022546434,'/system/dictDataManage','dictName',NULL,'/system/dictManage/dictDataList','List','字典数据','/system/dictManage','1','0','1','1','1',3,'1','1',NULL,NULL,'','1','admin','2023-06-13 17:48:48','admin','2023-06-13 22:44:12'),('1668607595978809345',0,'https://www.baidu.com','link','','','Lollipop','测试外链','','0','1','1','1','1',3,'1','1',NULL,NULL,'','1','admin','2023-06-13 21:13:47','admin','2023-06-13 22:38:57'),('2',0,'/system','system','/system/menuMange',NULL,'Tools','系统管理','','1','1','1','1','1',2,'0','1',NULL,NULL,'','1','admin','2023-06-09 20:52:29','admin','2023-06-13 22:02:33'),('3',2,'/system/menuMange','menuMange',NULL,'/system/menuMange/menuList','Menu','菜单管理','','1','1','1','1','1',1,'1','1',NULL,NULL,'','1','admin','2023-06-09 20:52:29','admin','2023-06-13 21:09:05');
+INSERT INTO `sys_menu` VALUES ('1',0,'/home/index','home',NULL,'/home/index','HomeFilled','首页','','1','1','1','0','1',1,'1','1',NULL,NULL,'','1','admin','2023-06-09 20:52:29','admin','2023-06-13 21:32:11'),('1667422148022546434',2,'/system/dictManage','dict',NULL,'/system/dictManage/dictList','Reading','字典管理',NULL,'1','1','1','1','1',2,'1','1',NULL,NULL,'','1','admin','2023-06-10 14:43:14','admin','2023-06-13 22:03:20'),('1668556011188789249',1667422148022546434,'/system/dictDataManage','dictName',NULL,'/system/dictManage/dictDataList','List','字典数据','/system/dictManage','1','0','1','1','1',3,'1','1',NULL,NULL,'','1','admin','2023-06-13 17:48:48','admin','2023-06-13 22:44:12'),('1668607595978809345',0,'https://www.baidu.com','link','','','Lollipop','测试外链','','0','1','1','1','1',3,'1','1',NULL,NULL,'','1','admin','2023-06-13 21:13:47','admin','2023-06-13 22:38:57'),('1668796580490149890',0,'baidu.com','','','','Basketball','测试百度','','0','1','1','1','1',0,'','1',NULL,'','','0','admin','2023-06-14 09:44:44','',NULL),('1668796977929814017',0,'https://element-plus.org/zh-CN/','','','','Avatar','饿了么UI','','1','1','1','1','1',4,'0','1','','','','1','admin','2023-06-14 09:46:19','admin','2023-06-14 13:39:29'),('2',0,'/system','system','/system/menuMange',NULL,'Tools','系统管理','','1','1','1','1','1',2,'0','1',NULL,NULL,'','1','admin','2023-06-09 20:52:29','admin','2023-06-13 22:02:33'),('3',2,'/system/menuMange','menuMange',NULL,'/system/menuMange/menuList','Menu','菜单管理','','1','1','1','1','1',1,'1','1',NULL,NULL,'','1','admin','2023-06-09 20:52:29','admin','2023-06-13 21:09:05');
 /*!40000 ALTER TABLE `sys_menu` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -434,4 +434,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-06-13 22:46:01
+-- Dump completed on 2023-06-14 18:10:26

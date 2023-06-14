@@ -82,6 +82,11 @@ public class MenuSelectDto extends Page implements Serializable {
      */
     private String query;
 
+    /**
+     * 模板标记
+     */
+    private Boolean tempFlag = false;
+
 
     private static final long serialVersionUID = 1L;
 }

@@ -6,6 +6,9 @@ import com.autumn.menu.entity.MenuSelectDto;
 import com.autumn.menu.entity.MenuUpdateDto;
 import com.autumn.result.Result;
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Administrator
@@ -25,4 +28,8 @@ public interface MenuService extends IService<Menu> {
     Result updateMenu(MenuUpdateDto menuUpdateDto);
 
     Result deleteMenu(String ids);
+
+    void exportMenu(MenuSelectDto menuSelectDto, HttpServletResponse response);
+
+    Result importMenu(MultipartFile file);
 }

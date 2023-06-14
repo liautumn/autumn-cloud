@@ -8,9 +8,12 @@ import com.autumn.menu.service.MenuService;
 import com.autumn.result.Result;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotBlank;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/menu")
@@ -59,6 +62,22 @@ public class MenuController {
     @GetMapping("/delete")
     public Result deleteMenu(@RequestParam("ids") String ids) {
         return menuService.deleteMenu(ids);
+    }
+
+    /**
+     * 菜单excel导出
+     */
+    @PostMapping("/export")
+    public void exportMenu(@RequestBody MenuSelectDto menuSelectDto, HttpServletResponse response) {
+        menuService.exportMenu(menuSelectDto, response);
+    }
+
+    /**
+     * 菜单excel导入
+     */
+    @PostMapping("/import")
+    public Result importMenu(MultipartFile file, String isCover) {
+        return menuService.importMenu(file);
     }
 
 }

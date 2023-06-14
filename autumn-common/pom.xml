@@ -105,6 +105,11 @@
             <artifactId>minio</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>easyexcel</artifactId>
+        </dependency>
+
     </dependencies>
 
 </project>

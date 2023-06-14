@@ -5,6 +5,7 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.lang.tree.Tree;
 import cn.hutool.core.lang.tree.TreeNode;
 import cn.hutool.core.lang.tree.TreeUtil;
+import com.alibaba.excel.EasyExcel;
 import com.alibaba.fastjson2.JSON;
 import com.autumn.dictionary.Dictionary;
 import com.autumn.menu.entity.Menu;
@@ -26,12 +27,12 @@ import com.github.pagehelper.PageHelper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import javax.servlet.http.HttpServletResponse;
+import java.net.URLEncoder;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -125,7 +126,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
             // 0表示最顶层的id是0
             List<Tree<String>> treeList = TreeUtil.build(nodeList, Dictionary.YES);
             return ResData.setDataTotal(page, treeList);
-        }else {
+        } else {
             return ResData.setDataTotal(page);
         }
     }
@@ -151,6 +152,40 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         List<String> idList = Arrays.asList(ids.split(","));
         int i = menuMapper.deleteBatchIds(idList);
         return i > 0 ? Result.success() : Result.fail();
+    }
+
+    @Override
+    public void exportMenu(MenuSelectDto menuSelectDto, HttpServletResponse response) {
+        List<Menu> menus = new ArrayList<>();
+        if (!menuSelectDto.getTempFlag()) {
+            Page<Menu> page = PageHelper.startPage(menuSelectDto.getPageNum(), menuSelectDto.getPageSize());
+            LambdaQueryWrapper<Menu> queryWrapper = new LambdaQueryWrapper<Menu>()
+                    .orderByAsc(Menu::getOrderNum);
+            menus = menuMapper.selectList(queryWrapper);
+        }
+        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        response.setCharacterEncoding("utf-8");
+        try {
+            // 这里URLEncoder.encode可以防止中文乱码 当然和easyexcel没有关系
+            String fileName = URLEncoder.encode("菜单列表", "UTF-8").replaceAll("\\+", "%20");
+            response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + fileName + ".xlsx");
+            EasyExcel.write(response.getOutputStream(), Menu.class).sheet("菜单").doWrite(menus);
+        } catch (Exception e) {
+            e.getMessage();
+        }
+    }
+
+    @Resource
+    private MenuService menuService;
+
+    @Override
+    public Result importMenu(MultipartFile file) {
+        try {
+            EasyExcel.read(file.getInputStream(), Menu.class, new MenuDataListener(menuService)).sheet("菜单").doRead();
+        }catch (Exception e){
+            e.getMessage();
+        }
+        return Result.success();
     }
 
 }
