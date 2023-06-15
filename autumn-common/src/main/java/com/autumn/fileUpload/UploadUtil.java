@@ -107,7 +107,7 @@ public class UploadUtil {
             insertDto.setUploadBy(updateBy);
             Result result = filesService.insertFiles(insertDto);
             HashMap map = new HashMap();
-            map.put("fileUrl", "http://127.0.0.1:9000/files/" + objectName);
+            map.put("fileIds", "http://127.0.0.1:9000/files/" + objectName);
             return result.getCode() == StatusCode.SUCCESS.getCode() ? Result.successData(map) : Result.failMsg("文件记录失败");
         } catch (Exception e) {
             e.printStackTrace();

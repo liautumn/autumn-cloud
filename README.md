@@ -5,7 +5,7 @@ autumn-cloud 编写代码中，致力于以最简单的代码（🈲过度封装
 
 #### 软件架构
 框架选型：
-SpringBoot, SpringCloud AliBaBa, Mybatis-Plus, Mysql, Redis, sa-token, redisson, seata, ShardingSphere, Hutool, mysql, minio 等
+SpringBoot, SpringCloud AliBaBa, Mybatis-Plus, Mysql, Redis, sa-token, redisson, seata, ShardingSphere, Hutool, mysql, minio, rabbitmq 等
 
 #### 安装教程
 
