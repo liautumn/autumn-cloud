@@ -6,6 +6,7 @@ import com.autumn.result.Result;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
 /**
@@ -46,6 +47,12 @@ public class UploadController {
     @SaIgnore
     public Result video(MultipartFile file) {
         return UploadUtil.uploadWeb(file);
+    }
+
+    @GetMapping("/parse")
+    @SaIgnore
+    public Result parse(String fileIds) {
+        return UploadUtil.parse(fileIds);
     }
 
 }

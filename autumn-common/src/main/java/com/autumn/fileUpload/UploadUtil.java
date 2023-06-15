@@ -15,6 +15,7 @@ import com.autumn.springConfig.StaticMethodGetBean;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import io.minio.*;
 import io.minio.messages.Bucket;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -106,9 +107,8 @@ public class UploadUtil {
             }
             insertDto.setUploadBy(updateBy);
             Result result = filesService.insertFiles(insertDto);
-            HashMap map = new HashMap();
-            map.put("fileIds", "http://127.0.0.1:9000/files/" + objectName);
-            return result.getCode() == StatusCode.SUCCESS.getCode() ? Result.successData(map) : Result.failMsg("文件记录失败");
+            Files files = (Files) result.getData();
+            return result.getCode() == StatusCode.SUCCESS.getCode() ? Result.successData(files) : Result.failMsg("文件记录失败");
         } catch (Exception e) {
             e.printStackTrace();
             return Result.failMsg("文件上传失败" + e.getMessage());
@@ -202,6 +202,23 @@ public class UploadUtil {
             return false;
         }
         return true;
+    }
+
+    public static Result parse(String fileIds) {
+        List<String> ids = Arrays.asList(fileIds.split(","));
+        FilesService filesService = StaticMethodGetBean.getBean(FilesService.class);
+        List<Files> files = filesService.listByIds(ids);
+        List<Map> maps = new ArrayList();
+        if (!CollectionUtils.isEmpty(files)) {
+            for (Files file : files) {
+                Map map = new HashMap();
+                map.put("fileId", file.getId());
+                map.put("name", file.getFileNameBefore());
+                map.put("url", "http://127.0.0.1:9000/files/" + file.getFileNameAfter());
+                maps.add(map);
+            }
+        }
+        return Result.successData(maps);
     }
 
     /**

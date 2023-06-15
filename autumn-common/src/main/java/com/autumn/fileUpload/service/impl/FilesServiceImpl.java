@@ -50,7 +50,7 @@ public class FilesServiceImpl extends ServiceImpl<FilesMapper, Files> implements
         Files filesType = new Files();
         BeanUtils.copyProperties(filesTypeInsertDto, filesType);
         int i = filesTypeMapper.insert(filesType);
-        return i > 0 ? Result.success() : Result.fail();
+        return i > 0 ? Result.successData(filesType) : Result.fail();
     }
 
     /**
