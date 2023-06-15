@@ -6,6 +6,8 @@ import com.autumn.dict.entity.DictTypeSelectDto;
 import com.autumn.dict.entity.DictTypeUpdateDto;
 import com.autumn.dict.mapper.DictTypeMapper;
 import com.autumn.dict.service.DictTypeService;
+import com.autumn.dictData.entity.DictData;
+import com.autumn.dictData.mapper.DictDataMapper;
 import com.autumn.page.ResData;
 import com.autumn.result.Result;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -14,11 +16,11 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author Administrator
@@ -30,6 +32,8 @@ public class DictTypeServiceImpl extends ServiceImpl<DictTypeMapper, DictType> i
 
     @Resource
     private DictTypeMapper dictTypeMapper;
+    @Resource
+    private DictDataMapper dictDataMapper;
 
     @Override
     public Result selectDict(DictTypeSelectDto dictTypeSelectDto) {
@@ -61,6 +65,24 @@ public class DictTypeServiceImpl extends ServiceImpl<DictTypeMapper, DictType> i
         List<String> idList = Arrays.asList(ids.split(","));
         int i = dictTypeMapper.deleteBatchIds(idList);
         return i > 0 ? Result.success() : Result.fail();
+    }
+
+    @Override
+    public Result parseDict(String dictType) {
+        LambdaQueryWrapper<DictData> queryWrapper = new LambdaQueryWrapper<DictData>()
+                .eq(DictData::getDictType, dictType)
+                .orderByAsc(DictData::getDictSort);
+        List<DictData> dictData = dictDataMapper.selectList(queryWrapper);
+        List data = new ArrayList();
+        if (!CollectionUtils.isEmpty(dictData)) {
+            for (DictData dict : dictData) {
+                HashMap map = new HashMap();
+                map.put("label", dict.getDictLabel());
+                map.put("value", dict.getDictValue());
+                data.add(map);
+            }
+        }
+        return Result.successData(data);
     }
 }
 

@@ -49,4 +49,12 @@ public class DictController {
         return dictTypeService.deleteDict(ids);
     }
 
+    /**
+     * 菜单解析
+     */
+    @GetMapping("/parse")
+    public Result parseDict(@RequestParam("dictType") String dictType) {
+        return dictTypeService.parseDict(dictType);
+    }
+
 }

@@ -21,4 +21,6 @@ public interface DictTypeService extends IService<DictType> {
     Result updateDict(DictTypeUpdateDto dictTypeUpdateDto);
 
     Result deleteDict(String ids);
+
+    Result parseDict(String dictType);
 }
