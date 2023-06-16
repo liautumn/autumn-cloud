@@ -108,64 +108,14 @@ public class UploadUtil {
             insertDto.setUploadBy(updateBy);
             Result result = filesService.insertFiles(insertDto);
             Files files = (Files) result.getData();
-            return result.getCode() == StatusCode.SUCCESS.getCode() ? Result.successData(files) : Result.failMsg("文件记录失败");
+            Map map = new HashMap();
+            map.put("fileId", files.getId());
+            map.put("name", files.getFileNameBefore());
+            map.put("url", "http://127.0.0.1:9000/files/" + files.getFileNameAfter());
+            return result.getCode() == StatusCode.SUCCESS.getCode() ? Result.successData(map) : Result.failMsg("文件记录失败");
         } catch (Exception e) {
             e.printStackTrace();
             return Result.failMsg("文件上传失败" + e.getMessage());
-        }
-    }
-
-    /**
-     * 文件上传代码逻辑中使用
-     *
-     * @param file 文件
-     * @return Boolean
-     */
-    public static Map uploadInterior(MultipartFile file) {
-        String originalFilename = file.getOriginalFilename();
-        if (StringUtils.isEmpty(originalFilename)) {
-            throw new RuntimeException("上传文件为空");
-        }
-        //判断桶是否存在
-        if (!UploadUtil.bucketExists("files")) {
-            if (!UploadUtil.makeBucket("files")) {
-                throw new RuntimeException("创建桶失败");
-            }
-        }
-        String fileName = UUID.fastUUID() + originalFilename.substring(originalFilename.lastIndexOf("."));
-        String objectName = DateUtil.format(DateUtil.date(), "yyyyMMddHHmmss") + "-" + fileName;
-        try {
-            MinioConfig minioConfig = StaticMethodGetBean.getBean(MinioConfig.class);
-            MinioClient minioClient = StaticMethodGetBean.getBean(MinioClient.class);
-            FilesService filesService = StaticMethodGetBean.getBean(FilesService.class);
-            PutObjectArgs objectArgs = PutObjectArgs.builder().bucket(minioConfig.getBucketName()).object(objectName)
-                    .stream(file.getInputStream(), file.getSize(), -1).contentType(file.getContentType()).build();
-            //文件名称相同会覆盖
-            minioClient.putObject(objectArgs);
-
-            //新增到记录表
-            FilesInsertDto insertDto = new FilesInsertDto();
-            insertDto.setFileNameBefore(originalFilename);
-            insertDto.setFileNameAfter(objectName);
-            insertDto.setFileSize(String.valueOf(file.getSize()));
-            String updateBy = null;
-            try {
-                updateBy = LoginInfoData.getUserInfo().getUserName();
-            } catch (Exception e) {
-                throw new RuntimeException("登录失效");
-            }
-            insertDto.setUploadBy(updateBy);
-            Result result = filesService.insertFiles(insertDto);
-            if (result.getCode() == StatusCode.SUCCESS.getCode()) {
-                HashMap map = new HashMap();
-                map.put("fileUrl", "http://127.0.0.1:9000/files/" + objectName);
-                return result.getCode() == StatusCode.SUCCESS.getCode() ? map : null;
-            } else {
-                return null;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
         }
     }
 
@@ -218,7 +168,9 @@ public class UploadUtil {
                 maps.add(map);
             }
         }
-        return Result.successData(maps);
+        Map res = new HashMap();
+        res.put("list", maps);
+        return Result.successData(res);
     }
 
     /**
