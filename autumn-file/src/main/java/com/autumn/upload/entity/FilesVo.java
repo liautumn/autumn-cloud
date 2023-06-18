@@ -1,4 +1,4 @@
-package com.autumn.fileUpload.entity;
+package com.autumn.upload.entity;
 
 import lombok.Data;
 import lombok.experimental.Accessors;

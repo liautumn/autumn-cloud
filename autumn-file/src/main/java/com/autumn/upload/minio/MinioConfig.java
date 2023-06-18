@@ -1,4 +1,4 @@
-package com.autumn.fileUpload.minio;
+package com.autumn.upload.minio;
 
 import io.minio.MinioClient;
 import lombok.Data;

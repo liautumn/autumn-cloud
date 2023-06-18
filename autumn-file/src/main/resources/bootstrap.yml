@@ -1,13 +1,17 @@
 server:
-  port: 8082
+  port: 8084
   servlet:
-    context-path: /system
+    context-path: /file
 spring:
   application:
-    name: autumn-system
+    name: autumn-file
   profiles:
     # 配置环境
     active: '@profile.name@'
+  servlet:
+    multipart:
+    max-file-size: 100MB
+    max-request-size: 100MB
   cloud:
     nacos:
       # nacos服务地址

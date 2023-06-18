@@ -1,7 +1,7 @@
-package com.autumn.fileUpload.mapper;
+package com.autumn.upload.mapper;
 
 
-import com.autumn.fileUpload.entity.Files;
+import com.autumn.upload.entity.Files;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**

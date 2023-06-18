@@ -1,8 +1,8 @@
-package com.autumn.fileUpload;
+package com.autumn.upload;
 
-import com.autumn.fileUpload.entity.FilesVo;
-import com.autumn.fileUpload.minio.MinioUtil;
 import com.autumn.result.Result;
+import com.autumn.upload.entity.FilesVo;
+import com.autumn.upload.minio.MinioUtil;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 

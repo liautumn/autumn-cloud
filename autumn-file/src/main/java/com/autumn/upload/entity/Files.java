@@ -1,4 +1,4 @@
-package com.autumn.fileUpload.entity;
+package com.autumn.upload.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;

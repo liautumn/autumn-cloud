@@ -1,16 +1,16 @@
-package com.autumn.fileUpload.minio;
+package com.autumn.upload.minio;
 
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.lang.UUID;
-import com.autumn.fileUpload.entity.Files;
-import com.autumn.fileUpload.entity.FilesInsertDto;
-import com.autumn.fileUpload.entity.FilesVo;
-import com.autumn.fileUpload.mapper.FilesMapper;
-import com.autumn.fileUpload.service.FilesService;
 import com.autumn.result.Result;
 import com.autumn.result.StatusCode;
 import com.autumn.sa_token.LoginInfoData;
 import com.autumn.springConfig.StaticMethodGetBean;
+import com.autumn.upload.entity.Files;
+import com.autumn.upload.entity.FilesInsertDto;
+import com.autumn.upload.entity.FilesVo;
+import com.autumn.upload.mapper.FilesMapper;
+import com.autumn.upload.service.FilesService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import io.minio.*;
 import io.minio.http.Method;

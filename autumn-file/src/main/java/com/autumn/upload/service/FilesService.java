@@ -1,12 +1,11 @@
-package com.autumn.fileUpload.service;
+package com.autumn.upload.service;
 
-import com.autumn.fileUpload.entity.Files;
-import com.autumn.fileUpload.entity.FilesInsertDto;
-import com.autumn.fileUpload.entity.FilesSelectDto;
-import com.autumn.fileUpload.entity.FilesUpdateDto;
 import com.autumn.result.Result;
+import com.autumn.upload.entity.Files;
+import com.autumn.upload.entity.FilesInsertDto;
+import com.autumn.upload.entity.FilesSelectDto;
+import com.autumn.upload.entity.FilesUpdateDto;
 import com.baomidou.mybatisplus.extension.service.IService;
-import org.springframework.stereotype.Component;
 
 /**
  * @author autumn

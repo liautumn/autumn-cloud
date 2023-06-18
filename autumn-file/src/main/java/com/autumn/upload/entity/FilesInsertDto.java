@@ -1,4 +1,4 @@
-package com.autumn.fileUpload.entity;
+package com.autumn.upload.entity;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -8,18 +8,14 @@ import java.io.Serializable;
 /**
  * @author autumn
  * @date 2023-06-12 09:18:53
- * 测试生成表 UpdateDto
+ * 测试生成表 InsertDto
  */
 @Data
 @Accessors
-public class FilesUpdateDto implements Serializable {
+public class FilesInsertDto implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    /**
-     * ID
-     */
-    private String id;
     /**
      * 上传前文件名称
      */

@@ -15,6 +15,7 @@
         <module>autumn-system</module>
         <module>autumn-common</module>
         <module>autumn-api</module>
+        <module>autumn-file</module>
         <module>autumn-generate</module>
         <module>autumn-demo</module>
     </modules>

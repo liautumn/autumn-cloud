@@ -1,13 +1,13 @@
-package com.autumn.fileUpload.service.impl;
+package com.autumn.upload.service.impl;
 
-import com.autumn.fileUpload.entity.Files;
-import com.autumn.fileUpload.entity.FilesInsertDto;
-import com.autumn.fileUpload.entity.FilesSelectDto;
-import com.autumn.fileUpload.entity.FilesUpdateDto;
-import com.autumn.fileUpload.mapper.FilesMapper;
-import com.autumn.fileUpload.service.FilesService;
 import com.autumn.page.ResData;
 import com.autumn.result.Result;
+import com.autumn.upload.entity.Files;
+import com.autumn.upload.entity.FilesInsertDto;
+import com.autumn.upload.entity.FilesSelectDto;
+import com.autumn.upload.entity.FilesUpdateDto;
+import com.autumn.upload.mapper.FilesMapper;
+import com.autumn.upload.service.FilesService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.Page;
