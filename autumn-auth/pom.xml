@@ -8,7 +8,7 @@
         <artifactId>autumn-cloud</artifactId>
         <version>1.0</version>
     </parent>
-
+    <packaging>jar</packaging>
     <artifactId>autumn-auth</artifactId>
 
     <properties>
@@ -40,5 +40,34 @@
         </dependency>
 
     </dependencies>
+
+        <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>com.autumn.AuthApplication</mainClass> <!-- 指定启动主类 -->
+                    <includeSystemScope>true</includeSystemScope> <!-- 打包 将外部jar包打包进项目中 -->
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
