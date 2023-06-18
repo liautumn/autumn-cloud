@@ -1,21 +1,18 @@
-package com.autumn.dict.entity;
+package com.autumn.dictType.entity;
 
-import com.autumn.page.Page;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 /**
  * 字典类型表
+ *
  */
 @Data
-public class DictTypeSelectDto extends Page implements Serializable {
+public class DictTypeUpdateDto implements Serializable {
 
     /**
-     * ID
+     * 字典类型表ID
      */
     private String id;
 

@@ -1,6 +1,5 @@
 package com.autumn.menu.controller;
 
-import cn.dev33.satoken.annotation.SaIgnore;
 import com.autumn.menu.entity.MenuInsertDto;
 import com.autumn.menu.entity.MenuSelectDto;
 import com.autumn.menu.entity.MenuUpdateDto;
@@ -12,8 +11,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.constraints.NotBlank;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/menu")
@@ -76,7 +73,7 @@ public class MenuController {
      * 菜单excel导入
      */
     @PostMapping("/import")
-    public Result importMenu(MultipartFile file, String isCover) {
+    public Result importMenu(MultipartFile file) {
         return menuService.importMenu(file);
     }
 

@@ -17,42 +17,45 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping("/file")
 public class UploadController {
 
+    @Resource
+    private UploadUtil uploadUtil;
+
     @GetMapping("/view")
     @SaIgnore
     public Result view(@RequestParam("filesIds") String filesIds) {
-        return Result.successData(UploadUtil.filesIdsTofiles(filesIds));
+        return Result.successData(uploadUtil.filesIdsTofiles(filesIds));
     }
 
     @GetMapping("/delete")
     @SaIgnore
     public Result delete(@RequestParam("filesId") String filesId) {
-        boolean remove = UploadUtil.remove(filesId);
+        Result remove = uploadUtil.remove(filesId);
         return Result.successData(remove);
     }
 
     @GetMapping("/download")
     @SaIgnore
     public Result download(@RequestParam("filesId") String filesId, HttpServletResponse response) {
-        UploadUtil.download(filesId, response);
+        uploadUtil.download(filesId, response);
         return Result.success();
     }
 
     @PostMapping("/upload/img")
     @SaIgnore
     public Result img(MultipartFile file) {
-        return UploadUtil.uploadWeb(file);
+        return uploadUtil.uploadWeb(file);
     }
 
     @PostMapping("/upload/video")
     @SaIgnore
     public Result video(MultipartFile file) {
-        return UploadUtil.uploadWeb(file);
+        return uploadUtil.uploadWeb(file);
     }
 
     @GetMapping("/parse")
     @SaIgnore
-    public Result parse(String fileIds) {
-        return UploadUtil.parse(fileIds);
+    public Result parse(String fileIds) throws Exception {
+        return uploadUtil.parse(fileIds);
     }
 
 }

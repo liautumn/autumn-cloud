@@ -65,6 +65,10 @@ public class DictDataSelectDto extends Page implements Serializable {
      * 备注
      */
     private String remark;
+    /**
+     * 模板标记
+     */
+    private Boolean tempFlag = false;
 
 
 }

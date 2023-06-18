@@ -45,4 +45,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         return userMapper.updateById(user) > 0 ? Result.success() : Result.fail();
     }
 
+    @Override
+    public Result getOneUser(String id) {
+        User user = userMapper.selectById(id);
+        user.setPassword(null);
+        return Result.successData(user);
+    }
+
 }

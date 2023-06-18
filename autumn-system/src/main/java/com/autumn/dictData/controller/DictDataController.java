@@ -7,8 +7,10 @@ import com.autumn.dictData.service.DictDataService;
 import com.autumn.result.Result;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author autumn
@@ -52,6 +54,22 @@ public class DictDataController {
     @GetMapping("/delete")
     public Result deleteDictData(@RequestParam("ids") String ids) {
         return dictDataService.deleteDictData(ids);
+    }
+
+    /**
+     * 菜单excel导出
+     */
+    @PostMapping("/export")
+    public void exportDictData(@RequestBody DictDataSelectDto dictDataSelectDto, HttpServletResponse response) {
+        dictDataService.exportDictData(dictDataSelectDto, response);
+    }
+
+    /**
+     * 菜单excel导入
+     */
+    @PostMapping("/import")
+    public Result importDictData(MultipartFile file) {
+        return dictDataService.importDictData(file);
     }
 
 }

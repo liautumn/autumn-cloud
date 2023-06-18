@@ -6,6 +6,9 @@ import com.autumn.dictData.entity.DictDataSelectDto;
 import com.autumn.dictData.entity.DictDataUpdateDto;
 import com.autumn.result.Result;
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author autumn
@@ -34,4 +37,7 @@ public interface DictDataService extends IService<DictData> {
      */
     Result deleteDictData(String ids);
 
+    void exportDictData(DictDataSelectDto dictDataSelectDto, HttpServletResponse response);
+
+    Result importDictData(MultipartFile file);
 }

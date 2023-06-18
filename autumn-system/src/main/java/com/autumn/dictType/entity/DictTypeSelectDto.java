@@ -1,17 +1,20 @@
-package com.autumn.dict.entity;
+package com.autumn.dictType.entity;
 
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.autumn.page.Page;
 import lombok.Data;
 
 import java.io.Serializable;
 
 /**
  * 字典类型表
- *
  */
 @Data
-public class DictTypeInsertDto implements Serializable {
+public class DictTypeSelectDto extends Page implements Serializable {
+
+    /**
+     * ID
+     */
+    private String id;
 
     /**
      * 字典名称
@@ -33,6 +36,10 @@ public class DictTypeInsertDto implements Serializable {
      */
     private String remark;
 
+    /**
+     * 模板标记
+     */
+    private Boolean tempFlag = false;
 
     private static final long serialVersionUID = 1L;
 }

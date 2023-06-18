@@ -1,6 +1,6 @@
-package com.autumn.dict.mapper;
+package com.autumn.dictType.mapper;
 
-import com.autumn.dict.entity.DictType;
+import com.autumn.dictType.entity.DictType;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**

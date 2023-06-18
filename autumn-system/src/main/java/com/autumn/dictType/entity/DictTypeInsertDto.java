@@ -1,6 +1,5 @@
-package com.autumn.dict.entity;
+package com.autumn.dictType.entity;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -10,12 +9,7 @@ import java.io.Serializable;
  *
  */
 @Data
-public class DictTypeUpdateDto implements Serializable {
-
-    /**
-     * 字典类型表ID
-     */
-    private String id;
+public class DictTypeInsertDto implements Serializable {
 
     /**
      * 字典名称

@@ -10,6 +10,7 @@ import com.alibaba.fastjson2.JSON;
 import com.autumn.dictionary.Dictionary;
 import com.autumn.easyExcel.CustomRowHeightColWidthHandler;
 import com.autumn.easyExcel.RowHeightColWidthModel;
+import com.autumn.menu.excel.MenuDataListener;
 import com.autumn.menu.entity.Menu;
 import com.autumn.menu.entity.MenuInsertDto;
 import com.autumn.menu.entity.MenuSelectDto;
@@ -172,7 +173,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
             response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + fileName + ".xlsx");
 
             List<RowHeightColWidthModel> rowHeightColWidthList = new ArrayList<>();
-            String sheetName="菜单";
+            String sheetName = "菜单";
             //设置行高
 //            rowHeightColWidthList.add(RowHeightColWidthModel.createRowHeightModel(sheetName, 0, 20f));
             //隐藏行
@@ -183,7 +184,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
             rowHeightColWidthList.add(RowHeightColWidthModel.createHideColModel(sheetName, 0));
 
             EasyExcel.write(response.getOutputStream(), Menu.class)
-                    .sheet("菜单")
+                    .sheet(sheetName)
                     .registerWriteHandler(new CustomRowHeightColWidthHandler(rowHeightColWidthList))
                     .doWrite(menus);
         } catch (Exception e) {

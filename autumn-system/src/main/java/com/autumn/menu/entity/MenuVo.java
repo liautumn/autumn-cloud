@@ -1,6 +1,5 @@
 package com.autumn.menu.entity;
 
-import com.autumn.page.ResPage;
 import lombok.Data;
 
 import java.io.Serializable;
