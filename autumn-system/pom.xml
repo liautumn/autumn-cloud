@@ -8,7 +8,7 @@
         <artifactId>autumn-cloud</artifactId>
         <version>1.0</version>
     </parent>
-
+    <packaging>jar</packaging>
     <artifactId>autumn-system</artifactId>
 
     <properties>
@@ -40,5 +40,15 @@
         </dependency>
 
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
 
 </project>
