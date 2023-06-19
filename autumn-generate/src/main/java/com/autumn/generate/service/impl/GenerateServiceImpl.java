@@ -35,9 +35,9 @@ public class GenerateServiceImpl implements GenerateService {
         genPublic.setEntityName(entityName);
         genPublic.setRootPath("com.autumn");
         genPublic.setColumns(columns);
-        genPublic.setTitle("测试生成表");
+        genPublic.setTitle(genDto.getTitle());
         genPublic.setDateTime(DateUtil.now());
-        genPublic.setAuthor("autumn");
+        genPublic.setAuthor(genDto.getAuthor());
         genPublic.setTableName(table.getTableName());
         genPublic.setTableComment(StringUtils.isEmpty(table.getTableComment()) ? genPublic.getTitle() : table.getTableComment());
 

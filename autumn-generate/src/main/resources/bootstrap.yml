@@ -7,7 +7,7 @@ spring:
     name: autumn-generate
   profiles:
     # 配置环境
-    active: dev
+    active: '@profile.name@'
   cloud:
     nacos:
       # nacos服务地址

@@ -13,4 +13,8 @@ public class GenDto {
 
     private String databaseName;
 
+    private String title;
+
+    private String author;
+
 }

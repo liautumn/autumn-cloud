@@ -22,8 +22,10 @@ public class TestController {
     @Test
     public void getTest() {
         GenDto genDto = new GenDto();
+        genDto.setAuthor("lqz");
+        genDto.setTitle("岗位信息");
         genDto.setDatabaseName("autumn_cloud");
-        genDto.setTableName("sys_dict_data");
+        genDto.setTableName("sys_post");
         Result generate = generateService.generate(genDto);
         System.out.printf("===========================================>", generate);
     }
