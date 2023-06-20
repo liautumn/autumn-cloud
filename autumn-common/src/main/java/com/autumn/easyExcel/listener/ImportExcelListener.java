@@ -1,13 +1,11 @@
-package com.autumn.post.excel;
+package com.autumn.easyExcel.listener;
 
 import com.alibaba.excel.context.AnalysisContext;
 import com.alibaba.excel.read.listener.ReadListener;
 import com.alibaba.excel.util.ListUtils;
 import com.alibaba.fastjson2.JSON;
-import com.autumn.menu.entity.Menu;
-import com.autumn.menu.service.MenuService;
-import com.autumn.post.entity.Post;
-import com.autumn.post.service.PostService;
+import com.autumn.public_entity.PublicEntity;
+import com.baomidou.mybatisplus.extension.service.IService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils;
 
@@ -15,7 +13,7 @@ import java.util.List;
 
 // 有个很重要的点 DataListener 不能被spring管理，要每次读取excel都要new,然后里面用到spring可以构造方法传进去
 @Slf4j
-public class PostDataListener implements ReadListener<Post> {
+public class ImportExcelListener<T extends PublicEntity> implements ReadListener<T> {
 
     /**
      * 每隔5条存储数据库，实际使用中可以100条，然后清理list ，方便内存回收
@@ -24,19 +22,19 @@ public class PostDataListener implements ReadListener<Post> {
     /**
      * 缓存的数据
      */
-    private List<Post> insertDataList = ListUtils.newArrayListWithExpectedSize(BATCH_COUNT);
-    private List<Post> updateDataList = ListUtils.newArrayListWithExpectedSize(BATCH_COUNT);
+    private List<T> insertDataList = ListUtils.newArrayListWithExpectedSize(BATCH_COUNT);
+    private List<T> updateDataList = ListUtils.newArrayListWithExpectedSize(BATCH_COUNT);
     /**
      * 假设这个是一个DAO，当然有业务逻辑这个也可以是一个service。当然如果不用存储这个对象没用。
      */
-    private PostService service;
+    private IService<T> service;
 
     /**
      * 如果使用了spring,请使用这个构造方法。每次创建Listener的时候需要把spring管理的类传进来
      *
      * @param service
      */
-    public PostDataListener(PostService service) {
+    public ImportExcelListener(IService<T> service) {
         this.service = service;
     }
 
@@ -47,7 +45,7 @@ public class PostDataListener implements ReadListener<Post> {
      * @param context
      */
     @Override
-    public void invoke(Post data, AnalysisContext context) {
+    public void invoke(T data, AnalysisContext context) {
         log.info("解析到一条数据:{}", JSON.toJSONString(data));
         if (StringUtils.isEmpty(data.getId())) {
             insertDataList.add(data);

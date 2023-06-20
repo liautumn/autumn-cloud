@@ -5,8 +5,22 @@ import com.alibaba.excel.converters.ReadConverterContext;
 import com.alibaba.excel.converters.WriteConverterContext;
 import com.alibaba.excel.enums.CellDataTypeEnum;
 import com.alibaba.excel.metadata.data.WriteCellData;
+import com.autumn.dictData.entity.DictData;
+import com.autumn.dictData.mapper.DictDataMapper;
+import com.autumn.dictType.entity.DictType;
+import com.autumn.dictType.mapper.DictTypeMapper;
+import com.autumn.springConfig.StaticMethodGetBean;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import org.springframework.util.CollectionUtils;
+
+import java.util.List;
 
 public class WhetherDictConverter implements Converter<String> {
+
+    private final String dictType = "whether";
+
+    private WriteConverterContext<String> context;
+
     @Override
     public Class<?> supportJavaTypeKey() {
         return String.class;
@@ -25,12 +39,28 @@ public class WhetherDictConverter implements Converter<String> {
      */
     @Override
     public String convertToJavaData(ReadConverterContext<?> context) {
-        String value = context.getReadCellData().getStringValue();
-        if (value.equals("是")) {
-            return "0";
-        } else {
-            return "1";
+        DictTypeMapper dictTypeMapper = StaticMethodGetBean.getBean(DictTypeMapper.class);
+        DictDataMapper dictDataMapper = StaticMethodGetBean.getBean(DictDataMapper.class);
+        LambdaQueryWrapper<DictType> dictTypeLambdaQueryWrapper = new LambdaQueryWrapper<DictType>()
+                .eq(DictType::getDictType, dictType);
+        DictType dt = dictTypeMapper.selectOne(dictTypeLambdaQueryWrapper);
+        if (dt == null) {
+            return null;
         }
+        LambdaQueryWrapper<DictData> dictDataLambdaQueryWrapper = new LambdaQueryWrapper<DictData>()
+                .eq(DictData::getDictType, dt.getDictType());
+        List<DictData> dataList = dictDataMapper.selectList(dictDataLambdaQueryWrapper);
+        String value = context.getReadCellData().getStringValue();
+        String res = null;
+        if (!CollectionUtils.isEmpty(dataList)) {
+            for (DictData data : dataList) {
+                if (value.equals(data.getDictLabel())) {
+                    res = data.getDictValue();
+                    break;
+                }
+            }
+        }
+        return res;
     }
 
     /**
@@ -39,15 +69,29 @@ public class WhetherDictConverter implements Converter<String> {
      * @return
      */
     @Override
-    public WriteCellData<?> convertToExcelData(WriteConverterContext<String> context) {
+    public WriteCellData<?> convertToExcelData(WriteConverterContext<String> context) throws InstantiationException, IllegalAccessException {
         String value = context.getValue();
-        String v = null;
-        if (value.equals("0")) {
-            v = "是";
-        } else {
-            v = "否";
+        DictTypeMapper dictTypeMapper = StaticMethodGetBean.getBean(DictTypeMapper.class);
+        DictDataMapper dictDataMapper = StaticMethodGetBean.getBean(DictDataMapper.class);
+        LambdaQueryWrapper<DictType> dictTypeLambdaQueryWrapper = new LambdaQueryWrapper<DictType>()
+                .eq(DictType::getDictType, dictType);
+        DictType dt = dictTypeMapper.selectOne(dictTypeLambdaQueryWrapper);
+        if (dt == null) {
+            return null;
         }
-        return new WriteCellData<>(v);
+        LambdaQueryWrapper<DictData> dictDataLambdaQueryWrapper = new LambdaQueryWrapper<DictData>()
+                .eq(DictData::getDictType, dt.getDictType());
+        List<DictData> dataList = dictDataMapper.selectList(dictDataLambdaQueryWrapper);
+        String res = null;
+        if (!CollectionUtils.isEmpty(dataList)) {
+            for (DictData data : dataList) {
+                if (value.equals(data.getDictValue())) {
+                    res = data.getDictLabel();
+                    break;
+                }
+            }
+        }
+        return new WriteCellData<>(res);
     }
 
 }

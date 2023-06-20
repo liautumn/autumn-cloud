@@ -1,14 +1,13 @@
 package com.autumn.dictType.entity;
 
-import com.alibaba.excel.annotation.ExcelIgnore;
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.autumn.easyExcel.converter.WhetherDictConverter;
 import com.autumn.public_entity.PublicEntity;
-import com.baomidou.mybatisplus.annotation.*;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
-import lombok.Data;
 
 /**
  * 字典类型表

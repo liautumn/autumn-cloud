@@ -1,5 +1,6 @@
 package com.autumn.role.entity;
 
+import com.autumn.public_entity.PublicEntity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -14,12 +15,7 @@ import lombok.Data;
  */
 @TableName(value ="sys_role")
 @Data
-public class Role implements Serializable {
-    /**
-     * 角色ID
-     */
-    @TableId(value = "id", type = IdType.ASSIGN_ID)
-    private String id;
+public class Role extends PublicEntity implements Serializable {
 
     /**
      * 角色名称
@@ -64,41 +60,10 @@ public class Role implements Serializable {
     private String status;
 
     /**
-     * 删除标志（0代表存在 2代表删除）
-     */
-    @TableField(value = "del_flag")
-    private String delFlag;
-
-    /**
-     * 创建者
-     */
-    @TableField(value = "create_by")
-    private String createBy;
-
-    /**
-     * 创建时间
-     */
-    @TableField(value = "create_time")
-    private LocalDateTime createTime;
-
-    /**
-     * 更新者
-     */
-    @TableField(value = "update_by")
-    private String updateBy;
-
-    /**
-     * 更新时间
-     */
-    @TableField(value = "update_time")
-    private LocalDateTime updateTime;
-
-    /**
      * 备注
      */
     @TableField(value = "remark")
     private String remark;
 
-    @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 }

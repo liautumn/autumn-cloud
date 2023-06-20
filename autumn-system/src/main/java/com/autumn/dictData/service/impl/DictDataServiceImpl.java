@@ -1,7 +1,6 @@
 package com.autumn.dictData.service.impl;
 
 import com.alibaba.excel.EasyExcel;
-import com.autumn.dictData.excel.DictDataDataListener;
 import com.autumn.dictData.entity.DictData;
 import com.autumn.dictData.entity.DictDataInsertDto;
 import com.autumn.dictData.entity.DictDataSelectDto;
@@ -10,6 +9,7 @@ import com.autumn.dictData.mapper.DictDataMapper;
 import com.autumn.dictData.service.DictDataService;
 import com.autumn.easyExcel.CustomRowHeightColWidthHandler;
 import com.autumn.easyExcel.RowHeightColWidthModel;
+import com.autumn.easyExcel.listener.ImportExcelListener;
 import com.autumn.page.ResData;
 import com.autumn.result.Result;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -118,7 +118,7 @@ public class DictDataServiceImpl extends ServiceImpl<DictDataMapper, DictData> i
     @Override
     public Result importDictData(MultipartFile file) {
         try {
-            EasyExcel.read(file.getInputStream(), DictData.class, new DictDataDataListener(dictDataService)).sheet("字典数据").doRead();
+            EasyExcel.read(file.getInputStream(), DictData.class, new ImportExcelListener<DictData>(dictDataService)).sheet("字典数据").doRead();
         } catch (Exception e) {
             return Result.failMsg(e.getMessage());
         }

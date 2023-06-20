@@ -3,12 +3,12 @@ package com.autumn.post.service.impl;
 import com.alibaba.excel.EasyExcel;
 import com.autumn.easyExcel.CustomRowHeightColWidthHandler;
 import com.autumn.easyExcel.RowHeightColWidthModel;
+import com.autumn.easyExcel.listener.ImportExcelListener;
 import com.autumn.page.ResData;
 import com.autumn.post.entity.Post;
 import com.autumn.post.entity.PostInsertDto;
 import com.autumn.post.entity.PostSelectDto;
 import com.autumn.post.entity.PostUpdateDto;
-import com.autumn.post.excel.PostDataListener;
 import com.autumn.post.mapper.PostMapper;
 import com.autumn.post.service.PostService;
 import com.autumn.result.Result;
@@ -96,14 +96,11 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
         response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
         response.setCharacterEncoding("utf-8");
         try {
-            // 这里URLEncoder.encode可以防止中文乱码 当然和easyexcel没有关系
-            String fileName = URLEncoder.encode("岗位信息列表", "UTF-8").replaceAll("\\+", "%20");
-            response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + fileName + ".xlsx");
-
-            List<RowHeightColWidthModel> rowHeightColWidthList = new ArrayList<>();
             String sheetName = "岗位信息";
-            //设置列宽
-            rowHeightColWidthList.add(RowHeightColWidthModel.createColWidthModel(sheetName, 0, 25));
+            // 这里URLEncoder.encode可以防止中文乱码 当然和easyexcel没有关系
+            String fileName = URLEncoder.encode(sheetName + "列表", "UTF-8").replaceAll("\\+", "%20");
+            response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + fileName + ".xlsx");
+            List<RowHeightColWidthModel> rowHeightColWidthList = new ArrayList<>();
             //隐藏列
             rowHeightColWidthList.add(RowHeightColWidthModel.createHideColModel(sheetName, 0));
             EasyExcel.write(response.getOutputStream(), Post.class)
@@ -124,7 +121,7 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
     @Override
     public Result importPost(MultipartFile file) {
         try {
-            EasyExcel.read(file.getInputStream(), Post.class, new PostDataListener(postService)).sheet("岗位信息").doRead();
+            EasyExcel.read(file.getInputStream(), Post.class, new ImportExcelListener<Post>(postService)).sheet("岗位信息").doRead();
         } catch (Exception e) {
             e.getMessage();
         }

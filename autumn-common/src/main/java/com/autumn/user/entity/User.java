@@ -1,10 +1,9 @@
 package com.autumn.user.entity;
 
-import com.baomidou.mybatisplus.annotation.*;
-import lombok.AllArgsConstructor;
+import com.autumn.public_entity.PublicEntity;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
@@ -17,16 +16,8 @@ import java.time.LocalDateTime;
  */
 @TableName(value = "sys_user")
 @Data
-@EqualsAndHashCode(callSuper = false)
-@AllArgsConstructor
-@NoArgsConstructor
 @Accessors
-public class User implements Serializable {
-    /**
-     * 用户ID
-     */
-    @TableId(value = "id", type = IdType.ASSIGN_ID)
-    private String id;
+public class User extends PublicEntity implements Serializable {
 
     /**
      * 部门ID
@@ -89,13 +80,6 @@ public class User implements Serializable {
     private String status;
 
     /**
-     * 删除标志（0代表删除 1代表存在）
-     */
-    @TableField(value = "del_flag")
-    @TableLogic
-    private String delFlag;
-
-    /**
      * 最后登录IP
      */
     @TableField(value = "login_ip")
@@ -106,30 +90,6 @@ public class User implements Serializable {
      */
     @TableField(value = "login_date")
     private LocalDateTime loginDate;
-
-    /**
-     * 创建者
-     */
-    @TableField(value = "create_by", fill = FieldFill.INSERT)
-    private String createBy;
-
-    /**
-     * 创建时间
-     */
-    @TableField(value = "create_time", fill = FieldFill.INSERT)
-    private LocalDateTime createTime;
-
-    /**
-     * 更新者
-     */
-    @TableField(value = "update_by", fill = FieldFill.UPDATE)
-    private String updateBy;
-
-    /**
-     * 更新时间
-     */
-    @TableField(value = "update_time", fill = FieldFill.UPDATE)
-    private LocalDateTime updateTime;
 
     /**
      * 备注

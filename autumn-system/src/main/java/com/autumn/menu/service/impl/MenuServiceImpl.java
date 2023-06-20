@@ -10,7 +10,7 @@ import com.alibaba.fastjson2.JSON;
 import com.autumn.dictionary.Dictionary;
 import com.autumn.easyExcel.CustomRowHeightColWidthHandler;
 import com.autumn.easyExcel.RowHeightColWidthModel;
-import com.autumn.menu.excel.MenuDataListener;
+import com.autumn.easyExcel.listener.ImportExcelListener;
 import com.autumn.menu.entity.Menu;
 import com.autumn.menu.entity.MenuInsertDto;
 import com.autumn.menu.entity.MenuSelectDto;
@@ -198,7 +198,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     @Override
     public Result importMenu(MultipartFile file) {
         try {
-            EasyExcel.read(file.getInputStream(), Menu.class, new MenuDataListener(menuService)).sheet("菜单").doRead();
+            EasyExcel.read(file.getInputStream(), Menu.class, new ImportExcelListener<Menu>(menuService)).sheet("菜单").doRead();
         } catch (Exception e) {
             e.getMessage();
         }

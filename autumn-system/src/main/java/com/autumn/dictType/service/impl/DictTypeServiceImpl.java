@@ -7,11 +7,11 @@ import com.autumn.dictType.entity.DictType;
 import com.autumn.dictType.entity.DictTypeInsertDto;
 import com.autumn.dictType.entity.DictTypeSelectDto;
 import com.autumn.dictType.entity.DictTypeUpdateDto;
-import com.autumn.dictType.excel.DictTypeDataListener;
 import com.autumn.dictType.mapper.DictTypeMapper;
 import com.autumn.dictType.service.DictTypeService;
 import com.autumn.easyExcel.CustomRowHeightColWidthHandler;
 import com.autumn.easyExcel.RowHeightColWidthModel;
+import com.autumn.easyExcel.listener.ImportExcelListener;
 import com.autumn.page.ResData;
 import com.autumn.result.Result;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -129,7 +129,7 @@ public class DictTypeServiceImpl extends ServiceImpl<DictTypeMapper, DictType> i
     @Override
     public Result importDictType(MultipartFile file) {
         try {
-            EasyExcel.read(file.getInputStream(), DictType.class, new DictTypeDataListener(dictTypeService)).sheet("字典类型").doRead();
+            EasyExcel.read(file.getInputStream(), DictType.class, new ImportExcelListener<DictType>(dictTypeService)).sheet("字典类型").doRead();
         } catch (Exception e) {
             e.getMessage();
         }
