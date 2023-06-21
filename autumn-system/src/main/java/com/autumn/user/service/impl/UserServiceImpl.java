@@ -1,14 +1,11 @@
 package com.autumn.user.service.impl;
 
 
-import cn.hutool.crypto.SecureUtil;
 import com.autumn.result.Result;
-import com.autumn.user.entity.User;
+import com.autumn.sa_token.entity.User;
 import com.autumn.user.mapper.UserMapper;
 import com.autumn.user.service.UserService;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

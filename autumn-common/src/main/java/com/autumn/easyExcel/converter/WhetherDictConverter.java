@@ -5,16 +5,19 @@ import com.alibaba.excel.converters.ReadConverterContext;
 import com.alibaba.excel.converters.WriteConverterContext;
 import com.alibaba.excel.enums.CellDataTypeEnum;
 import com.alibaba.excel.metadata.data.WriteCellData;
-import com.autumn.dictData.entity.DictData;
-import com.autumn.dictData.mapper.DictDataMapper;
-import com.autumn.dictType.entity.DictType;
-import com.autumn.dictType.mapper.DictTypeMapper;
+import com.autumn.easyExcel.entity.DictData;
+import com.autumn.easyExcel.entity.DictType;
+import com.autumn.easyExcel.mapper.DictDataMapper;
+import com.autumn.easyExcel.mapper.DictTypeMapper;
 import com.autumn.springConfig.StaticMethodGetBean;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 
+/**
+ * 是否 导入导出转换
+ */
 public class WhetherDictConverter implements Converter<String> {
 
     private final String dictType = "whether";

@@ -1,6 +1,6 @@
-package com.autumn.dictData.mapper;
+package com.autumn.easyExcel.mapper;
 
-import com.autumn.dictData.entity.DictData;
+import com.autumn.easyExcel.entity.DictData;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**

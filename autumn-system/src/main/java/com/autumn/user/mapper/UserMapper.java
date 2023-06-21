@@ -1,6 +1,6 @@
 package com.autumn.user.mapper;
 
-import com.autumn.user.entity.User;
+import com.autumn.sa_token.entity.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**

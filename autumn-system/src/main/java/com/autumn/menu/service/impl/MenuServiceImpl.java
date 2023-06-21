@@ -22,7 +22,7 @@ import com.autumn.redis.RedisUtil;
 import com.autumn.result.Result;
 import com.autumn.sa_token.LoginInfoData;
 import com.autumn.sa_token.StpInterfaceImpl;
-import com.autumn.user.entity.User;
+import com.autumn.sa_token.entity.User;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.Page;

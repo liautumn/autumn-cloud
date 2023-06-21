@@ -1,13 +1,15 @@
 package com.autumn.easyExcel;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.excel.write.handler.AbstractRowWriteHandler;
-import com.alibaba.excel.write.metadata.holder.*;
-import org.apache.poi.ss.usermodel.*;
+import com.alibaba.excel.write.metadata.holder.WriteSheetHolder;
+import com.alibaba.excel.write.metadata.holder.WriteTableHolder;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -95,7 +97,7 @@ public class CustomRowHeightColWidthHandler extends AbstractRowWriteHandler {
         colWidthList.removeAll(sheetColWidthList);
         //重新获取要添加的sheet页姓名
         sheetNameList = this.rowHeightList.stream().map(x -> x.getSheetName()).distinct().collect(Collectors.toList());
-        sheetNameList.addAll(this.colWidthList.stream().map(x ->  x.getSheetName()).distinct().collect(Collectors.toList()));
+        sheetNameList.addAll(this.colWidthList.stream().map(x -> x.getSheetName()).distinct().collect(Collectors.toList()));
         sheetNameList = sheetNameList.stream().distinct().collect(Collectors.toList());
     }
 }

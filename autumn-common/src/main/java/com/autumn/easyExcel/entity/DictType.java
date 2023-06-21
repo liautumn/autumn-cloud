@@ -1,4 +1,4 @@
-package com.autumn.dictType.entity;
+package com.autumn.easyExcel.entity;
 
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.autumn.easyExcel.converter.WhetherDictConverter;

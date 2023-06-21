@@ -1,4 +1,4 @@
-package com.autumn.dictData.entity;
+package com.autumn.easyExcel.entity;
 
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.autumn.easyExcel.converter.WhetherDictConverter;
@@ -15,7 +15,7 @@ import java.io.Serializable;
  * @date 2023-06-13 09:00:38
  * 字典数据表
  */
-@TableName(value ="sys_dict_data")
+@TableName(value = "sys_dict_data")
 @Data
 @Accessors
 public class DictData extends PublicEntity implements Serializable {

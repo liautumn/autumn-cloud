@@ -7,6 +7,6 @@ import feign.RequestTemplate;
 public class FeignAuthRequestInterceptor implements RequestInterceptor {
     @Override
     public void apply(RequestTemplate requestTemplate) {
-        requestTemplate.header("token", StpUtil.getTokenValue());
+        requestTemplate.header("autumn-token", StpUtil.getTokenValue());
     }
 }

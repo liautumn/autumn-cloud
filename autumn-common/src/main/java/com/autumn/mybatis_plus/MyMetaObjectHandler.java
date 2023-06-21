@@ -1,7 +1,7 @@
 package com.autumn.mybatis_plus;
 
 import com.autumn.sa_token.LoginInfoData;
-import com.autumn.user.entity.User;
+import com.autumn.sa_token.entity.User;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.stereotype.Component;

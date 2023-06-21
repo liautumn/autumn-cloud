@@ -1,7 +1,7 @@
 package com.autumn.user.controller;
 
 import com.autumn.result.Result;
-import com.autumn.user.entity.User;
+import com.autumn.sa_token.entity.User;
 import com.autumn.user.service.UserService;
 import org.springframework.web.bind.annotation.*;
 

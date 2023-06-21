@@ -1,4 +1,4 @@
-package com.autumn.user.entity;
+package com.autumn.sa_token.entity;
 
 import com.autumn.public_entity.PublicEntity;
 import com.baomidou.mybatisplus.annotation.TableField;
