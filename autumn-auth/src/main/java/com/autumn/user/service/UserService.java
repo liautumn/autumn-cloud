@@ -3,6 +3,7 @@ package com.autumn.user.service;
 import com.autumn.result.Result;
 import com.autumn.sa_token.entity.User;
 import com.autumn.user.entity.LoginDto;
+import com.autumn.user.entity.PasswordDto;
 import com.autumn.user.entity.UserInsertDto;
 import com.autumn.user.entity.UserUpdateDto;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -21,4 +22,8 @@ public interface UserService extends IService<User> {
     Result updateUser(UserUpdateDto userUpdateDto);
 
     Result login(LoginDto login);
+
+    Result getOneUser(String id);
+
+    Result updatePassword(PasswordDto passwordDto);
 }

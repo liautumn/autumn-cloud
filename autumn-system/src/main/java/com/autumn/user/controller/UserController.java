@@ -29,9 +29,5 @@ public class UserController {
     public Result select() {
         return userService.select();
     }
-    @GetMapping("/getOneUser")
-    public Result getOneUser(@RequestParam("id") String id) {
-        return userService.getOneUser(id);
-    }
 
 }

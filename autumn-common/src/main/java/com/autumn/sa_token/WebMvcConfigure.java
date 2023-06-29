@@ -2,7 +2,11 @@ package com.autumn.sa_token;
 
 import cn.dev33.satoken.interceptor.SaInterceptor;
 import cn.dev33.satoken.stp.StpUtil;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -16,7 +20,7 @@ public class WebMvcConfigure implements WebMvcConfigurer {
         // 注册 Sa-Token 拦截器，校验规则为 StpUtil.checkLogin() 登录校验。
         registry.addInterceptor(new SaInterceptor(handle -> StpUtil.checkLogin()))
                 .addPathPatterns("/**")
-                .excludePathPatterns("/login", "/logout", "/user/insert");
+                .excludePathPatterns("/login", "/logout", "/signUp");
         /**
          * @SaCheckLogin: 登录校验 —— 只有登录之后才能进入该方法。
          * @SaCheckRole("admin"): 角色校验 —— 必须具有指定角色标识才能进入该方法。
@@ -30,5 +34,21 @@ public class WebMvcConfigure implements WebMvcConfigurer {
         // 注册注解拦截器，并排除不需要注解鉴权的接口地址 (与登录拦截器无关)
         registry.addInterceptor(new SaInterceptor()).addPathPatterns("/**");
     }
+
+    /**
+     * 开发中遇到前端请求后端保存接口的时候 出现JSON parse error: Unrecognized field "xxx"的错误。
+     *
+     * @return
+     */
+//    @Bean
+//    public MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter() {
+//
+//        MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        //添加此配置
+//        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+//        converter.setObjectMapper(objectMapper);
+//        return converter;
+//    }
 
 }

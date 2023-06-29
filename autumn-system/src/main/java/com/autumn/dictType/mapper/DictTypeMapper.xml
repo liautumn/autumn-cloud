@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.autumn.dictType.mapper.DictTypeMapper">
+<mapper namespace="com.autumn.easyExcel.mapper.DictTypeMapper">
 
-    <resultMap id="BaseResultMap" type="com.autumn.dictType.entity.DictType">
+    <resultMap id="BaseResultMap" type="com.autumn.easyExcel.entity.DictType">
             <result property="id" column="id" jdbcType="VARCHAR"/>
             <result property="dictName" column="dict_name" jdbcType="VARCHAR"/>
             <result property="dictType" column="dict_type" jdbcType="VARCHAR"/>

@@ -1,25 +1,25 @@
-package com.autumn.menu.excel;
+package com.autumn.easyExcel.converter;
 
+import com.alibaba.excel.annotation.ExcelProperty;
 import com.alibaba.excel.converters.Converter;
 import com.alibaba.excel.converters.ReadConverterContext;
 import com.alibaba.excel.converters.WriteConverterContext;
 import com.alibaba.excel.enums.CellDataTypeEnum;
 import com.alibaba.excel.metadata.data.WriteCellData;
-import com.autumn.dictData.entity.DictData;
-import com.autumn.dictData.mapper.DictDataMapper;
-import com.autumn.dictType.entity.DictType;
-import com.autumn.dictType.mapper.DictTypeMapper;
+import com.autumn.easyExcel.entity.DictData;
+import com.autumn.easyExcel.entity.DictType;
+import com.autumn.easyExcel.mapper.DictDataMapper;
+import com.autumn.easyExcel.mapper.DictTypeMapper;
 import com.autumn.springConfig.StaticMethodGetBean;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 
-public class MenuTypeDictConverter implements Converter<String> {
-
-    private final String dictType = "menuType";
-
-    private WriteConverterContext<String> context;
+/**
+ * 是否 导入导出转换
+ */
+public class DictConverter implements Converter<String> {
 
     @Override
     public Class<?> supportJavaTypeKey() {
@@ -39,19 +39,21 @@ public class MenuTypeDictConverter implements Converter<String> {
      */
     @Override
     public String convertToJavaData(ReadConverterContext<?> context) {
+        ExcelProperty annotation = context.getContentProperty().getField().getAnnotation(ExcelProperty.class);
+        String dictCode = annotation.dictCode();
+        String value = context.getReadCellData().getStringValue();
         DictTypeMapper dictTypeMapper = StaticMethodGetBean.getBean(DictTypeMapper.class);
         DictDataMapper dictDataMapper = StaticMethodGetBean.getBean(DictDataMapper.class);
         LambdaQueryWrapper<DictType> dictTypeLambdaQueryWrapper = new LambdaQueryWrapper<DictType>()
-                .eq(DictType::getDictType, dictType);
+                .eq(DictType::getDictType, dictCode);
         DictType dt = dictTypeMapper.selectOne(dictTypeLambdaQueryWrapper);
         if (dt == null) {
-            return null;
+            return value;
         }
         LambdaQueryWrapper<DictData> dictDataLambdaQueryWrapper = new LambdaQueryWrapper<DictData>()
-                .eq(DictData::getDictType, dt.getDictType());
+                .eq(DictData::getDictTypeId, dt.getId());
         List<DictData> dataList = dictDataMapper.selectList(dictDataLambdaQueryWrapper);
-        String value = context.getReadCellData().getStringValue();
-        String res = null;
+        String res = "/";
         if (!CollectionUtils.isEmpty(dataList)) {
             for (DictData data : dataList) {
                 if (value.equals(data.getDictLabel())) {
@@ -69,20 +71,22 @@ public class MenuTypeDictConverter implements Converter<String> {
      * @return
      */
     @Override
-    public WriteCellData<?> convertToExcelData(WriteConverterContext<String> context) throws InstantiationException, IllegalAccessException {
+    public WriteCellData<?> convertToExcelData(WriteConverterContext<String> context) {
+        ExcelProperty annotation = context.getContentProperty().getField().getAnnotation(ExcelProperty.class);
+        String dictCode = annotation.dictCode();
         String value = context.getValue();
         DictTypeMapper dictTypeMapper = StaticMethodGetBean.getBean(DictTypeMapper.class);
         DictDataMapper dictDataMapper = StaticMethodGetBean.getBean(DictDataMapper.class);
         LambdaQueryWrapper<DictType> dictTypeLambdaQueryWrapper = new LambdaQueryWrapper<DictType>()
-                .eq(DictType::getDictType, dictType);
+                .eq(DictType::getDictType, dictCode);
         DictType dt = dictTypeMapper.selectOne(dictTypeLambdaQueryWrapper);
         if (dt == null) {
-            return null;
+            return new WriteCellData<>(value);
         }
         LambdaQueryWrapper<DictData> dictDataLambdaQueryWrapper = new LambdaQueryWrapper<DictData>()
-                .eq(DictData::getDictType, dt.getDictType());
+                .eq(DictData::getDictTypeId, dt.getId());
         List<DictData> dataList = dictDataMapper.selectList(dictDataLambdaQueryWrapper);
-        String res = null;
+        String res = "/";
         if (!CollectionUtils.isEmpty(dataList)) {
             for (DictData data : dataList) {
                 if (value.equals(data.getDictValue())) {

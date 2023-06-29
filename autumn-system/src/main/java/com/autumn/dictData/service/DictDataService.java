@@ -1,9 +1,9 @@
 package com.autumn.dictData.service;
 
-import com.autumn.dictData.entity.DictData;
 import com.autumn.dictData.entity.DictDataInsertDto;
 import com.autumn.dictData.entity.DictDataSelectDto;
 import com.autumn.dictData.entity.DictDataUpdateDto;
+import com.autumn.easyExcel.entity.DictData;
 import com.autumn.result.Result;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.springframework.web.multipart.MultipartFile;

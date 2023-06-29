@@ -7,10 +7,7 @@ import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.crypto.SecureUtil;
 import com.autumn.result.Result;
 import com.autumn.sa_token.entity.User;
-import com.autumn.user.entity.LoginDto;
-import com.autumn.user.entity.LoginVo;
-import com.autumn.user.entity.UserInsertDto;
-import com.autumn.user.entity.UserUpdateDto;
+import com.autumn.user.entity.*;
 import com.autumn.user.mapper.UserMapper;
 import com.autumn.user.service.UserService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -88,5 +85,30 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         } else {
             return Result.failMsg("用户不存在");
         }
+    }
+
+    @Override
+    public Result getOneUser(String id) {
+        User user = userMapper.selectById(id);
+        user.setPassword(null);
+        return Result.successData(user);
+    }
+
+    @Override
+    public Result updatePassword(PasswordDto passwordDto) {
+        User user = userMapper.selectById(passwordDto.getId());
+        if (user == null){
+            return Result.failMsg("用户不存在");
+        }
+        String pass = SecureUtil.pbkdf2(passwordDto.getOldPassword().toCharArray(), salt.getBytes());
+        if (!pass.equals(user.getPassword())){
+            return Result.failMsg("原密码错误");
+        }
+        String newPass = SecureUtil.pbkdf2(passwordDto.getNewPassword().toCharArray(), salt.getBytes());
+        User userUpdate = new User();
+        userUpdate.setId(passwordDto.getId());
+        userUpdate.setPassword(newPass);
+        int i = userMapper.updateById(userUpdate);
+        return i > 0 ? Result.success() : Result.failMsg("修改密码失败");
     }
 }

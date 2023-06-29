@@ -3,6 +3,7 @@ package com.autumn.auth.controller;
 import cn.dev33.satoken.stp.StpUtil;
 import com.autumn.result.Result;
 import com.autumn.user.entity.LoginDto;
+import com.autumn.user.entity.PasswordDto;
 import com.autumn.user.entity.UserInsertDto;
 import com.autumn.user.entity.UserUpdateDto;
 import com.autumn.user.service.UserService;
@@ -70,6 +71,28 @@ public class LoginController {
     @PostMapping("/update")
     public Result update(@RequestBody @Validated UserUpdateDto userUpdateDto) {
         return userService.updateUser(userUpdateDto);
+    }
+
+    /**
+     * 获取用户信息
+     *
+     * @param id
+     * @return
+     */
+    @GetMapping("/getOneUser")
+    public Result getOneUser(@RequestParam("id") String id) {
+        return userService.getOneUser(id);
+    }
+
+    /**
+     * 修改密码
+     *
+     * @param passwordDto
+     * @return
+     */
+    @PostMapping("/updatePassword")
+    public Result updatePassword(@RequestBody @Validated PasswordDto passwordDto) {
+        return userService.updatePassword(passwordDto);
     }
 
 }

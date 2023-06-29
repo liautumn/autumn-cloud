@@ -1,8 +1,7 @@
 package com.autumn.menu.entity;
 
 import com.alibaba.excel.annotation.ExcelProperty;
-import com.autumn.easyExcel.converter.WhetherDictConverter;
-import com.autumn.menu.excel.MenuTypeDictConverter;
+import com.autumn.easyExcel.converter.DictConverter;
 import com.autumn.public_entity.PublicEntity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -78,35 +77,35 @@ public class Menu extends PublicEntity implements Serializable {
     /**
      * 是否为外链（0是 1否）
      */
-    @ExcelProperty(value = "是否为外链", converter = WhetherDictConverter.class)
+    @ExcelProperty(value = "是否为外链", converter = DictConverter.class, dictCode = "whether")
     @TableField(value = "is_link")
     private String isLink;
 
     /**
      * 是否隐藏（0是 1否）
      */
-    @ExcelProperty(value = "是否隐藏", converter = WhetherDictConverter.class)
+    @ExcelProperty(value = "是否隐藏", converter = DictConverter.class, dictCode = "whether")
     @TableField(value = "is_hide")
     private String isHide;
 
     /**
      * 是否全屏显示（0是 1否）
      */
-    @ExcelProperty(value = "是否全屏显示", converter = WhetherDictConverter.class)
+    @ExcelProperty(value = "是否全屏显示", converter = DictConverter.class, dictCode = "whether")
     @TableField(value = "is_full")
     private String isFull;
 
     /**
      * 是否固定页（0是 1否）
      */
-    @ExcelProperty(value = "是否固定页", converter = WhetherDictConverter.class)
+    @ExcelProperty(value = "是否固定页", converter = DictConverter.class, dictCode = "whether")
     @TableField(value = "is_affix")
     private String isAffix;
 
     /**
      * 是否缓存（0是 1否）
      */
-    @ExcelProperty(value = "是否缓存", converter = WhetherDictConverter.class)
+    @ExcelProperty(value = "是否缓存", converter = DictConverter.class, dictCode = "whether")
     @TableField(value = "is_keep_alive")
     private String isKeepAlive;
 
@@ -120,14 +119,14 @@ public class Menu extends PublicEntity implements Serializable {
     /**
      * 菜单类型（0目录 1菜单 2按钮）
      */
-    @ExcelProperty(value = "菜单类型", converter = MenuTypeDictConverter.class)
+    @ExcelProperty(value = "菜单类型", converter = DictConverter.class, dictCode = "menuType")
     @TableField(value = "menu_type")
     private String menuType;
 
     /**
      * 是否停用（0是 1否）
      */
-    @ExcelProperty(value = "是否停用", converter = WhetherDictConverter.class)
+    @ExcelProperty(value = "是否停用", converter = DictConverter.class, dictCode = "whether")
     @TableField(value = "status")
     private String status;
 

@@ -168,18 +168,12 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
         response.setCharacterEncoding("utf-8");
         try {
+            String sheetName = "菜单";
             // 这里URLEncoder.encode可以防止中文乱码 当然和easyexcel没有关系
-            String fileName = URLEncoder.encode("菜单列表", "UTF-8").replaceAll("\\+", "%20");
+            String fileName = URLEncoder.encode(sheetName + "列表", "UTF-8").replaceAll("\\+", "%20");
             response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + fileName + ".xlsx");
 
             List<RowHeightColWidthModel> rowHeightColWidthList = new ArrayList<>();
-            String sheetName = "菜单";
-            //设置行高
-//            rowHeightColWidthList.add(RowHeightColWidthModel.createRowHeightModel(sheetName, 0, 20f));
-            //隐藏行
-//            rowHeightColWidthList.add(RowHeightColWidthModel.createHideRowModel(sheetName, 2));
-            //设置列宽
-            rowHeightColWidthList.add(RowHeightColWidthModel.createColWidthModel(sheetName, 0, 20));
             //隐藏列
             rowHeightColWidthList.add(RowHeightColWidthModel.createHideColModel(sheetName, 0));
 

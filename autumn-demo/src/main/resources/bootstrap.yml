@@ -3,6 +3,8 @@ server:
   servlet:
     context-path: /demo
 spring:
+  main:
+    allow-circular-references: true
   application:
     name: autumn-demo
   profiles:

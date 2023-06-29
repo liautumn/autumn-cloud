@@ -1,15 +1,15 @@
 package com.autumn.dictData.service.impl;
 
 import com.alibaba.excel.EasyExcel;
-import com.autumn.dictData.entity.DictData;
 import com.autumn.dictData.entity.DictDataInsertDto;
 import com.autumn.dictData.entity.DictDataSelectDto;
 import com.autumn.dictData.entity.DictDataUpdateDto;
-import com.autumn.dictData.mapper.DictDataMapper;
 import com.autumn.dictData.service.DictDataService;
 import com.autumn.easyExcel.CustomRowHeightColWidthHandler;
 import com.autumn.easyExcel.RowHeightColWidthModel;
+import com.autumn.easyExcel.entity.DictData;
 import com.autumn.easyExcel.listener.ImportExcelListener;
+import com.autumn.easyExcel.mapper.DictDataMapper;
 import com.autumn.page.ResData;
 import com.autumn.result.Result;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -88,19 +88,18 @@ public class DictDataServiceImpl extends ServiceImpl<DictDataMapper, DictData> i
         List<DictData> dictDatas = new ArrayList<>();
         if (!dictDataSelectDto.getTempFlag()) {
             LambdaQueryWrapper<DictData> queryWrapper = new LambdaQueryWrapper<DictData>()
-                    .orderByDesc(DictData::getCreateTime);
+                    .eq(DictData::getDictTypeId, dictDataSelectDto.getDictTypeId())
+                    .orderByAsc(DictData::getDictSort);
             dictDatas = dictDataMapper.selectList(queryWrapper);
         }
         response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
         response.setCharacterEncoding("utf-8");
         try {
+            String sheetName = "字典数据";
             // 这里URLEncoder.encode可以防止中文乱码 当然和easyexcel没有关系
-            String fileName = URLEncoder.encode("字典数据列表", "UTF-8").replaceAll("\\+", "%20");
+            String fileName = URLEncoder.encode(sheetName + "列表", "UTF-8").replaceAll("\\+", "%20");
             response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + fileName + ".xlsx");
             List<RowHeightColWidthModel> rowHeightColWidthList = new ArrayList<>();
-            String sheetName = "字典数据";
-            //设置列宽
-            rowHeightColWidthList.add(RowHeightColWidthModel.createColWidthModel(sheetName, 0, 20));
             //隐藏列
             rowHeightColWidthList.add(RowHeightColWidthModel.createHideColModel(sheetName, 0));
             EasyExcel.write(response.getOutputStream(), DictData.class)

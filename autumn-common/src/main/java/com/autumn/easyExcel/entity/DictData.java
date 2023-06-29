@@ -1,10 +1,11 @@
 package com.autumn.easyExcel.entity;
 
 import com.alibaba.excel.annotation.ExcelProperty;
-import com.autumn.easyExcel.converter.WhetherDictConverter;
+import com.autumn.easyExcel.converter.DictConverter;
 import com.autumn.public_entity.PublicEntity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -73,13 +74,13 @@ public class DictData extends PublicEntity implements Serializable {
     /**
      * 是否默认（0是 1否）
      */
-    @ExcelProperty(value = "是否默认", converter = WhetherDictConverter.class)
+    @ExcelProperty(value = "是否默认", converter = DictConverter.class, dictCode = "whether")
     @TableField(value = "is_default")
     private String isDefault;
     /**
      * 是否停用（0是 1否）
      */
-    @ExcelProperty(value = "是否停用", converter = WhetherDictConverter.class)
+    @ExcelProperty(value = "是否停用", converter = DictConverter.class, dictCode = "whether")
     @TableField(value = "status")
     private String status;
     /**

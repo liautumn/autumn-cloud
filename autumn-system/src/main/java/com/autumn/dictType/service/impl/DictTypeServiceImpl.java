@@ -1,17 +1,17 @@
 package com.autumn.dictType.service.impl;
 
 import com.alibaba.excel.EasyExcel;
-import com.autumn.dictData.entity.DictData;
-import com.autumn.dictData.mapper.DictDataMapper;
-import com.autumn.dictType.entity.DictType;
 import com.autumn.dictType.entity.DictTypeInsertDto;
 import com.autumn.dictType.entity.DictTypeSelectDto;
 import com.autumn.dictType.entity.DictTypeUpdateDto;
-import com.autumn.dictType.mapper.DictTypeMapper;
 import com.autumn.dictType.service.DictTypeService;
 import com.autumn.easyExcel.CustomRowHeightColWidthHandler;
 import com.autumn.easyExcel.RowHeightColWidthModel;
+import com.autumn.easyExcel.entity.DictData;
+import com.autumn.easyExcel.entity.DictType;
 import com.autumn.easyExcel.listener.ImportExcelListener;
+import com.autumn.easyExcel.mapper.DictDataMapper;
+import com.autumn.easyExcel.mapper.DictTypeMapper;
 import com.autumn.page.ResData;
 import com.autumn.result.Result;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -105,13 +105,11 @@ public class DictTypeServiceImpl extends ServiceImpl<DictTypeMapper, DictType> i
         response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
         response.setCharacterEncoding("utf-8");
         try {
+            String sheetName = "字典类型";
             // 这里URLEncoder.encode可以防止中文乱码 当然和easyexcel没有关系
-            String fileName = URLEncoder.encode("字典类型列表", "UTF-8").replaceAll("\\+", "%20");
+            String fileName = URLEncoder.encode(sheetName + "列表", "UTF-8").replaceAll("\\+", "%20");
             response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + fileName + ".xlsx");
             List<RowHeightColWidthModel> rowHeightColWidthList = new ArrayList<>();
-            String sheetName = "字典类型";
-            //设置列宽
-            rowHeightColWidthList.add(RowHeightColWidthModel.createColWidthModel(sheetName, 0, 20));
             //隐藏列
             rowHeightColWidthList.add(RowHeightColWidthModel.createHideColModel(sheetName, 0));
             EasyExcel.write(response.getOutputStream(), DictType.class)

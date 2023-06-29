@@ -20,8 +20,8 @@
     <dependencies>
 
         <dependency>
-            <groupId>com.autumn</groupId>
-            <artifactId>autumn-common</artifactId>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
 
     </dependencies>

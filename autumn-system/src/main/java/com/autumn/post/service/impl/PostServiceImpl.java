@@ -97,7 +97,7 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
         response.setCharacterEncoding("utf-8");
         try {
             String sheetName = "岗位信息";
-            // 这里URLEncoder.encode可以防止中文乱码 当然和easyexcel没有关系
+            // 这里URLEncoder.encode可以防止中文乱码
             String fileName = URLEncoder.encode(sheetName + "列表", "UTF-8").replaceAll("\\+", "%20");
             response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + fileName + ".xlsx");
             List<RowHeightColWidthModel> rowHeightColWidthList = new ArrayList<>();

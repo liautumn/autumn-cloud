@@ -3,6 +3,8 @@ server:
   servlet:
     context-path: /generate
 spring:
+  main:
+    allow-circular-references: true
   application:
     name: autumn-generate
   profiles:

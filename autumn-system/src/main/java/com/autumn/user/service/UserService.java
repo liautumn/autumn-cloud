@@ -17,5 +17,4 @@ public interface UserService extends IService<User> {
 
     Result updateUser(User user);
 
-    Result getOneUser(String id);
 }

@@ -3,6 +3,8 @@ server:
   servlet:
     context-path: /system
 spring:
+  main:
+    allow-circular-references: true
   application:
     name: autumn-system
   profiles:
