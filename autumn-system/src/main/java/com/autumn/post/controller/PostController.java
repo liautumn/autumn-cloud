@@ -1,6 +1,5 @@
 package com.autumn.post.controller;
 
-import com.autumn.menu.entity.MenuSelectDto;
 import com.autumn.post.entity.PostInsertDto;
 import com.autumn.post.entity.PostSelectDto;
 import com.autumn.post.entity.PostUpdateDto;

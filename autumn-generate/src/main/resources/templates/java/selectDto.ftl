@@ -32,6 +32,10 @@ public class ${entityName}SelectDto extends Page implements Serializable {
     private ${value.dataType} ${dashedToCamel(value.columnName)};
     </#if>
 </#list>
+    /**
+     * 模板标记
+     */
+    private Boolean tempFlag = false;
 
 <#function dashedToCamel(s)>
     <#return s

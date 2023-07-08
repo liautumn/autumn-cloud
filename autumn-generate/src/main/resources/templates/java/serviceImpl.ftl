@@ -1,12 +1,16 @@
 package ${rootPath}.${entityName?uncap_first}.service.impl;
 
+import com.alibaba.excel.EasyExcel;
+import ${rootPath}.easyExcel.CustomRowHeightColWidthHandler;
+import ${rootPath}.easyExcel.RowHeightColWidthModel;
+import ${rootPath}.easyExcel.listener.ImportExcelListener;
+import ${rootPath}.page.ResData;
 import ${rootPath}.${entityName?uncap_first}.entity.${entityName};
 import ${rootPath}.${entityName?uncap_first}.entity.${entityName}InsertDto;
 import ${rootPath}.${entityName?uncap_first}.entity.${entityName}SelectDto;
 import ${rootPath}.${entityName?uncap_first}.entity.${entityName}UpdateDto;
 import ${rootPath}.${entityName?uncap_first}.mapper.${entityName}Mapper;
 import ${rootPath}.${entityName?uncap_first}.service.${entityName}Service;
-import ${rootPath}.page.ResData;
 import ${rootPath}.result.Result;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -14,8 +18,12 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
+import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -29,6 +37,8 @@ public class ${entityName}ServiceImpl extends ServiceImpl<${entityName}Mapper, $
 
     @Resource
     private ${entityName}Mapper ${entityName?uncap_first}TypeMapper;
+    @Resource
+    private ${entityName}Service ${entityName?uncap_first}Service;
 
     /**
      * ${title}查询
@@ -73,4 +83,48 @@ public class ${entityName}ServiceImpl extends ServiceImpl<${entityName}Mapper, $
         int i = ${entityName?uncap_first}TypeMapper.deleteBatchIds(idList);
         return i > 0 ? Result.success() : Result.fail();
     }
+
+    /**
+     * ${title}excel导出
+     */
+    @Override
+    public void export${entityName}(${entityName}SelectDto ${entityName?uncap_first}SelectDto, HttpServletResponse response) {
+        List<${entityName}> list = new ArrayList<>();
+        if (!${entityName?uncap_first}SelectDto.getTempFlag()) {
+            LambdaQueryWrapper<${entityName}> queryWrapper = new LambdaQueryWrapper<${entityName}>()
+                    .orderByAsc(${entityName}::get${entityName}Sort);
+            list = ${entityName?uncap_first}Mapper.selectList(queryWrapper);
+        }
+        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        response.setCharacterEncoding("utf-8");
+        try {
+            String sheetName = "${title}";
+            // 这里URLEncoder.encode可以防止中文乱码
+            String fileName = URLEncoder.encode(sheetName + "列表", "UTF-8").replaceAll("\\+", "%20");
+            response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + fileName + ".xlsx");
+            List<RowHeightColWidthModel> rowHeightColWidthList = new ArrayList<>();
+            //隐藏列
+            rowHeightColWidthList.add(RowHeightColWidthModel.createHideColModel(sheetName, 0));
+            EasyExcel.write(response.getOutputStream(), ${entityName}.class)
+                    .sheet(sheetName)
+                    .registerWriteHandler(new CustomRowHeightColWidthHandler(rowHeightColWidthList))
+                    .doWrite(list);
+        } catch (Exception e) {
+            e.getMessage();
+        }
+    }
+
+    /**
+     * ${title}excel导入
+     */
+    @Override
+    public Result import${entityName}(MultipartFile file) {
+        try {
+            EasyExcel.read(file.getInputStream(), ${entityName}.class, new ImportExcelListener<${entityName}>(${entityName?uncap_first}Service)).sheet("岗位信息").doRead();
+        } catch (Exception e) {
+            e.getMessage();
+        }
+        return Result.success();
+    }
+
 }

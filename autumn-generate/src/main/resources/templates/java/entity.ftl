@@ -1,11 +1,16 @@
 package ${rootPath}.${entityName?uncap_first}.entity;
 
-import com.baomidou.mybatisplus.annotation.*;
-
-import java.io.Serializable;
-import java.time.LocalDateTime;
+import com.alibaba.excel.annotation.ExcelProperty;
+import com.alibaba.excel.annotation.write.style.ColumnWidth;
+import com.alibaba.excel.annotation.write.style.HeadRowHeight;
+import ${rootPath}.easyExcel.converter.DictConverter;
+import ${rootPath}.public_entity.PublicEntity;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.experimental.Accessors;
+
+import java.io.Serializable;
 
 /**
  * @author ${author}
@@ -15,51 +20,23 @@ import lombok.experimental.Accessors;
 @TableName(value ="${tableName}")
 @Data
 @Accessors
-public class ${entityName} implements Serializable {
+@ColumnWidth(30)
+@HeadRowHeight(20)
+public class ${entityName} extends PublicEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
 <#list columns as value>
-    <#if value.columnName == "id">
+    <#if value.columnName != "id" &&
+         value.columnName != "del_flag" &&
+         value.columnName != "create_by" &&
+         value.columnName != "create_time" &&
+         value.columnName != "update_by" &&
+         value.columnName != "update_time">
     /**
      * ${value.columnComment}
      */
-    @TableId(value = "id", type = IdType.ASSIGN_ID)
-    private String id;
-    <#elseif value.columnName == "del_flag">
-    /**
-     * 删除标志（0代表删除 1代表存在）
-     */
-    @TableField(value = "del_flag")
-    private String delFlag;
-    <#elseif value.columnName == "create_by">
-    /**
-     * 创建者
-     */
-    @TableField(value = "create_by", fill = FieldFill.INSERT)
-    private String createBy;
-    <#elseif value.columnName == "create_time">
-    /**
-     * 创建时间
-     */
-    @TableField(value = "create_time", fill = FieldFill.INSERT)
-    private LocalDateTime createTime;
-    <#elseif value.columnName == "update_by">
-    /**
-     * 更新者
-     */
-    @TableField(value = "update_by", fill = FieldFill.UPDATE)
-    private String updateBy;
-    <#elseif value.columnName == "update_time">
-    /**
-     * 更新时间
-     */
-    @TableField(value = "update_time", fill = FieldFill.UPDATE)
-    private LocalDateTime updateTime;
-    <#else>
-    /**
-     * ${value.columnComment}
-     */
+    @ExcelProperty(value = "${value.columnComment}")
     @TableField(value = "${value.columnName}")
     private ${value.dataType} ${dashedToCamel(value.columnName)};
     </#if>

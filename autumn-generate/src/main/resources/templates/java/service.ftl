@@ -6,6 +6,9 @@ import ${rootPath}.${entityName?uncap_first}.entity.${entityName}SelectDto;
 import ${rootPath}.${entityName?uncap_first}.entity.${entityName}UpdateDto;
 import ${rootPath}.result.Result;
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author ${author}
@@ -33,5 +36,15 @@ public interface ${entityName}Service extends IService<${entityName}> {
      * ${title}删除
      */
     Result delete${entityName}(String ids);
+
+    /**
+     * ${title}excel导出
+     */
+    void export${title}(${title}SelectDto ${entityName?uncap_first}SelectDto, HttpServletResponse response);
+
+    /**
+     * ${title}excel导入
+     */
+    Result import${title}(MultipartFile file);
 
 }

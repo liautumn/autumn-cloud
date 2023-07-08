@@ -7,8 +7,10 @@ import ${rootPath}.${entityName?uncap_first}.service.${entityName}Service;
 import ${rootPath}.result.Result;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author ${author}
@@ -52,6 +54,22 @@ public class ${entityName}Controller {
     @GetMapping("/delete")
     public Result delete${entityName}(@RequestParam("ids") String ids) {
         return ${entityName?uncap_first}Service.delete${entityName}(ids);
+    }
+
+    /**
+     * ${title}excel导出
+     */
+    @PostMapping("/export")
+    public void export${entityName}(@RequestBody ${entityName}SelectDto ${entityName?uncap_first}SelectDto, HttpServletResponse response) {
+        postService.export${entityName}(${entityName?uncap_first}SelectDto, response);
+    }
+
+    /**
+     * ${title}excel导入
+     */
+    @PostMapping("/import")
+    public Result import${entityName}(MultipartFile file) {
+        return ${entityName?uncap_first}Service.import${entityName}(file);
     }
 
 }
