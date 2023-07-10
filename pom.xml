@@ -23,7 +23,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.6.3</version>
+        <version>2.6.13</version>
     </parent>
 
     <properties>
@@ -32,8 +32,8 @@
         <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <snakeyaml.version>1.33</snakeyaml.version>
-        <spring.cloud.version>2021.0.1</spring.cloud.version>
-        <spring.cloud.alibaba.version>2021.0.1.0</spring.cloud.alibaba.version>
+        <spring.cloud.version>2021.0.5</spring.cloud.version>
+        <spring.cloud.alibaba.version>2021.0.5.0</spring.cloud.alibaba.version>
 
         <mysql.version>8.0.27</mysql.version>
         <lombok.version>1.18.26</lombok.version>
@@ -224,7 +224,7 @@
             <properties>
                 <!--当前环境-->
                 <profile.name>dev</profile.name>
-                <nacos.server-addr>100.75.77.47:8848</nacos.server-addr>
+                <nacos.server-addr>127.0.0.1:8848</nacos.server-addr>
                 <nacos.username>nacos</nacos.username>
                 <nacos.password>nacos</nacos.password>
                 <nacos.config.group>DEFAULT_GROUP</nacos.config.group>
@@ -236,7 +236,7 @@
             <properties>
                 <!--当前环境-->
                 <profile.name>test</profile.name>
-                <nacos.server-addr>192.168.1.3:8848</nacos.server-addr>
+                <nacos.server-addr>100.75.77.47:8848</nacos.server-addr>
                 <nacos.username>nacos</nacos.username>
                 <nacos.password>nacos</nacos.password>
                 <nacos.config.group>DEFAULT_GROUP</nacos.config.group>
