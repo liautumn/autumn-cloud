@@ -1,13 +1,22 @@
 package com.autumn.user.controller;
 
 import com.autumn.result.Result;
-import com.autumn.sa_token.entity.User;
+import com.autumn.user.entity.UserInsertDto;
+import com.autumn.user.entity.UserSelectDto;
+import com.autumn.user.entity.UserUpdateDto;
 import com.autumn.user.service.UserService;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import javax.validation.constraints.NotBlank;
+import javax.servlet.http.HttpServletResponse;
 
+/**
+ * @author lqz
+ * @date 2023-07-10 15:27:07
+ * 用户信息 Controller
+ */
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -15,19 +24,52 @@ public class UserController {
     @Resource
     private UserService userService;
 
-    @GetMapping("/delete")
-    public Result delete(@NotBlank(message = "用户id不能为空") String ids) {
-        return userService.delete(ids);
+    /**
+     * 用户信息查询
+     */
+    @PostMapping("/select")
+    public Result selectUser(@RequestBody UserSelectDto userSelectDto) {
+        return userService.selectUser(userSelectDto);
     }
 
+    /**
+     * 用户信息新增
+     */
+    @PostMapping("/insert")
+    public Result insertUser(@RequestBody @Validated UserInsertDto userInsertDto) {
+        return userService.insertUser(userInsertDto);
+    }
+
+    /**
+     * 用户信息修改
+     */
     @PostMapping("/update")
-    public Result update(@RequestBody User user) {
-        return userService.updateUser(user);
+    public Result updateUser(@RequestBody @Validated UserUpdateDto userUpdateDto) {
+        return userService.updateUser(userUpdateDto);
     }
 
-    @GetMapping("/select")
-    public Result select() {
-        return userService.select();
+    /**
+     * 用户信息删除
+     */
+    @GetMapping("/delete")
+    public Result deleteUser(@RequestParam("ids") String ids) {
+        return userService.deleteUser(ids);
+    }
+
+    /**
+     * 用户信息excel导出
+     */
+    @PostMapping("/export")
+    public void exportUser(@RequestBody UserSelectDto userSelectDto, HttpServletResponse response) {
+        userService.exportUser(userSelectDto, response);
+    }
+
+    /**
+     * 用户信息excel导入
+     */
+    @PostMapping("/import")
+    public Result importUser(MultipartFile file) {
+        return userService.importUser(file);
     }
 
 }

@@ -4,15 +4,10 @@ import com.autumn.sa_token.entity.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
- * @author Administrator
- * @description 针对表【sys_user(用户信息表)】的数据库操作Mapper
- * @createDate 2023-05-25 13:48:41
- * @Entity com.autumn.user.entity.User
+ * @author lqz
+ * @date 2023-07-10 15:27:07
+ * 用户信息 Mapper
  */
 public interface UserMapper extends BaseMapper<User> {
 
 }
-
-
-
-

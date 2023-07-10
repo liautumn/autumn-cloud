@@ -5,7 +5,9 @@ import cn.dev33.satoken.stp.SaLoginModel;
 import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.crypto.SecureUtil;
+import com.autumn.dictionary.Dictionary;
 import com.autumn.result.Result;
+import com.autumn.sa_token.LoginInfoData;
 import com.autumn.sa_token.entity.User;
 import com.autumn.user.entity.*;
 import com.autumn.user.mapper.UserMapper;
@@ -70,9 +72,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         if (user != null) {
             String pass = SecureUtil.pbkdf2(password.toCharArray(), salt.getBytes());
             if (pass.equals(user.getPassword())) {
-                StpUtil.login(user.getId(), new SaLoginModel().setDevice("PC").setIsLastingCookie(login.getIsRemember()));
+                StpUtil.login(user.getId(), new SaLoginModel().setDevice(Dictionary.PC).setIsLastingCookie(login.getIsRemember()));
                 SaTokenInfo tokenInfo = StpUtil.getTokenInfo();
-                StpUtil.getSession().set("user", user);
+                LoginInfoData.setUserInfo(user);
                 LoginVo loginVo = new LoginVo();
                 BeanUtils.copyProperties(user, loginVo);
                 Map data = new HashMap();
@@ -97,11 +99,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public Result updatePassword(PasswordDto passwordDto) {
         User user = userMapper.selectById(passwordDto.getId());
-        if (user == null){
+        if (user == null) {
             return Result.failMsg("用户不存在");
         }
         String pass = SecureUtil.pbkdf2(passwordDto.getOldPassword().toCharArray(), salt.getBytes());
-        if (!pass.equals(user.getPassword())){
+        if (!pass.equals(user.getPassword())) {
             return Result.failMsg("原密码错误");
         }
         String newPass = SecureUtil.pbkdf2(passwordDto.getNewPassword().toCharArray(), salt.getBytes());
