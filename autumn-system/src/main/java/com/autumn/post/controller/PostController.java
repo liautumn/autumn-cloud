@@ -1,5 +1,6 @@
 package com.autumn.post.controller;
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.autumn.post.entity.PostInsertDto;
 import com.autumn.post.entity.PostSelectDto;
 import com.autumn.post.entity.PostUpdateDto;
@@ -28,6 +29,7 @@ public class PostController {
      * 岗位信息查询
      */
     @PostMapping("/select")
+//    @SaCheckPermission("post.select")
     public Result selectPost(@RequestBody PostSelectDto postSelectDto) {
         return postService.selectPost(postSelectDto);
     }
@@ -36,6 +38,7 @@ public class PostController {
      * 岗位信息新增
      */
     @PostMapping("/insert")
+    @SaCheckPermission("post.insert")
     public Result insertPost(@RequestBody @Validated PostInsertDto postInsertDto) {
         return postService.insertPost(postInsertDto);
     }
@@ -44,6 +47,7 @@ public class PostController {
      * 岗位信息修改
      */
     @PostMapping("/update")
+    @SaCheckPermission("post.update")
     public Result updatePost(@RequestBody @Validated PostUpdateDto postUpdateDto) {
         return postService.updatePost(postUpdateDto);
     }
@@ -52,6 +56,7 @@ public class PostController {
      * 岗位信息删除
      */
     @GetMapping("/delete")
+    @SaCheckPermission("post.delete")
     public Result deletePost(@RequestParam("ids") String ids) {
         return postService.deletePost(ids);
     }
@@ -60,6 +65,7 @@ public class PostController {
      * 岗位信息excel导出
      */
     @PostMapping("/export")
+    @SaCheckPermission("post.export")
     public void exportPost(@RequestBody PostSelectDto postSelectDto, HttpServletResponse response) {
         postService.exportPost(postSelectDto, response);
     }
@@ -68,6 +74,7 @@ public class PostController {
      * 岗位信息excel导入
      */
     @PostMapping("/import")
+    @SaCheckPermission("post.import")
     public Result importPost(MultipartFile file) {
         return postService.importPost(file);
     }
