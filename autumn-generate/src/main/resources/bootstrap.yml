@@ -33,8 +33,8 @@ spring:
         namespace: ${spring.profiles.active}
         # 所属组
         group: '@nacos.config.group@'
-        # 配置名称-dev
-        prefix: ${spring.application.name}
+        # 配置名称
+        name: ${spring.application.name}
         # 指定格式
         file-extension: yml
         # 扩展配置
