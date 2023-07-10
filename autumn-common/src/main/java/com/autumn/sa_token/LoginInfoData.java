@@ -9,4 +9,8 @@ public class LoginInfoData {
         return StpUtil.getSession().get("user", new User());
     }
 
+    public static void setUserInfo(Object data) {
+        StpUtil.getSession().set("user", data);
+    }
+
 }

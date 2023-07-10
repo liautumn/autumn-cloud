@@ -11,11 +11,11 @@ public class Page {
     /**
      * 页码
      */
-    private Integer pageNum = 1;
+    private Integer pageNum;
 
     /**
      * 条数
      */
-    private Integer pageSize = 10;
+    private Integer pageSize;
 
 }

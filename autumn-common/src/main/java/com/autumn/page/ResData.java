@@ -3,6 +3,9 @@ package com.autumn.page;
 import com.autumn.result.Result;
 import com.github.pagehelper.Page;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class ResData {
 
     public static Result setDataTotal(Page page, Object data) {
