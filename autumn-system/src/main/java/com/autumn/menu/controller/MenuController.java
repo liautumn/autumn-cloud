@@ -2,6 +2,7 @@ package com.autumn.menu.controller;
 
 import com.autumn.menu.entity.MenuInsertDto;
 import com.autumn.menu.entity.MenuSelectDto;
+import com.autumn.menu.entity.MenuTreeDto;
 import com.autumn.menu.entity.MenuUpdateDto;
 import com.autumn.menu.service.MenuService;
 import com.autumn.result.Result;
@@ -35,6 +36,14 @@ public class MenuController {
     @PostMapping("/select")
     public Result selectMenu(@RequestBody MenuSelectDto menuSelectDto) {
         return menuService.selectMenu(menuSelectDto);
+    }
+
+    /**
+     * 菜单树列表数据
+     */
+    @PostMapping("/getMenuTree")
+    public Result getMenuTree(@RequestBody MenuTreeDto menuTreeDto) {
+        return menuService.getMenuTree(menuTreeDto);
     }
 
     /**

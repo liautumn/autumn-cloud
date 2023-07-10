@@ -4,6 +4,7 @@ import com.autumn.menu.entity.Menu;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Administrator
@@ -17,6 +18,7 @@ public interface MenuMapper extends BaseMapper<Menu> {
 
     List<Menu> getBtnPermsList(String loginId);
 
+    List<Menu> getMenuBtnsByUserid(Map param);
 }
 
 

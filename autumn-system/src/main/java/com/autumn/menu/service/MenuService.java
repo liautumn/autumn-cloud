@@ -1,9 +1,6 @@
 package com.autumn.menu.service;
 
-import com.autumn.menu.entity.Menu;
-import com.autumn.menu.entity.MenuInsertDto;
-import com.autumn.menu.entity.MenuSelectDto;
-import com.autumn.menu.entity.MenuUpdateDto;
+import com.autumn.menu.entity.*;
 import com.autumn.result.Result;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.springframework.web.multipart.MultipartFile;
@@ -32,4 +29,6 @@ public interface MenuService extends IService<Menu> {
     void exportMenu(MenuSelectDto menuSelectDto, HttpServletResponse response);
 
     Result importMenu(MultipartFile file);
+
+    Result getMenuTree(MenuTreeDto menuTreeDto);
 }

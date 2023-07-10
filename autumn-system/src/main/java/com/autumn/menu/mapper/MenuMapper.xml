@@ -44,14 +44,14 @@
     </sql>
 
     <sql id="getMenuList_Column_List">
-        menu.id,parent_id,path,
-        name,redirect,component,
-        icon,title,active_menu,is_link,
-        is_hide,is_full,is_affix,
-        is_keep_alive,order_num,menu_type,
-        status,perms,query,
-        remark,del_flag,create_by,
-        create_time,update_by,update_time
+        menu.id,menu.parent_id,menu.path,
+        menu.name,menu.redirect,menu.component,
+        menu.icon,menu.title,menu.active_menu,menu.is_link,
+        menu.is_hide,menu.is_full,menu.is_affix,
+        menu.is_keep_alive,menu.order_num,menu.menu_type,
+        menu.status,menu.perms,menu.query,
+        menu.remark,menu.del_flag,menu.create_by,
+        menu.create_time,menu.update_by,menu.update_time
     </sql>
 
     <select id="getMenuList" resultMap="BaseResultMap">
@@ -62,7 +62,7 @@
         sys_role_menu rmenu
         inner join
         sys_user_role urole
-        on menu.menu_id = rmenu.menu_id
+        on menu.id = rmenu.menu_id
         and urole.role_id = rmenu.role_id
         where menu.status = '1'
         and menu.del_flag = '1'
@@ -80,10 +80,35 @@
              sys_role_menu rmenu
                  inner join
              sys_user_role urole
-             on menu.menu_id = rmenu.menu_id and menu.status = '0'
+             on menu.id = rmenu.menu_id and menu.status = '0'
                  and urole.role_id = rmenu.role_id
         where menu.menu_type = 'F'
           and urole.user_id = #{loginId}
+    </select>
+
+    <select id="getMenuBtnsByUserid" resultType="com.autumn.menu.entity.Menu">
+        select menu.id,
+        menu.parent_id parentId,
+        menu.menu_type menuType,
+        menu.name,
+        menu.perms
+        from sys_menu menu
+        inner join
+        sys_role_menu rmenu
+        inner join
+        sys_user_role urole
+        on menu.id = rmenu.menu_id
+        and urole.role_id = rmenu.role_id
+        where menu.status = '1'
+        and menu.del_flag = '1'
+        and rmenu.del_flag = '1'
+        and urole.del_flag = '1'
+        and menu.menu_type = #{menuType}
+        and urole.user_id = #{loginId}
+        <if test="parentId != null and parentId != ''">
+            and menu.parent_id = #{parentId}
+        </if>
+        order by menu.order_num asc
     </select>
 
 </mapper>
