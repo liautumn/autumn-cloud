@@ -1,43 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper
-        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.autumn.role.mapper.RoleMapper">
 
     <resultMap id="BaseResultMap" type="com.autumn.role.entity.Role">
-        <id property="id" column="id" jdbcType="VARCHAR"/>
+        <result property="id" column="id" jdbcType="VARCHAR"/>
         <result property="roleName" column="role_name" jdbcType="VARCHAR"/>
         <result property="roleKey" column="role_key" jdbcType="VARCHAR"/>
         <result property="roleSort" column="role_sort" jdbcType="INTEGER"/>
         <result property="dataScope" column="data_scope" jdbcType="CHAR"/>
-        <result property="menuCheckStrictly" column="menu_check_strictly" jdbcType="VARCHAR"/>
-        <result property="deptCheckStrictly" column="dept_check_strictly" jdbcType="VARCHAR"/>
+        <result property="menuCheckStrictly" column="menu_check_strictly" jdbcType="CHAR"/>
+        <result property="deptCheckStrictly" column="dept_check_strictly" jdbcType="CHAR"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
         <result property="status" column="status" jdbcType="CHAR"/>
         <result property="delFlag" column="del_flag" jdbcType="CHAR"/>
         <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
         <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
         <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
         <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
-        <result property="remark" column="remark" jdbcType="VARCHAR"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        role_id
-        ,role_name,role_key,
-        role_sort,data_scope,menu_check_strictly,
-        dept_check_strictly,status,del_flag,
-        create_by,create_time,update_by,
-        update_time,remark
+        id,
+        role_name,
+        role_key,
+        role_sort,
+        data_scope,
+        menu_check_strictly,
+        dept_check_strictly,
+        remark,
+        status,
+        del_flag,
+        create_by,
+        create_time,
+        update_by,
+        update_time
     </sql>
 
-    <select id="getRoleKeyList" resultType="com.autumn.role.entity.Role">
-        select role.role_key roleKey
-        from sys_role role
-                 inner join
-             sys_user_role urole
-             on role.role_id = urole.role_id and role.del_flag = '0' and
-                role.status = '0'
-        where urole.user_id = #{loginId}
-    </select>
 
 </mapper>
