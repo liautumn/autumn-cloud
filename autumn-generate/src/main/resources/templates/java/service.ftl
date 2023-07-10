@@ -40,11 +40,11 @@ public interface ${entityName}Service extends IService<${entityName}> {
     /**
      * ${title}excel导出
      */
-    void export${title}(${title}SelectDto ${entityName?uncap_first}SelectDto, HttpServletResponse response);
+    void export${entityName}(${entityName}SelectDto ${entityName?uncap_first}SelectDto, HttpServletResponse response);
 
     /**
      * ${title}excel导入
      */
-    Result import${title}(MultipartFile file);
+    Result import${entityName}(MultipartFile file);
 
 }

@@ -55,7 +55,7 @@ public class Templates {
     public static Boolean genMapperXml(GenPublic genPublic) {
         String templateName = "mapperXml";
         String templatePath = "java";
-        String fileOutName = genPublic.getEntityName() + GenerateUtil.captureName(templateName);
+        String fileOutName = genPublic.getEntityName() + "Mapper";
         String fileOutsuffix = "xml";
         String outPackage = "src/main/java/com/autumn/" + GenerateUtil.lowerFirst(genPublic.getEntityName()) + "/mapper";
         Map data = JSON.parseObject(JSON.toJSONString(genPublic), Map.class);
@@ -98,6 +98,46 @@ public class Templates {
         String fileOutName = genPublic.getEntityName() + GenerateUtil.captureName(templateName);
         String fileOutsuffix = "java";
         String outPackage = "src/main/java/com/autumn/" + GenerateUtil.lowerFirst(genPublic.getEntityName()) + "/entity";
+        Map data = JSON.parseObject(JSON.toJSONString(genPublic), Map.class);
+        return GenerateUtil.generateCode(templatePath, templateName, fileOutName, fileOutsuffix, outPackage, data);
+    }
+
+    public static Boolean genList(GenPublic genPublic) {
+        String templateName = "list";
+        String templatePath = "vue3";
+        String fileOutName = GenerateUtil.lowerFirst(genPublic.getEntityName()) + "List";
+        String fileOutsuffix = "vue";
+        String outPackage = "src/src/views/" + genPublic.getSystemCode() + "/" + GenerateUtil.lowerFirst(genPublic.getEntityName()) + "Manage";
+        Map data = JSON.parseObject(JSON.toJSONString(genPublic), Map.class);
+        return GenerateUtil.generateCode(templatePath, templateName, fileOutName, fileOutsuffix, outPackage, data);
+    }
+
+    public static Boolean genForm(GenPublic genPublic) {
+        String templateName = "form";
+        String templatePath = "vue3";
+        String fileOutName = GenerateUtil.lowerFirst(genPublic.getEntityName()) + "Form";
+        String fileOutsuffix = "vue";
+        String outPackage = "src/src/views/" + genPublic.getSystemCode() + "/" + GenerateUtil.lowerFirst(genPublic.getEntityName()) + "Manage";
+        Map data = JSON.parseObject(JSON.toJSONString(genPublic), Map.class);
+        return GenerateUtil.generateCode(templatePath, templateName, fileOutName, fileOutsuffix, outPackage, data);
+    }
+
+    public static Boolean genInterface(GenPublic genPublic) {
+        String templateName = "interface";
+        String templatePath = "vue3";
+        String fileOutName = GenerateUtil.lowerFirst(genPublic.getEntityName());
+        String fileOutsuffix = "ts";
+        String outPackage = "src/src/api/interface/" + genPublic.getSystemCode() + "/" + GenerateUtil.lowerFirst(genPublic.getEntityName());
+        Map data = JSON.parseObject(JSON.toJSONString(genPublic), Map.class);
+        return GenerateUtil.generateCode(templatePath, templateName, fileOutName, fileOutsuffix, outPackage, data);
+    }
+
+    public static Boolean genApi(GenPublic genPublic) {
+        String templateName = "api";
+        String templatePath = "vue3";
+        String fileOutName = GenerateUtil.lowerFirst(genPublic.getEntityName());
+        String fileOutsuffix = "ts";
+        String outPackage = "src/src/api/modules/" + genPublic.getSystemCode() + "/" + GenerateUtil.lowerFirst(genPublic.getEntityName());
         Map data = JSON.parseObject(JSON.toJSONString(genPublic), Map.class);
         return GenerateUtil.generateCode(templatePath, templateName, fileOutName, fileOutsuffix, outPackage, data);
     }

@@ -3,11 +3,14 @@ package com.autumn;
 import com.autumn.generate.entity.GenDto;
 import com.autumn.generate.service.GenerateService;
 import com.autumn.result.Result;
-import com.autumn.utils.GenerateUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author liqiuzhuang
@@ -23,9 +26,11 @@ public class TestController {
     public void getTest() {
         GenDto genDto = new GenDto();
         genDto.setAuthor("lqz");
-        genDto.setTitle("岗位信息");
+        genDto.setTitle("用户角色关系表");
         genDto.setDatabaseName("autumn_cloud");
-        genDto.setTableName("sys_post");
+        genDto.setTableName("sys_user_role");
+        genDto.setRootPath("com.autumn");
+        genDto.setSystemCode("system");
         Result generate = generateService.generate(genDto);
         System.out.printf("===========================================>", generate);
     }

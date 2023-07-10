@@ -28,11 +28,11 @@
            value.columnName != "create_time" &&
            value.columnName != "update_by" &&
            value.columnName != "update_time">
-          <el-col :span="12">
-              <el-form-item label="${value.columnComment}" prop="${dashedToCamel(value.columnName)}">
-                <el-input v-model="dialogProps.row!.${dashedToCamel(value.columnName)}" placeholder="${value.columnComment}" clearable />
-              </el-form-item>
-          </el-col>
+        <el-col :span="12">
+          <el-form-item label="${value.columnComment}" prop="${dashedToCamel(value.columnName)}">
+            <el-input v-model="dialogProps.row!.${dashedToCamel(value.columnName)}" placeholder="${value.columnComment}" clearable />
+          </el-form-item>
+        </el-col>
       </#if>
     </#list>
       </el-row>
@@ -49,7 +49,7 @@
 <script setup lang="ts" name="${entityName?uncap_first}Form">
 import { FormInstance, FormRules, ElMessage } from "element-plus";
 import { ref, reactive } from "vue";
-import { ${entityName} } from "@/api/interface/${entityName?uncap_first}";
+import { ${entityName} } from "@/api/interface/${systemCode}/${entityName?uncap_first}/${entityName?uncap_first}";
 
 const formRef = ref<FormInstance>();
 const dialogFlag = ref(false);
@@ -63,7 +63,11 @@ const rules = reactive<FormRules>({
        value.columnName != "create_time" &&
        value.columnName != "update_by" &&
        value.columnName != "update_time">
+  <#if value_index == ((columns?size) - 6)>
   ${dashedToCamel(value.columnName)}: [{ required: false, message: "不能为空", trigger: "blur" }]
+  <#else>
+  ${dashedToCamel(value.columnName)}: [{ required: false, message: "不能为空", trigger: "blur" }],
+  </#if>
   </#if>
 </#list>
 });
@@ -73,7 +77,7 @@ interface DialogProps {
   type: string;
   title: string;
   disabled: boolean;
-  row: Partial<Post.ResList>;
+  row: Partial<${entityName}.ResList>;
   api?: (params: any) => Promise<any>;
   getTableList?: () => void;
 }
@@ -107,17 +111,10 @@ const reset = () => {
 const submit = () => {
   formRef.value!.validate(async valid => {
     if (!valid) return;
-    try {
-      await dialogProps.value.api!(dialogProps.value.row);
-      ElMessage.success({ message: `${dialogProps.value.title}成功！` });
-      dialogProps.value.getTableList!();
-      close();
-    } catch (error) {
-      ElMessage({
-        message: error,
-        type: "error"
-      });
-    }
+    await dialogProps.value.api!(dialogProps.value.row);
+    ElMessage.success({ message: dialogProps.value.title + "成功！" });
+    dialogProps.value.getTableList!();
+    close();
   });
 };
 
@@ -125,3 +122,15 @@ defineExpose({
   open
 });
 </script>
+
+<#function dashedToCamel(s)>
+    <#return s
+    ?replace('(^_+)|(_+$)', '', 'r')
+    ?replace('\\_+(\\w)?', ' $1', 'r')
+    ?replace('([A-Z])', ' $1', 'r')
+    ?capitalize
+    ?replace(' ' , '')
+    ?uncap_first>
+</#function>
+
+

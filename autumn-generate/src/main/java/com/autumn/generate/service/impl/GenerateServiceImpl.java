@@ -26,14 +26,16 @@ public class GenerateServiceImpl implements GenerateService {
     @Override
     public Result generate(GenDto genDto) {
         String[] prefix = {"sys_"};//去掉字符串前缀为sys_、log_
-        String entityName = GenerateUtil.getNoUnderlineStr(GenerateUtil.captureName(GenerateUtil.removePrefix(genDto.getTableName() ,prefix)));
+        String entity = GenerateUtil.getNoUnderlineStr(GenerateUtil.captureName(GenerateUtil.removePrefix(genDto.getTableName(), prefix)));
+        String entityName = GenerateUtil.getNoUnderlineStr(entity);
         //查询表信息
         Tables table = generateMapper.selectTablesByTableName(genDto);
         //查出字段循环遍历
         List<Columns> columns = generateMapper.selectColumnsByTableName(genDto);
         GenPublic genPublic = new GenPublic();
+        genPublic.setSystemCode(genDto.getSystemCode());
         genPublic.setEntityName(entityName);
-        genPublic.setRootPath("com.autumn");
+        genPublic.setRootPath(genDto.getRootPath());
         genPublic.setColumns(columns);
         genPublic.setTitle(genDto.getTitle());
         genPublic.setDateTime(DateUtil.now());
@@ -51,6 +53,10 @@ public class GenerateServiceImpl implements GenerateService {
         Templates.genInsertDto(genPublic);
         Templates.genUpdateDto(genPublic);
         Templates.genSelectDto(genPublic);
+        Templates.genList(genPublic);
+        Templates.genForm(genPublic);
+        Templates.genInterface(genPublic);
+        Templates.genApi(genPublic);
         return Result.success();
     }
 }

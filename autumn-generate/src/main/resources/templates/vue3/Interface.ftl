@@ -1,4 +1,4 @@
-import { ReqPage } from "./index";
+import { ReqPage } from "@/api/interface";
 
 // ${title}实体类
 export namespace ${entityName} {
@@ -23,3 +23,13 @@ export namespace ${entityName} {
 </#list>
   }
 }
+
+<#function dashedToCamel(s)>
+    <#return s
+    ?replace('(^_+)|(_+$)', '', 'r')
+    ?replace('\\_+(\\w)?', ' $1', 'r')
+    ?replace('([A-Z])', ' $1', 'r')
+    ?capitalize
+    ?replace(' ' , '')
+    ?uncap_first>
+</#function>

@@ -61,7 +61,7 @@ public class ${entityName}Controller {
      */
     @PostMapping("/export")
     public void export${entityName}(@RequestBody ${entityName}SelectDto ${entityName?uncap_first}SelectDto, HttpServletResponse response) {
-        postService.export${entityName}(${entityName?uncap_first}SelectDto, response);
+        ${entityName?uncap_first}Service.export${entityName}(${entityName?uncap_first}SelectDto, response);
     }
 
     /**

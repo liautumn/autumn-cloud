@@ -17,4 +17,8 @@ public class GenDto {
 
     private String author;
 
+    private String systemCode;
+
+    private String rootPath;
+
 }

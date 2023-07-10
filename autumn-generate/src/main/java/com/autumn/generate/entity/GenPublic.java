@@ -29,4 +29,6 @@ public class GenPublic {
 
     private String tableComment;
 
+    private String systemCode;
+
 }

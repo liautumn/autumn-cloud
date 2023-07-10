@@ -12,7 +12,7 @@
     >
       <!-- 表格 header 按钮 -->
       <template #tableHeader="scope">
-        <el-button type="primary" @click="openDialog('add', formDefaultData)" :icon="CirclePlus">新增</el-button>
+        <el-button type="primary" @click="openDialog('insert', formDefaultData)" :icon="CirclePlus">新增</el-button>
         <el-button type="danger" @click="batchDelete(scope.selectedListIds)" :icon="Delete">删除</el-button>
         <el-button type="primary" @click="importClick" plain :icon="Upload">导入</el-button>
         <el-button type="primary" @click="exportClick" plain :icon="Download">导出</el-button>
@@ -48,10 +48,9 @@ import { Delete, EditPen, CirclePlus, Download, Upload } from "@element-plus/ico
 import { useDownload } from "@/hooks/useDownload";
 import ImportExcel from "@/components/ImportExcel/index.vue";
 import { ElMessage, ElMessageBox } from "element-plus";
-import { ${entityName} } from "@/api/interface/${entityName?uncap_first}";
+import { ${entityName} } from "@/api/interface/${systemCode}/${entityName?uncap_first}/${entityName?uncap_first}";
 import ${entityName}Form from "./${entityName?uncap_first}Form.vue";
-import { dictParse } from "@/api/modules/dict";
-import { select${entityName}, insert${entityName}, update${entityName}, delete${entityName}, export${entityName}, import${entityName} } from "@/api/modules/${entityName?uncap_first}";
+import { select${entityName}, insert${entityName}, update${entityName}, delete${entityName}, export${entityName}, import${entityName} } from "@/api/modules/${systemCode}/${entityName?uncap_first}/${entityName?uncap_first}";
 
 const proTable = ref<ProTableInstance>();
 const dataCallback = (data: any) => {
@@ -83,12 +82,17 @@ const columns: ColumnProps<${entityName}.ResList>[] = [
 //声明参数
 const formDefaultData = ref<${entityName}.ResList>({
 <#list columns as value>
-  <#if value.columnName != "del_flag" &&
+  <#if value.columnName != "id" &&
+       value.columnName != "del_flag" &&
        value.columnName != "create_by" &&
        value.columnName != "create_time" &&
        value.columnName != "update_by" &&
        value.columnName != "update_time">
-  "${dashedToCamel(value.columnName)}": "",
+  <#if value_index == ((columns?size) - 6)>
+  ${dashedToCamel(value.columnName)}: ""
+  <#else>
+  ${dashedToCamel(value.columnName)}: "",
+  </#if>
   </#if>
 </#list>
 });
@@ -106,19 +110,13 @@ const deleteClick = async (row: ${entityName}.ResList) => {
 // 批量删除信息
 const batchDelete = async (ids: string[]) => {
   if (ids.length === 0) {
-    ElMessage({
-      message: "请先选择",
-      type: "error"
-    });
+    ElMessage.error("请先选择");
     return;
   }
   await delete${entityName}(ids.toString());
   proTable.value?.clearSelection();
   proTable.value?.getTableList();
-  ElMessage({
-    message: "删除成功!",
-    type: "success"
-  });
+  ElMessage.success("删除成功");
 };
 
 // 导入
@@ -146,11 +144,21 @@ const openDialog = (type: string, row: Partial<${entityName}.ResList> = {}) => {
   const params = {
     type,
     row,
-    title: type === "add" ? "新增" : type === "delete" ? "删除" : type === "update" ? "修改" : type === "view" ? "查看" : "",
+    title: type === "insert" ? "新增" : type === "delete" ? "删除" : type === "update" ? "修改" : type === "view" ? "查看" : "",
     disabled: type === "view",
-    api: type === "add" ? insert${entityName} : type === "update" ? update${entityName} : undefined,
+    api: type === "insert" ? insert${entityName} : type === "update" ? update${entityName} : undefined,
     getTableList: proTable.value?.getTableList
   };
   dialogRef.value?.open(params);
 };
 </script>
+
+<#function dashedToCamel(s)>
+    <#return s
+    ?replace('(^_+)|(_+$)', '', 'r')
+    ?replace('\\_+(\\w)?', ' $1', 'r')
+    ?replace('([A-Z])', ' $1', 'r')
+    ?capitalize
+    ?replace(' ' , '')
+    ?uncap_first>
+</#function>
