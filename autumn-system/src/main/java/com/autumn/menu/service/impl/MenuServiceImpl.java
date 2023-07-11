@@ -1,6 +1,7 @@
 package com.autumn.menu.service.impl;
 
 import com.alibaba.excel.EasyExcel;
+import com.alibaba.fastjson2.JSON;
 import com.autumn.dictionary.Dictionary;
 import com.autumn.easyExcel.CustomRowHeightColWidthHandler;
 import com.autumn.easyExcel.RowHeightColWidthModel;
@@ -11,6 +12,9 @@ import com.autumn.menu.service.MenuService;
 import com.autumn.publicEntity.LabelValue;
 import com.autumn.redis.RedisUtil;
 import com.autumn.result.Result;
+import com.autumn.role.entity.Role;
+import com.autumn.role.mapper.RoleMapper;
+import com.autumn.roleMenu.mapper.RoleMenuMapper;
 import com.autumn.saToken.LoginInfoData;
 import com.autumn.saToken.StpInterfaceImpl;
 import com.autumn.saToken.entity.User;
@@ -42,6 +46,8 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     private MenuMapper menuMapper;
     @Resource
     private MenuService menuService;
+    @Resource
+    private RoleMapper roleMapper;
     @Resource
     private RedisUtil redisUtil;
     @Resource
@@ -116,6 +122,46 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
                 res.put(menu.getName(), perms);
             }
         }
+        //数据格式转化
+        Set<String> keySet = res.keySet();
+        List<String> prems = new ArrayList<>();
+        for (String key : keySet) {
+            List<String> perms = (List<String>) res.get(key);
+            if (!CollectionUtils.isEmpty(perms)){
+                for (String perm : perms) {
+                    prems.add(key + "."+ perm);
+                }
+            }
+        }
+        //清空redis
+        String premKey = LoginInfoData.getUserInfo().getId() + Dictionary.PERMS;
+        redisUtil.remove(premKey);
+        //存入redis
+        redisUtil.set(premKey, JSON.toJSONString(prems));
+        //更新sa-token权限数据
+        stpInterface.getPermissionList(LoginInfoData.getUserInfo().getId(), null);
+
+        //角色权限处理
+        String roleKey = LoginInfoData.getUserInfo().getId() + Dictionary.ROLES;
+        //清空redis
+        redisUtil.remove(roleKey);
+        //判断是否管理员
+        List<Role> roleList = roleMapper.getRoleKeysByLoginId(LoginInfoData.getUserInfo().getId());
+        if (Dictionary.ADMINFLAG.equals(userInfo.getUserType())) {
+            LambdaQueryWrapper<Role> queryWrapper = new LambdaQueryWrapper<Role>()
+                    .eq(Role::getStatus, Dictionary.NO);
+            roleList = roleMapper.selectList(queryWrapper);
+        }else {
+            roleList = roleMapper.getRoleKeysByLoginId(LoginInfoData.getUserInfo().getId());
+        }
+        List<String> roles = new ArrayList<>();
+        if (!CollectionUtils.isEmpty(roleList)){
+            roles = roleList.stream().map(m -> m.getRoleKey()).collect(Collectors.toList());
+        }
+        //存入redis
+        redisUtil.set(roleKey, JSON.toJSONString(roles));
+        //更新sa-token权限数据
+        stpInterface.getRoleList(LoginInfoData.getUserInfo().getId(), null);
         return Result.successData(res);
     }
 

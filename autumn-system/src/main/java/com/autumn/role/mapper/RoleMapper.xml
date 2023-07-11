@@ -37,5 +37,25 @@
         update_time
     </sql>
 
+    <sql id="Role_User_Column_List">
+        role.id,
+        role_name,
+        role_key,
+        role_sort,
+        data_scope,
+        menu_check_strictly,
+        dept_check_strictly,
+        remark,
+        status
+    </sql>
+
+    <select id="getRoleKeysByLoginId" resultType="com.autumn.role.entity.Role">
+        select
+        <include refid="Role_User_Column_List"></include>
+        from sys_role role inner join sys_user_role urole
+        on role.id = urole.role_id where role.del_flag = '1' and urole.del_flag = '1'
+        and role.status = '1' and urole.user_id = #{loginId}
+    </select>
+
 
 </mapper>

@@ -11,6 +11,11 @@ public class Dictionary {
     //设备
     public static final String PC = "PC";
 
+    //权限缓存标识
+    public static final String PERMS = "_PERMS";
+    //角色缓存标识
+    public static final String ROLES = "_ROLES";
+
     //根节点ID
     public static final String ROOTID = "0";
     //根节点名称

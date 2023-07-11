@@ -29,7 +29,7 @@ public class PostController {
      * 岗位信息查询
      */
     @PostMapping("/select")
-//    @SaCheckPermission("post.select")
+    @SaCheckPermission("post.select")
     public Result selectPost(@RequestBody PostSelectDto postSelectDto) {
         return postService.selectPost(postSelectDto);
     }
