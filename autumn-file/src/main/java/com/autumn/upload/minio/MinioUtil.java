@@ -4,7 +4,7 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.lang.UUID;
 import com.autumn.result.Result;
 import com.autumn.result.StatusCode;
-import com.autumn.sa_token.LoginInfoData;
+import com.autumn.saToken.LoginInfoData;
 import com.autumn.springConfig.StaticMethodGetBean;
 import com.autumn.upload.entity.Files;
 import com.autumn.upload.entity.FilesInsertDto;

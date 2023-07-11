@@ -1,4 +1,4 @@
-package com.autumn.sa_token;
+package com.autumn.saToken;
 
 import cn.dev33.satoken.stp.StpInterface;
 import cn.dev33.satoken.stp.StpUtil;

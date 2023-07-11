@@ -13,6 +13,7 @@ import com.autumn.easyExcel.listener.ImportExcelListener;
 import com.autumn.easyExcel.mapper.DictDataMapper;
 import com.autumn.easyExcel.mapper.DictTypeMapper;
 import com.autumn.page.ResData;
+import com.autumn.post.entity.Post;
 import com.autumn.result.Result;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -21,6 +22,7 @@ import com.github.pagehelper.PageHelper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
@@ -48,6 +50,9 @@ public class DictTypeServiceImpl extends ServiceImpl<DictTypeMapper, DictType> i
     public Result selectDictType(DictTypeSelectDto dictTypeSelectDto) {
         Page<DictType> page = PageHelper.startPage(dictTypeSelectDto.getPageNum(), dictTypeSelectDto.getPageSize());
         LambdaQueryWrapper<DictType> queryWrapper = new LambdaQueryWrapper<DictType>()
+                .like(!StringUtils.isEmpty(dictTypeSelectDto.getDictName()), DictType::getDictName, "%" + dictTypeSelectDto.getDictName() + "%")
+                .like(!StringUtils.isEmpty(dictTypeSelectDto.getDictType()), DictType::getDictType, "%" + dictTypeSelectDto.getDictType() + "%")
+                .eq(!StringUtils.isEmpty(dictTypeSelectDto.getStatus()), DictType::getStatus, dictTypeSelectDto.getStatus())
                 .orderByDesc(DictType::getCreateTime);
         List<DictType> dictTypeList = dictTypeMapper.selectList(queryWrapper);
         return ResData.setDataTotal(page, dictTypeList);

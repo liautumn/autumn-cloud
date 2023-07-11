@@ -7,8 +7,8 @@ import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.crypto.SecureUtil;
 import com.autumn.dictionary.Dictionary;
 import com.autumn.result.Result;
-import com.autumn.sa_token.LoginInfoData;
-import com.autumn.sa_token.entity.User;
+import com.autumn.saToken.LoginInfoData;
+import com.autumn.saToken.entity.User;
 import com.autumn.user.entity.*;
 import com.autumn.user.mapper.UserMapper;
 import com.autumn.user.service.UserService;
@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -80,6 +81,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                 Map data = new HashMap();
                 data.put("userInfo", loginVo);
                 data.put("token", tokenInfo.tokenValue);
+                //修改登录时间, 登录IP
+                User us = new User();
+                us.setId(user.getId());
+                us.setLoginIp(login.getLoginIp());
+                us.setLoginDate(LocalDateTime.now());
+                userMapper.updateById(us);
                 return Result.successData(data);
             } else {
                 return Result.failMsg("密码错误");

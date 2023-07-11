@@ -12,6 +12,7 @@ import com.autumn.easyExcel.listener.ImportExcelListener;
 import com.autumn.easyExcel.mapper.DictDataMapper;
 import com.autumn.page.ResData;
 import com.autumn.result.Result;
+import com.autumn.tree.TreeUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.Page;
@@ -48,7 +49,8 @@ public class DictDataServiceImpl extends ServiceImpl<DictDataMapper, DictData> i
                 .eq(DictData::getDictTypeId, dictDataTypeSelectDto.getDictTypeId())
                 .orderByAsc(DictData::getDictSort);
         List<DictData> dictDataTypeList = dictDataMapper.selectList(queryWrapper);
-        return ResData.setDataTotal(page, dictDataTypeList);
+        List treeList = TreeUtil.buildTree(dictDataTypeList);
+        return ResData.setDataTotal(page, treeList);
     }
 
     /**

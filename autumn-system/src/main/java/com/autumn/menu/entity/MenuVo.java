@@ -1,11 +1,12 @@
 package com.autumn.menu.entity;
 
+import com.autumn.tree.TreePublic;
 import lombok.Data;
 
 import java.io.Serializable;
 
 @Data
-public class MenuVo implements Serializable {
+public class MenuVo extends TreePublic implements Serializable {
     /**
      * 菜单ID
      */
@@ -37,49 +38,9 @@ public class MenuVo implements Serializable {
     private String component;
 
     /**
-     * 菜单图标
+     * meta
      */
-    private String icon;
-
-    /**
-     * 菜单名称
-     */
-    private String title;
-
-    /**
-     * 活动菜单
-     */
-    private String activeMenu;
-
-    /**
-     * 是否为外链（0是 1否）
-     */
-    private String isLink;
-
-    /**
-     * 是否隐藏（0是 1否）
-     */
-    private String isHide;
-
-    /**
-     * 是否全屏显示（0是 1否）
-     */
-    private String isFull;
-
-    /**
-     * affix（0是 1否）
-     */
-    private String isAffix;
-
-    /**
-     * 是否缓存（0是 1否）
-     */
-    private String isKeepAlive;
-
-    /**
-     * 路由参数
-     */
-    private String query;
+    private Meta meta;
 
 
     private static final long serialVersionUID = 1L;

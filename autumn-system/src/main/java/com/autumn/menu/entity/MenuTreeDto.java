@@ -33,5 +33,10 @@ public class MenuTreeDto extends Page implements Serializable {
      */
     private String status;
 
+    /**
+     * 是否要根节点
+     */
+    private Boolean isGetRoot = false;
+
     private static final long serialVersionUID = 1L;
 }

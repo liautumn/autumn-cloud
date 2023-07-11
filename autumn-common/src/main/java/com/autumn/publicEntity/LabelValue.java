@@ -1,5 +1,6 @@
-package com.autumn.public_entity;
+package com.autumn.publicEntity;
 
+import com.autumn.tree.TreePublic;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -13,7 +14,7 @@ import java.io.Serializable;
  */
 @Data
 @Accessors
-public class LabelValue implements Serializable {
+public class LabelValue extends TreePublic implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

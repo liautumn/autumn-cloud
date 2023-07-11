@@ -1,4 +1,4 @@
-package com.autumn.open_feign;
+package com.autumn.openFeign;
 
 import feign.Logger;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;

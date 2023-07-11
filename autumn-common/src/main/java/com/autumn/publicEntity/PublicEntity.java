@@ -1,4 +1,4 @@
-package com.autumn.public_entity;
+package com.autumn.publicEntity;
 
 import com.alibaba.excel.annotation.ExcelIgnore;
 import com.alibaba.excel.annotation.ExcelProperty;

@@ -1,9 +1,9 @@
-package com.autumn.sa_token.entity;
+package com.autumn.saToken.entity;
 
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.alibaba.excel.annotation.write.style.ColumnWidth;
 import com.alibaba.excel.annotation.write.style.HeadRowHeight;
-import com.autumn.public_entity.PublicEntity;
+import com.autumn.publicEntity.PublicEntity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;

@@ -2,10 +2,9 @@ package com.autumn.easyExcel.entity;
 
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.autumn.easyExcel.converter.DictConverter;
-import com.autumn.public_entity.PublicEntity;
+import com.autumn.tree.TreePublic;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -19,7 +18,7 @@ import java.io.Serializable;
 @TableName(value = "sys_dict_data")
 @Data
 @Accessors
-public class DictData extends PublicEntity implements Serializable {
+public class DictData extends TreePublic implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

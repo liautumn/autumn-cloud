@@ -6,7 +6,7 @@ import com.autumn.easyExcel.CustomRowHeightColWidthHandler;
 import com.autumn.easyExcel.RowHeightColWidthModel;
 import com.autumn.easyExcel.listener.ImportExcelListener;
 import com.autumn.page.ResData;
-import com.autumn.public_entity.LabelValue;
+import com.autumn.publicEntity.LabelValue;
 import com.autumn.result.Result;
 import com.autumn.role.entity.Role;
 import com.autumn.role.entity.RoleInsertDto;
@@ -24,6 +24,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
@@ -58,6 +59,9 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
     public Result selectRole(RoleSelectDto roleSelectDto) {
         Page<Role> page = PageHelper.startPage(roleSelectDto.getPageNum(), roleSelectDto.getPageSize());
         LambdaQueryWrapper<Role> queryWrapper = new LambdaQueryWrapper<Role>()
+                .like(!StringUtils.isEmpty(roleSelectDto.getRoleName()), Role::getRoleName, "%" + roleSelectDto.getRoleName() + "%")
+                .like(!StringUtils.isEmpty(roleSelectDto.getRoleKey()), Role::getRoleKey, "%" + roleSelectDto.getRoleKey() + "%")
+                .eq(!StringUtils.isEmpty(roleSelectDto.getStatus()), Role::getStatus, roleSelectDto.getStatus())
                 .orderByDesc(Role::getCreateTime);
         List<Role> roleList = roleMapper.selectList(queryWrapper);
         List<Map> list = new ArrayList<>();

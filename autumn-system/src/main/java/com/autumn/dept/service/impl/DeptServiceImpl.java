@@ -1,23 +1,18 @@
 package com.autumn.dept.service.impl;
 
-import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.lang.tree.Tree;
-import cn.hutool.core.lang.tree.TreeNode;
-import cn.hutool.core.lang.tree.TreeUtil;
 import com.alibaba.excel.EasyExcel;
-import com.alibaba.fastjson2.JSON;
 import com.autumn.dept.entity.Dept;
 import com.autumn.dept.entity.DeptInsertDto;
 import com.autumn.dept.entity.DeptSelectDto;
 import com.autumn.dept.entity.DeptUpdateDto;
 import com.autumn.dept.mapper.DeptMapper;
 import com.autumn.dept.service.DeptService;
-import com.autumn.dictionary.Dictionary;
 import com.autumn.easyExcel.CustomRowHeightColWidthHandler;
 import com.autumn.easyExcel.RowHeightColWidthModel;
 import com.autumn.easyExcel.listener.ImportExcelListener;
 import com.autumn.page.ResData;
 import com.autumn.result.Result;
+import com.autumn.tree.TreeUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.Page;
@@ -53,15 +48,9 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements De
         LambdaQueryWrapper<Dept> queryWrapper = new LambdaQueryWrapper<Dept>()
                 .orderByAsc(Dept::getOrderNum);
         List<Dept> deptList = deptMapper.selectList(queryWrapper);
-        // 构建node列表
-        List<TreeNode<String>> nodeList = CollUtil.newArrayList();
-        deptList.stream().forEach(node -> {
-            Map map = JSON.parseObject(JSON.toJSONString(node), Map.class);
-            nodeList.add(new TreeNode(node.getId(), node.getParentId(), null, null).setExtra(map));
-        });
-        // 0表示最顶层的id是0
-        List<Tree<String>> treeList = TreeUtil.build(nodeList, Dictionary.ROOTID);
-        return ResData.setDataTotal(page, treeList);
+        //转树
+        List tree = TreeUtil.buildTree(deptList);
+        return ResData.setDataTotal(page, tree);
     }
 
     /**

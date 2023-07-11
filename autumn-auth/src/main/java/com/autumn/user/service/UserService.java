@@ -1,7 +1,7 @@
 package com.autumn.user.service;
 
 import com.autumn.result.Result;
-import com.autumn.sa_token.entity.User;
+import com.autumn.saToken.entity.User;
 import com.autumn.user.entity.LoginDto;
 import com.autumn.user.entity.PasswordDto;
 import com.autumn.user.entity.UserInsertDto;

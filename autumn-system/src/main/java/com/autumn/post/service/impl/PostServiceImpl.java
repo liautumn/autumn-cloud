@@ -12,12 +12,14 @@ import com.autumn.post.entity.PostUpdateDto;
 import com.autumn.post.mapper.PostMapper;
 import com.autumn.post.service.PostService;
 import com.autumn.result.Result;
+import com.autumn.role.entity.Role;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
@@ -45,6 +47,9 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
     public Result selectPost(PostSelectDto postTypeSelectDto) {
         Page<Post> page = PageHelper.startPage(postTypeSelectDto.getPageNum(), postTypeSelectDto.getPageSize());
         LambdaQueryWrapper<Post> queryWrapper = new LambdaQueryWrapper<Post>()
+                .like(!StringUtils.isEmpty(postTypeSelectDto.getPostName()), Post::getPostName, "%" + postTypeSelectDto.getPostName() + "%")
+                .like(!StringUtils.isEmpty(postTypeSelectDto.getPostCode()), Post::getPostCode, "%" + postTypeSelectDto.getPostCode() + "%")
+                .eq(!StringUtils.isEmpty(postTypeSelectDto.getStatus()), Post::getStatus, postTypeSelectDto.getStatus())
                 .orderByAsc(Post::getPostSort);
         List<Post> postTypeList = postMapper.selectList(queryWrapper);
         return ResData.setDataTotal(page, postTypeList);

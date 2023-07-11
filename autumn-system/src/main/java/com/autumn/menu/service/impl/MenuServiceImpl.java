@@ -1,11 +1,6 @@
 package com.autumn.menu.service.impl;
 
-import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.lang.tree.Tree;
-import cn.hutool.core.lang.tree.TreeNode;
-import cn.hutool.core.lang.tree.TreeUtil;
 import com.alibaba.excel.EasyExcel;
-import com.alibaba.fastjson2.JSON;
 import com.autumn.dictionary.Dictionary;
 import com.autumn.easyExcel.CustomRowHeightColWidthHandler;
 import com.autumn.easyExcel.RowHeightColWidthModel;
@@ -13,11 +8,14 @@ import com.autumn.easyExcel.listener.ImportExcelListener;
 import com.autumn.menu.entity.*;
 import com.autumn.menu.mapper.MenuMapper;
 import com.autumn.menu.service.MenuService;
+import com.autumn.publicEntity.LabelValue;
 import com.autumn.redis.RedisUtil;
 import com.autumn.result.Result;
-import com.autumn.sa_token.LoginInfoData;
-import com.autumn.sa_token.StpInterfaceImpl;
-import com.autumn.sa_token.entity.User;
+import com.autumn.saToken.LoginInfoData;
+import com.autumn.saToken.StpInterfaceImpl;
+import com.autumn.saToken.entity.User;
+import com.autumn.tree.TreePublic;
+import com.autumn.tree.TreeUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.BeanUtils;
@@ -43,6 +41,8 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     @Resource
     private MenuMapper menuMapper;
     @Resource
+    private MenuService menuService;
+    @Resource
     private RedisUtil redisUtil;
     @Resource
     private StpInterfaceImpl stpInterface;
@@ -56,34 +56,30 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         }
         List<Menu> list;
         if (Dictionary.ADMINFLAG.equals(userInfo.getUserType())) {
-            LambdaQueryWrapper queryWrapper = new LambdaQueryWrapper<Menu>()
-                    .eq(Menu::getStatus, Dictionary.NO)
-                    .orderByAsc(Menu::getOrderNum);
+            LambdaQueryWrapper queryWrapper = new LambdaQueryWrapper<Menu>().eq(Menu::getStatus, Dictionary.NO).orderByAsc(Menu::getOrderNum);
             list = menuMapper.selectList(queryWrapper);
         } else {
             list = menuMapper.getMenuList(userInfo.getId());
         }
-        // 构建node列表
-        List<TreeNode<String>> nodeList = CollUtil.newArrayList();
-        list.stream().forEach(menu -> {
-            Map data = new HashMap();
-            data.put("path", menu.getPath());
-            data.put("component", menu.getComponent());
-            data.put("redirect", menu.getRedirect());
-            Map meta = new HashMap();
-            meta.put("icon", menu.getIcon());
-            meta.put("title", menu.getTitle());
-            meta.put("activeMenu", menu.getActiveMenu());
-            meta.put("isLink", menu.getIsLink().equals(Dictionary.YES) ? menu.getPath() : "");
-            meta.put("isHide", menu.getIsHide().equals(Dictionary.YES) ? true : false);
-            meta.put("isFull", menu.getIsFull().equals(Dictionary.YES) ? true : false);
-            meta.put("isAffix", menu.getIsAffix().equals(Dictionary.YES) ? true : false);
-            meta.put("isKeepAlive", menu.getIsKeepAlive().equals(Dictionary.YES) ? true : false);
-            data.put("meta", meta);
-            nodeList.add(new TreeNode<>(menu.getId(), menu.getParentId(), menu.getName(), null).setExtra(data));
-        });
-        // 0表示最顶层的id是0
-        List<Tree<String>> treeList = TreeUtil.build(nodeList, Dictionary.ROOTID);
+
+        List<MenuVo> menuVoList = new ArrayList<>();
+        for (Menu menu : list) {
+            MenuVo menuVo = new MenuVo();
+            BeanUtils.copyProperties(menu, menuVo);
+            Meta meta = new Meta();
+            meta.setIcon(menu.getIcon());
+            meta.setTitle(menu.getTitle());
+            meta.setActiveMenu(menu.getActiveMenu());
+            meta.setIsLink(menu.getIsLink().equals(Dictionary.YES) ? menu.getPath() : null);
+            meta.setIsHide(menu.getIsHide().equals(Dictionary.YES) ? true : false);
+            meta.setIsFull(menu.getIsFull().equals(Dictionary.YES) ? true : false);
+            meta.setIsAffix(menu.getIsAffix().equals(Dictionary.YES) ? true : false);
+            meta.setIsKeepAlive(menu.getIsKeepAlive().equals(Dictionary.YES) ? true : false);
+            menuVo.setMeta(meta);
+            menuVoList.add(menuVo);
+        }
+        //转树
+        List treeList = TreeUtil.buildTree(menuVoList);
         return Result.successData(treeList);
     }
 
@@ -94,9 +90,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         //判断是否是管理员
         List<Menu> menuList;
         if (Dictionary.ADMINFLAG.equals(userInfo.getUserType())) {
-            LambdaQueryWrapper<Menu> queryWrapper = new LambdaQueryWrapper<Menu>()
-                    .eq(Menu::getStatus, Dictionary.NO)
-                    .eq(Menu::getMenuType, Dictionary.MENU);
+            LambdaQueryWrapper<Menu> queryWrapper = new LambdaQueryWrapper<Menu>().eq(Menu::getStatus, Dictionary.NO).eq(Menu::getMenuType, Dictionary.MENU);
             menuList = menuMapper.selectList(queryWrapper);
         } else {
             Map param = new HashMap();
@@ -109,10 +103,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
             for (Menu menu : menuList) {
                 List<Menu> btns;
                 if (Dictionary.ADMINFLAG.equals(userInfo.getUserType())) {
-                    LambdaQueryWrapper<Menu> queryWrapper = new LambdaQueryWrapper<Menu>()
-                            .eq(Menu::getStatus, Dictionary.NO)
-                            .eq(Menu::getParentId, menu.getId())
-                            .eq(Menu::getMenuType, Dictionary.BUTTEN);
+                    LambdaQueryWrapper<Menu> queryWrapper = new LambdaQueryWrapper<Menu>().eq(Menu::getStatus, Dictionary.NO).eq(Menu::getParentId, menu.getId()).eq(Menu::getMenuType, Dictionary.BUTTEN);
                     btns = menuMapper.selectList(queryWrapper);
                 } else {
                     Map map = new HashMap();
@@ -130,23 +121,11 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
 
     @Override
     public Result selectMenu(MenuSelectDto menuSelectDto) {
-        LambdaQueryWrapper<Menu> queryWrapper = new LambdaQueryWrapper<Menu>()
-                .eq(!StringUtils.isEmpty(menuSelectDto.getTitle()), Menu::getTitle, menuSelectDto.getTitle())
-                .eq(!StringUtils.isEmpty(menuSelectDto.getStatus()), Menu::getStatus, menuSelectDto.getStatus())
-                .orderByAsc(Menu::getOrderNum);
+        LambdaQueryWrapper<Menu> queryWrapper = new LambdaQueryWrapper<Menu>().like(!StringUtils.isEmpty(menuSelectDto.getTitle()), Menu::getTitle, "%" + menuSelectDto.getTitle() + "%").eq(!StringUtils.isEmpty(menuSelectDto.getStatus()), Menu::getStatus, menuSelectDto.getStatus()).orderByAsc(Menu::getOrderNum);
         List<Menu> menus = menuMapper.selectList(queryWrapper);
-        List<Tree<String>> treeList = new ArrayList<>();
-        if (!CollectionUtils.isEmpty(menus)) {
-            // 构建node列表
-            List<TreeNode<String>> nodeList = CollUtil.newArrayList();
-            menus.stream().forEach(menu -> {
-                Map map = JSON.parseObject(JSON.toJSONString(menu), Map.class);
-                nodeList.add(new TreeNode<>(menu.getId(), menu.getParentId(), null, null).setExtra(map));
-            });
-            // 0表示最顶层的id是0
-            treeList = TreeUtil.build(nodeList, Dictionary.ROOTID);
-        }
-        return Result.successData(treeList);
+        //转树
+        List tree = TreeUtil.buildTree(menus);
+        return Result.successData(tree);
     }
 
     @Override
@@ -184,8 +163,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     public void exportMenu(MenuSelectDto menuSelectDto, HttpServletResponse response) {
         List<Menu> menus = new ArrayList<>();
         if (!menuSelectDto.getTempFlag()) {
-            LambdaQueryWrapper<Menu> queryWrapper = new LambdaQueryWrapper<Menu>()
-                    .orderByAsc(Menu::getOrderNum);
+            LambdaQueryWrapper<Menu> queryWrapper = new LambdaQueryWrapper<Menu>().orderByAsc(Menu::getOrderNum);
             menus = menuMapper.selectList(queryWrapper);
         }
         response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
@@ -200,17 +178,11 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
             //隐藏列
             rowHeightColWidthList.add(RowHeightColWidthModel.createHideColModel(sheetName, 0));
 
-            EasyExcel.write(response.getOutputStream(), Menu.class)
-                    .sheet(sheetName)
-                    .registerWriteHandler(new CustomRowHeightColWidthHandler(rowHeightColWidthList))
-                    .doWrite(menus);
+            EasyExcel.write(response.getOutputStream(), Menu.class).sheet(sheetName).registerWriteHandler(new CustomRowHeightColWidthHandler(rowHeightColWidthList)).doWrite(menus);
         } catch (Exception e) {
             e.getMessage();
         }
     }
-
-    @Resource
-    private MenuService menuService;
 
     @Override
     public Result importMenu(MultipartFile file) {
@@ -224,28 +196,24 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
 
     @Override
     public Result getMenuTree(MenuTreeDto menuTreeDto) {
-        LambdaQueryWrapper<Menu> queryWrapper = new LambdaQueryWrapper<Menu>()
-                .in(!CollectionUtils.isEmpty(menuTreeDto.getMenuType()), Menu::getMenuType, menuTreeDto.getMenuType())
-                .eq(!StringUtils.isEmpty(menuTreeDto.getIsHide()), Menu::getIsHide, menuTreeDto.getIsHide())
-                .eq(!StringUtils.isEmpty(menuTreeDto.getStatus()), Menu::getStatus, menuTreeDto.getStatus())
-                .orderByAsc(Menu::getOrderNum);
+        LambdaQueryWrapper<Menu> queryWrapper = new LambdaQueryWrapper<Menu>().in(!CollectionUtils.isEmpty(menuTreeDto.getMenuType()), Menu::getMenuType, menuTreeDto.getMenuType()).eq(!StringUtils.isEmpty(menuTreeDto.getIsHide()), Menu::getIsHide, menuTreeDto.getIsHide()).eq(!StringUtils.isEmpty(menuTreeDto.getStatus()), Menu::getStatus, menuTreeDto.getStatus()).orderByAsc(Menu::getOrderNum);
         List<Menu> menus = menuMapper.selectList(queryWrapper);
-        List<Tree<String>> treeList = new ArrayList<>();
-        if (!CollectionUtils.isEmpty(menus)) {
-            // 构建node列表
-            List<TreeNode<String>> nodeList = CollUtil.newArrayList();
-            Map hashMap = new HashMap();
-            hashMap.put("label", Dictionary.ROOTTITLE);
-            hashMap.put("value", Dictionary.ROOTID);
-            nodeList.add(new TreeNode<>(Dictionary.ROOTID, Dictionary.ROOTID, null, null).setExtra(hashMap));
-            menus.stream().forEach(menu -> {
-                Map map = new HashMap();
-                map.put("label", menu.getTitle());
-                map.put("value", menu.getId());
-                nodeList.add(new TreeNode<>(menu.getId(), menu.getParentId(), null, null).setExtra(map));
-            });
-            // 0表示最顶层的id是0
-            treeList = TreeUtil.build(nodeList, Dictionary.ROOTID);
+        List<LabelValue> labelValueList = new ArrayList<>();
+        for (Menu menu : menus) {
+            LabelValue labelValue = new LabelValue();
+            labelValue.setId(menu.getId());
+            labelValue.setParentId(menu.getParentId());
+            labelValue.setLabel(menu.getTitle());
+            labelValue.setValue(menu.getId());
+            labelValueList.add(labelValue);
+        }
+        List<LabelValue> treeList = (List<LabelValue>) TreeUtil.buildTree(labelValueList);
+        if (menuTreeDto.getIsGetRoot()) {
+            LabelValue labelValue = new LabelValue();
+            labelValue.setId(Dictionary.ROOTID);
+            labelValue.setLabel(Dictionary.ROOTTITLE);
+            labelValue.setValue(Dictionary.ROOTID);
+            treeList.add(0, labelValue);
         }
         return Result.successData(treeList);
     }

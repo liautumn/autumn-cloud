@@ -7,7 +7,7 @@ import com.autumn.easyExcel.RowHeightColWidthModel;
 import com.autumn.easyExcel.listener.ImportExcelListener;
 import com.autumn.page.ResData;
 import com.autumn.result.Result;
-import com.autumn.sa_token.entity.User;
+import com.autumn.saToken.entity.User;
 import com.autumn.user.entity.UserInsertDto;
 import com.autumn.user.entity.UserSelectDto;
 import com.autumn.user.entity.UserUpdateDto;

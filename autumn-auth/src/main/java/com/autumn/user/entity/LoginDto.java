@@ -21,6 +21,11 @@ public class LoginDto implements Serializable {
     private String password;
 
     /**
+     * 登录IP
+     */
+    private String loginIp;
+
+    /**
      * 记住我标记（true记住 false不记住）
      */
     private Boolean isRemember = false;

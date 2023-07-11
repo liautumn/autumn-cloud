@@ -2,7 +2,7 @@ package com.autumn.menu.entity;
 
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.autumn.easyExcel.converter.DictConverter;
-import com.autumn.public_entity.PublicEntity;
+import com.autumn.tree.TreePublic;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
@@ -16,14 +16,7 @@ import java.io.Serializable;
  */
 @Data
 @TableName(value = "sys_menu")
-public class Menu extends PublicEntity implements Serializable {
-
-    /**
-     * 父菜单ID
-     */
-    @ExcelProperty(value = "父菜单ID")
-    @TableField(value = "parent_id")
-    private String parentId;
+public class Menu extends TreePublic implements Serializable {
 
     /**
      * 路由地址

@@ -2,7 +2,7 @@ package com.autumn.easyExcel.entity;
 
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.autumn.easyExcel.converter.DictConverter;
-import com.autumn.public_entity.PublicEntity;
+import com.autumn.publicEntity.PublicEntity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;

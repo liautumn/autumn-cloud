@@ -1,4 +1,4 @@
-package com.autumn.open_feign;
+package com.autumn.openFeign;
 
 import cn.dev33.satoken.stp.StpUtil;
 import feign.RequestInterceptor;

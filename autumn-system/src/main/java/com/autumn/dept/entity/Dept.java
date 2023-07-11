@@ -3,7 +3,7 @@ package com.autumn.dept.entity;
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.alibaba.excel.annotation.write.style.ColumnWidth;
 import com.alibaba.excel.annotation.write.style.HeadRowHeight;
-import com.autumn.public_entity.PublicEntity;
+import com.autumn.tree.TreePublic;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
@@ -21,7 +21,7 @@ import java.io.Serializable;
 @Accessors
 @ColumnWidth(30)
 @HeadRowHeight(20)
-public class Dept extends PublicEntity implements Serializable {
+public class Dept extends TreePublic implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

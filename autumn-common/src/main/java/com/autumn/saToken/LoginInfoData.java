@@ -1,7 +1,7 @@
-package com.autumn.sa_token;
+package com.autumn.saToken;
 
 import cn.dev33.satoken.stp.StpUtil;
-import com.autumn.sa_token.entity.User;
+import com.autumn.saToken.entity.User;
 
 public class LoginInfoData {
 

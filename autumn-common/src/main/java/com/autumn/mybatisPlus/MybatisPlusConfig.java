@@ -1,9 +1,9 @@
-package com.autumn.mybatis_plus;
+package com.autumn.mybatisPlus;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@MapperScan("com.autumn.*.mapper")
+@MapperScan("com.*.*.mapper")
 public class MybatisPlusConfig {
 }
