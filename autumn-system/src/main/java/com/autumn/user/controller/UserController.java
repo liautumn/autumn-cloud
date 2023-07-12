@@ -11,12 +11,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.constraints.NotBlank;
 
 /**
  * @author lqz
  * @date 2023-07-10 15:27:07
  * 用户信息 Controller
  */
+@Validated
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -52,7 +54,7 @@ public class UserController {
      * 用户信息删除
      */
     @GetMapping("/delete")
-    public Result deleteUser(@RequestParam("ids") String ids) {
+    public Result deleteUser(@RequestParam("ids") @NotBlank(message = "ids不能为空") String ids) {
         return userService.deleteUser(ids);
     }
 

@@ -11,7 +11,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.constraints.NotBlank;
 
+/**
+ * 字典类型管理
+ */
+@Validated
 @RestController
 @RequestMapping("/dictType")
 public class DictTypeController {
@@ -47,7 +52,7 @@ public class DictTypeController {
      * 字典类型删除
      */
     @GetMapping("/delete")
-    public Result deleteDictType(@RequestParam("ids") String ids) {
+    public Result deleteDictType(@RequestParam("ids") @NotBlank(message = "ids不能为空") String ids) {
         return dictTypeService.deleteDictType(ids);
     }
 
@@ -55,7 +60,7 @@ public class DictTypeController {
      * 字典类型解析
      */
     @GetMapping("/parse")
-    public Result parseDictType(@RequestParam("dictType") String dictType) {
+    public Result parseDictType(@RequestParam("dictType") @NotBlank(message = "dictType不能为空") String dictType) {
         return dictTypeService.parseDictType(dictType);
     }
 

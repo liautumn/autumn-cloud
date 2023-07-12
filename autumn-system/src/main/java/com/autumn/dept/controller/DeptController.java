@@ -11,12 +11,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.constraints.NotBlank;
 
 /**
  * @author lqz
  * @date 2023-07-09 16:13:26
  * 部门信息 Controller
  */
+@Validated
 @RestController
 @RequestMapping("/dept")
 public class DeptController {
@@ -52,7 +54,7 @@ public class DeptController {
      * 部门信息删除
      */
     @GetMapping("/delete")
-    public Result deleteDept(@RequestParam("ids") String ids) {
+    public Result deleteDept(@RequestParam("ids") @NotBlank(message = "ids不能为空") String ids) {
         return deptService.deleteDept(ids);
     }
 

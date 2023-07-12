@@ -12,7 +12,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.constraints.NotBlank;
 
+/**
+ * 菜单管理
+ */
+@Validated
 @RestController
 @RequestMapping("/menu")
 public class MenuController {
@@ -66,7 +71,7 @@ public class MenuController {
      * 菜单删除
      */
     @GetMapping("/delete")
-    public Result deleteMenu(@RequestParam("ids") String ids) {
+    public Result deleteMenu(@RequestParam("ids") @NotBlank(message = "ids不能为空") String ids) {
         return menuService.deleteMenu(ids);
     }
 

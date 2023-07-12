@@ -149,8 +149,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         //判断是否管理员
         List<Role> roleList = roleMapper.getRoleKeysByLoginId(LoginInfoData.getUserInfo().getId());
         if (Dictionary.ADMINFLAG.equals(userInfo.getUserType())) {
-            LambdaQueryWrapper<Role> queryWrapper = new LambdaQueryWrapper<Role>()
-                    .eq(Role::getStatus, Dictionary.NO);
+            LambdaQueryWrapper<Role> queryWrapper = new LambdaQueryWrapper<Role>().eq(Role::getStatus, Dictionary.NO);
             roleList = roleMapper.selectList(queryWrapper);
         } else {
             roleList = roleMapper.getRoleKeysByLoginId(LoginInfoData.getUserInfo().getId());

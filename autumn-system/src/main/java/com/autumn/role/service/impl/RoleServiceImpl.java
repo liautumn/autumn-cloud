@@ -16,6 +16,7 @@ import com.autumn.role.mapper.RoleMapper;
 import com.autumn.role.service.RoleService;
 import com.autumn.roleMenu.entity.RoleMenu;
 import com.autumn.roleMenu.mapper.RoleMenuMapper;
+import com.autumn.userRole.entity.UserRole;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.Page;
@@ -58,17 +59,12 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
     @Override
     public Result selectRole(RoleSelectDto roleSelectDto) {
         Page<Role> page = PageHelper.startPage(roleSelectDto.getPageNum(), roleSelectDto.getPageSize());
-        LambdaQueryWrapper<Role> queryWrapper = new LambdaQueryWrapper<Role>()
-                .like(!StringUtils.isEmpty(roleSelectDto.getRoleName()), Role::getRoleName, "%" + roleSelectDto.getRoleName() + "%")
-                .like(!StringUtils.isEmpty(roleSelectDto.getRoleKey()), Role::getRoleKey, "%" + roleSelectDto.getRoleKey() + "%")
-                .eq(!StringUtils.isEmpty(roleSelectDto.getStatus()), Role::getStatus, roleSelectDto.getStatus())
-                .orderByDesc(Role::getCreateTime);
+        LambdaQueryWrapper<Role> queryWrapper = new LambdaQueryWrapper<Role>().like(!StringUtils.isEmpty(roleSelectDto.getRoleName()), Role::getRoleName, "%" + roleSelectDto.getRoleName() + "%").like(!StringUtils.isEmpty(roleSelectDto.getRoleKey()), Role::getRoleKey, "%" + roleSelectDto.getRoleKey() + "%").eq(!StringUtils.isEmpty(roleSelectDto.getStatus()), Role::getStatus, roleSelectDto.getStatus()).orderByDesc(Role::getCreateTime);
         List<Role> roleList = roleMapper.selectList(queryWrapper);
         List<Map> list = new ArrayList<>();
         for (Role role : roleList) {
             Map map = JSON.parseObject(JSON.toJSONString(role), Map.class);
-            LambdaQueryWrapper<RoleMenu> wrapper = new LambdaQueryWrapper<RoleMenu>()
-                    .eq(RoleMenu::getRoleId, role.getId());
+            LambdaQueryWrapper<RoleMenu> wrapper = new LambdaQueryWrapper<RoleMenu>().eq(RoleMenu::getRoleId, role.getId());
             List<RoleMenu> roleMenus = roleMenuMapper.selectList(wrapper);
             List<String> menuIds = roleMenus.stream().map(m -> {
                 return m.getMenuId();
@@ -116,24 +112,18 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
         List<String> menuTreeList = roleUpdateDto.getMenuTreeList();
         if (!CollectionUtils.isEmpty(menuTreeList)) {
             //查询原来数据集
-            LambdaQueryWrapper<RoleMenu> wrapper = new LambdaQueryWrapper<RoleMenu>()
-                    .eq(RoleMenu::getRoleId, role.getId());
+            LambdaQueryWrapper<RoleMenu> wrapper = new LambdaQueryWrapper<RoleMenu>().eq(RoleMenu::getRoleId, role.getId());
             List<RoleMenu> roleMenus = roleMenuMapper.selectList(wrapper);
             List<String> menuIds = roleMenus.stream().map(m -> {
                 return m.getMenuId();
             }).collect(Collectors.toList());
-            List<String> differenceIds = Stream.concat(
-                            menuIds.stream().filter(str -> !menuTreeList.contains(str)),
-                            menuTreeList.stream().filter(str -> !menuIds.contains(str)))
-                    .collect(Collectors.toList());
+            List<String> differenceIds = Stream.concat(menuIds.stream().filter(str -> !menuTreeList.contains(str)), menuTreeList.stream().filter(str -> !menuIds.contains(str))).collect(Collectors.toList());
             if (!CollectionUtils.isEmpty(differenceIds)) {
                 for (String s : differenceIds) {
                     RoleMenu roleMenu = new RoleMenu();
                     roleMenu.setMenuId(s);
                     roleMenu.setRoleId(role.getId());
-                    LambdaQueryWrapper<RoleMenu> wrapper1 = new LambdaQueryWrapper<RoleMenu>()
-                            .eq(RoleMenu::getRoleId, role.getId())
-                            .eq(RoleMenu::getMenuId, s);
+                    LambdaQueryWrapper<RoleMenu> wrapper1 = new LambdaQueryWrapper<RoleMenu>().eq(RoleMenu::getRoleId, role.getId()).eq(RoleMenu::getMenuId, s);
                     RoleMenu selectOne = roleMenuMapper.selectOne(wrapper1);
                     if (selectOne == null) {
                         roleMenuMapper.insert(roleMenu);
@@ -142,6 +132,10 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
                     }
                 }
             }
+        } else {
+            LambdaQueryWrapper<RoleMenu> wrapper = new LambdaQueryWrapper<RoleMenu>().eq(RoleMenu::getRoleId, role.getId());
+            RoleMenu selectOne = roleMenuMapper.selectOne(wrapper);
+            roleMenuMapper.deleteById(selectOne.getId());
         }
         return i > 0 ? Result.success() : Result.fail();
     }
@@ -157,8 +151,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
         int i = roleMapper.deleteBatchIds(idList);
         //删除子表
         for (String id : idList) {
-            LambdaQueryWrapper<RoleMenu> wrapper = new LambdaQueryWrapper<RoleMenu>()
-                    .eq(RoleMenu::getRoleId, id);
+            LambdaQueryWrapper<RoleMenu> wrapper = new LambdaQueryWrapper<RoleMenu>().eq(RoleMenu::getRoleId, id);
             roleMenuMapper.delete(wrapper);
         }
         return i > 0 ? Result.success() : Result.fail();
@@ -171,8 +164,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
     public void exportRole(RoleSelectDto roleSelectDto, HttpServletResponse response) {
         List<Role> list = new ArrayList<>();
         if (!roleSelectDto.getTempFlag()) {
-            LambdaQueryWrapper<Role> queryWrapper = new LambdaQueryWrapper<Role>()
-                    .orderByAsc(Role::getRoleSort);
+            LambdaQueryWrapper<Role> queryWrapper = new LambdaQueryWrapper<Role>().orderByAsc(Role::getRoleSort);
             list = roleMapper.selectList(queryWrapper);
         }
         response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
@@ -185,10 +177,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
             List<RowHeightColWidthModel> rowHeightColWidthList = new ArrayList<>();
             //隐藏列
             rowHeightColWidthList.add(RowHeightColWidthModel.createHideColModel(sheetName, 0));
-            EasyExcel.write(response.getOutputStream(), Role.class)
-                    .sheet(sheetName)
-                    .registerWriteHandler(new CustomRowHeightColWidthHandler(rowHeightColWidthList))
-                    .doWrite(list);
+            EasyExcel.write(response.getOutputStream(), Role.class).sheet(sheetName).registerWriteHandler(new CustomRowHeightColWidthHandler(rowHeightColWidthList)).doWrite(list);
         } catch (Exception e) {
             e.getMessage();
         }
@@ -209,11 +198,10 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
 
     @Override
     public Result getRoleList(RoleSelectDto roleSelectDto) {
-        LambdaQueryWrapper<Role> queryWrapper = new LambdaQueryWrapper<Role>()
-                .orderByDesc(Role::getCreateTime);
+        LambdaQueryWrapper<Role> queryWrapper = new LambdaQueryWrapper<Role>().orderByDesc(Role::getCreateTime);
         List<Role> roleList = roleMapper.selectList(queryWrapper);
         List<LabelValue> list = new ArrayList<>();
-        if (!CollectionUtils.isEmpty(roleList)){
+        if (!CollectionUtils.isEmpty(roleList)) {
             for (Role role : roleList) {
                 LabelValue labelValue = new LabelValue();
                 labelValue.setLabel(role.getRoleName());

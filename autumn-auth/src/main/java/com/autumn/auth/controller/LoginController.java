@@ -11,6 +11,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.validation.constraints.NotBlank;
 
 @RestController
 public class LoginController {
@@ -58,7 +59,7 @@ public class LoginController {
      * @return
      */
     @GetMapping("/delete")
-    public Result delete(@RequestParam("id") String id) {
+    public Result delete(@RequestParam("id") @NotBlank(message = "id不能为空") String id) {
         return userService.deleteUser(id);
     }
 
@@ -80,7 +81,7 @@ public class LoginController {
      * @return
      */
     @GetMapping("/getOneUser")
-    public Result getOneUser(@RequestParam("id") String id) {
+    public Result getOneUser(@RequestParam("id") @NotBlank(message = "id不能为空") String id) {
         return userService.getOneUser(id);
     }
 

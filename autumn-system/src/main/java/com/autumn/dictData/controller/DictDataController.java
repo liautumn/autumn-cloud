@@ -11,12 +11,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.constraints.NotBlank;
 
 /**
  * @author autumn
  * @date 2023-06-13 09:00:38
  * 测试生成表 Controller
  */
+@Validated
 @RestController
 @RequestMapping("/dictData")
 public class DictDataController {
@@ -52,7 +54,7 @@ public class DictDataController {
      * 测试生成表删除
      */
     @GetMapping("/delete")
-    public Result deleteDictData(@RequestParam("ids") String ids) {
+    public Result deleteDictData(@RequestParam("ids") @NotBlank(message = "ids不能为空") String ids) {
         return dictDataService.deleteDictData(ids);
     }
 

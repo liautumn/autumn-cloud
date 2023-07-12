@@ -12,12 +12,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.constraints.NotBlank;
 
 /**
  * @author lqz
  * @date 2023-06-19 09:56:30
  * 岗位信息 Controller
  */
+@Validated
 @RestController
 @RequestMapping("/post")
 public class PostController {
@@ -57,7 +59,7 @@ public class PostController {
      */
     @GetMapping("/delete")
     @SaCheckPermission("post.delete")
-    public Result deletePost(@RequestParam("ids") String ids) {
+    public Result deletePost(@RequestParam("ids") @NotBlank(message = "ids不能为空") String ids) {
         return postService.deletePost(ids);
     }
 

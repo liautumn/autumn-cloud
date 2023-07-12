@@ -1,16 +1,19 @@
 package com.autumn.upload;
 
 import com.autumn.result.Result;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.constraints.NotBlank;
 
 /**
  * @author liqiuzhuang
  * @date 2023-06-11 9:49
  */
+@Validated
 @RestController
 @RequestMapping("/file")
 public class UploadController {
@@ -19,18 +22,18 @@ public class UploadController {
     private UploadUtil uploadUtil;
 
     @GetMapping("/view")
-    public Result view(@RequestParam("filesIds") String filesIds) {
+    public Result view(@RequestParam("filesIds") @NotBlank(message = "filesIds不能为空") String filesIds) {
         return Result.successData(uploadUtil.filesIdsTofiles(filesIds));
     }
 
     @GetMapping("/delete")
-    public Result delete(@RequestParam("filesId") String filesId) {
+    public Result delete(@RequestParam("filesId") @NotBlank(message = "filesId不能为空") String filesId) {
         Result remove = uploadUtil.remove(filesId);
         return Result.successData(remove);
     }
 
     @GetMapping("/download")
-    public Result download(@RequestParam("filesId") String filesId, HttpServletResponse response) {
+    public Result download(@RequestParam("filesId") @NotBlank(message = "filesId不能为空") String filesId, HttpServletResponse response) {
         uploadUtil.download(filesId, response);
         return Result.success();
     }
@@ -41,7 +44,7 @@ public class UploadController {
     }
 
     @GetMapping("/parse")
-    public Result parse(String fileIds) throws Exception {
+    public Result parse(@RequestParam("filesId") @NotBlank(message = "filesId不能为空") String fileIds) throws Exception {
         return uploadUtil.parse(fileIds);
     }
 

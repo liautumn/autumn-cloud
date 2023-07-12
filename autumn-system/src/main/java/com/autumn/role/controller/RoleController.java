@@ -11,12 +11,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.constraints.NotBlank;
 
 /**
  * @author lqz
  * @date 2023-07-09 19:34:33
  * 角色信息 Controller
  */
+@Validated
 @RestController
 @RequestMapping("/role")
 public class RoleController {
@@ -60,7 +62,7 @@ public class RoleController {
      * 角色信息删除
      */
     @GetMapping("/delete")
-    public Result deleteRole(@RequestParam("ids") String ids) {
+    public Result deleteRole(@RequestParam("ids") @NotBlank(message = "ids不能为空") String ids) {
         return roleService.deleteRole(ids);
     }
 

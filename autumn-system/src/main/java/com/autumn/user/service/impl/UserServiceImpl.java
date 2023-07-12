@@ -56,14 +56,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public Result selectUser(UserSelectDto userSelectDto) {
         Page<User> page = PageHelper.startPage(userSelectDto.getPageNum(), userSelectDto.getPageSize());
-        LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<User>()
-                .orderByDesc(User::getCreateTime);
+        LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<User>().orderByDesc(User::getCreateTime);
         List<User> userList = userMapper.selectList(queryWrapper);
         List<Map> list = new ArrayList<>();
         for (User user : userList) {
             Map map = JSON.parseObject(JSON.toJSONString(user), Map.class);
-            LambdaQueryWrapper<UserRole> wrapper = new LambdaQueryWrapper<UserRole>()
-                    .eq(UserRole::getUserId, user.getId());
+            LambdaQueryWrapper<UserRole> wrapper = new LambdaQueryWrapper<UserRole>().eq(UserRole::getUserId, user.getId());
             List<UserRole> userRoles = userRoleMapper.selectList(wrapper);
             List<String> roleIds = userRoles.stream().map(m -> {
                 return m.getRoleId();
@@ -111,24 +109,18 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         List<String> roleList = userUpdateDto.getRoleList();
         if (!CollectionUtils.isEmpty(roleList)) {
             //查询原来数据集
-            LambdaQueryWrapper<UserRole> wrapper = new LambdaQueryWrapper<UserRole>()
-                    .eq(UserRole::getUserId, user.getId());
+            LambdaQueryWrapper<UserRole> wrapper = new LambdaQueryWrapper<UserRole>().eq(UserRole::getUserId, user.getId());
             List<UserRole> userRoles = userRoleMapper.selectList(wrapper);
             List<String> roleIds = userRoles.stream().map(m -> {
                 return m.getRoleId();
             }).collect(Collectors.toList());
-            List<String> differenceIds = Stream.concat(
-                            roleIds.stream().filter(str -> !roleList.contains(str)),
-                            roleList.stream().filter(str -> !roleIds.contains(str)))
-                    .collect(Collectors.toList());
+            List<String> differenceIds = Stream.concat(roleIds.stream().filter(str -> !roleList.contains(str)), roleList.stream().filter(str -> !roleIds.contains(str))).collect(Collectors.toList());
             if (!CollectionUtils.isEmpty(differenceIds)) {
                 for (String s : differenceIds) {
                     UserRole userRole = new UserRole();
                     userRole.setRoleId(s);
                     userRole.setUserId(user.getId());
-                    LambdaQueryWrapper<UserRole> wrapper1 = new LambdaQueryWrapper<UserRole>()
-                            .eq(UserRole::getUserId, user.getId())
-                            .eq(UserRole::getRoleId, s);
+                    LambdaQueryWrapper<UserRole> wrapper1 = new LambdaQueryWrapper<UserRole>().eq(UserRole::getUserId, user.getId()).eq(UserRole::getRoleId, s);
                     UserRole selectOne = userRoleMapper.selectOne(wrapper1);
                     if (selectOne == null) {
                         userRoleMapper.insert(userRole);
@@ -138,8 +130,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                 }
             }
         } else {
-            LambdaQueryWrapper<UserRole> wrapper = new LambdaQueryWrapper<UserRole>()
-                    .eq(UserRole::getUserId, user.getId());
+            LambdaQueryWrapper<UserRole> wrapper = new LambdaQueryWrapper<UserRole>().eq(UserRole::getUserId, user.getId());
             UserRole selectOne = userRoleMapper.selectOne(wrapper);
             userRoleMapper.deleteById(selectOne.getId());
         }
@@ -157,8 +148,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         int i = userMapper.deleteBatchIds(idList);
         //删除子表
         for (String id : idList) {
-            LambdaQueryWrapper<UserRole> wrapper = new LambdaQueryWrapper<UserRole>()
-                    .eq(UserRole::getUserId, id);
+            LambdaQueryWrapper<UserRole> wrapper = new LambdaQueryWrapper<UserRole>().eq(UserRole::getUserId, id);
             userRoleMapper.delete(wrapper);
         }
         return i > 0 ? Result.success() : Result.fail();
@@ -171,8 +161,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public void exportUser(UserSelectDto userSelectDto, HttpServletResponse response) {
         List<User> list = new ArrayList<>();
         if (!userSelectDto.getTempFlag()) {
-            LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<User>()
-                    .orderByDesc(User::getCreateTime);
+            LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<User>().orderByDesc(User::getCreateTime);
             list = userMapper.selectList(queryWrapper);
         }
         response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
@@ -185,10 +174,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             List<RowHeightColWidthModel> rowHeightColWidthList = new ArrayList<>();
             //隐藏列
             rowHeightColWidthList.add(RowHeightColWidthModel.createHideColModel(sheetName, 0));
-            EasyExcel.write(response.getOutputStream(), User.class)
-                    .sheet(sheetName)
-                    .registerWriteHandler(new CustomRowHeightColWidthHandler(rowHeightColWidthList))
-                    .doWrite(list);
+            EasyExcel.write(response.getOutputStream(), User.class).sheet(sheetName).registerWriteHandler(new CustomRowHeightColWidthHandler(rowHeightColWidthList)).doWrite(list);
         } catch (Exception e) {
             e.getMessage();
         }
