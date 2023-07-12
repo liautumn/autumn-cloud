@@ -14,11 +14,9 @@ import com.autumn.redis.RedisUtil;
 import com.autumn.result.Result;
 import com.autumn.role.entity.Role;
 import com.autumn.role.mapper.RoleMapper;
-import com.autumn.roleMenu.mapper.RoleMenuMapper;
 import com.autumn.saToken.LoginInfoData;
 import com.autumn.saToken.StpInterfaceImpl;
 import com.autumn.saToken.entity.User;
-import com.autumn.tree.TreePublic;
 import com.autumn.tree.TreeUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -118,6 +116,9 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
                     map.put("parentId", menu.getId());
                     btns = menuMapper.getMenuBtnsByUserid(map);
                 }
+                Menu me = new Menu();
+                me.setPerms(menu.getPerms());
+                btns.add(menu);
                 List<String> perms = btns.stream().map(m -> m.getPerms()).collect(Collectors.toList());
                 res.put(menu.getName(), perms);
             }
@@ -127,9 +128,9 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         List<String> prems = new ArrayList<>();
         for (String key : keySet) {
             List<String> perms = (List<String>) res.get(key);
-            if (!CollectionUtils.isEmpty(perms)){
+            if (!CollectionUtils.isEmpty(perms)) {
                 for (String perm : perms) {
-                    prems.add(key + "."+ perm);
+                    prems.add(key + "." + perm);
                 }
             }
         }
@@ -151,11 +152,11 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
             LambdaQueryWrapper<Role> queryWrapper = new LambdaQueryWrapper<Role>()
                     .eq(Role::getStatus, Dictionary.NO);
             roleList = roleMapper.selectList(queryWrapper);
-        }else {
+        } else {
             roleList = roleMapper.getRoleKeysByLoginId(LoginInfoData.getUserInfo().getId());
         }
         List<String> roles = new ArrayList<>();
-        if (!CollectionUtils.isEmpty(roleList)){
+        if (!CollectionUtils.isEmpty(roleList)) {
             roles = roleList.stream().map(m -> m.getRoleKey()).collect(Collectors.toList());
         }
         //存入redis
