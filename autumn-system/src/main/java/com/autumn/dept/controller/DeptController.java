@@ -35,6 +35,14 @@ public class DeptController {
     }
 
     /**
+     * 所属部门下拉数据
+     */
+    @PostMapping("/getDeptList")
+    public Result getDeptList(@RequestBody DeptSelectDto deptSelectDto) {
+        return deptService.getDeptList(deptSelectDto);
+    }
+
+    /**
      * 部门信息新增
      */
     @PostMapping("/insert")

@@ -31,6 +31,10 @@ public class UserUpdateDto implements Serializable {
      */
     private List roleList;
     /**
+     * 所属岗位
+     */
+    private List postList;
+    /**
      * 用户账号
      */
     private String userName;

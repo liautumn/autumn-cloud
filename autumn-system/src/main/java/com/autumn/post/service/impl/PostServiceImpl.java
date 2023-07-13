@@ -1,6 +1,7 @@
 package com.autumn.post.service.impl;
 
 import com.alibaba.excel.EasyExcel;
+import com.autumn.dictionary.Dictionary;
 import com.autumn.easyExcel.CustomRowHeightColWidthHandler;
 import com.autumn.easyExcel.RowHeightColWidthModel;
 import com.autumn.easyExcel.listener.ImportExcelListener;
@@ -11,6 +12,7 @@ import com.autumn.post.entity.PostSelectDto;
 import com.autumn.post.entity.PostUpdateDto;
 import com.autumn.post.mapper.PostMapper;
 import com.autumn.post.service.PostService;
+import com.autumn.publicEntity.LabelValue;
 import com.autumn.result.Result;
 import com.autumn.role.entity.Role;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -19,6 +21,7 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -131,5 +134,26 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
             e.getMessage();
         }
         return Result.success();
+    }
+
+    /**
+     * 获取所属岗位下拉数据
+     */
+    @Override
+    public Result getPostList(PostSelectDto postSelectDto) {
+        LambdaQueryWrapper<Post> queryWrapper = new LambdaQueryWrapper<Post>()
+                .eq(Post::getStatus, Dictionary.NO)
+                .orderByDesc(Post::getCreateTime);
+        List<Post> postList = postMapper.selectList(queryWrapper);
+        List<LabelValue> list = new ArrayList<>();
+        if (!CollectionUtils.isEmpty(postList)) {
+            for (Post post : postList) {
+                LabelValue labelValue = new LabelValue();
+                labelValue.setLabel(post.getPostName());
+                labelValue.setValue(post.getId());
+                list.add(labelValue);
+            }
+        }
+        return Result.successData(list);
     }
 }

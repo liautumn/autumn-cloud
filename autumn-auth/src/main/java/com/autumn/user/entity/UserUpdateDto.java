@@ -38,19 +38,16 @@ public class UserUpdateDto implements Serializable {
     /**
      * 用户邮箱
      */
-    @NotBlank(message = "用户邮箱不能为空")
     private String email;
 
     /**
      * 手机号码
      */
-    @NotBlank(message = "手机号码不能为空")
     private String phonenumber;
 
     /**
      * 用户性别（0男 1女 2未知）
      */
-    @NotBlank(message = "用户性别不能为空")
     private String sex;
 
     /**

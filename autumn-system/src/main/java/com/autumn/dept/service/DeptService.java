@@ -47,4 +47,8 @@ public interface DeptService extends IService<Dept> {
      */
     Result importDept(MultipartFile file);
 
+    /**
+     * 所属部门下拉数据
+     */
+    Result getDeptList(DeptSelectDto deptSelectDto);
 }

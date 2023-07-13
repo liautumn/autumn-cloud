@@ -7,11 +7,14 @@ import com.autumn.dept.entity.DeptSelectDto;
 import com.autumn.dept.entity.DeptUpdateDto;
 import com.autumn.dept.mapper.DeptMapper;
 import com.autumn.dept.service.DeptService;
+import com.autumn.dictionary.Dictionary;
 import com.autumn.easyExcel.CustomRowHeightColWidthHandler;
 import com.autumn.easyExcel.RowHeightColWidthModel;
 import com.autumn.easyExcel.listener.ImportExcelListener;
 import com.autumn.page.ResData;
+import com.autumn.publicEntity.LabelValue;
 import com.autumn.result.Result;
+import com.autumn.role.entity.Role;
 import com.autumn.tree.TreeUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -19,6 +22,7 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
@@ -127,6 +131,27 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements De
             e.getMessage();
         }
         return Result.success();
+    }
+
+    /**
+     * 所属部门下拉数据
+     */
+    @Override
+    public Result getDeptList(DeptSelectDto deptSelectDto) {
+        LambdaQueryWrapper<Dept> queryWrapper = new LambdaQueryWrapper<Dept>()
+                .eq(Dept::getStatus, Dictionary.NO)
+                .orderByDesc(Dept::getCreateTime);
+        List<Dept> deptList = deptMapper.selectList(queryWrapper);
+        List<LabelValue> list = new ArrayList<>();
+        if (!CollectionUtils.isEmpty(deptList)) {
+            for (Dept dept : deptList) {
+                LabelValue labelValue = new LabelValue();
+                labelValue.setLabel(dept.getDeptName());
+                labelValue.setValue(dept.getId());
+                list.add(labelValue);
+            }
+        }
+        return Result.successData(list);
     }
 
 }

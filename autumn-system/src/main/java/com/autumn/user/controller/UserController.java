@@ -5,6 +5,7 @@ import com.autumn.user.entity.UserInsertDto;
 import com.autumn.user.entity.UserSelectDto;
 import com.autumn.user.entity.UserUpdateDto;
 import com.autumn.user.service.UserService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;

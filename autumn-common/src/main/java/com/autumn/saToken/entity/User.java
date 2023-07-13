@@ -1,5 +1,6 @@
 package com.autumn.saToken.entity;
 
+import com.alibaba.excel.annotation.ExcelIgnore;
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.alibaba.excel.annotation.write.style.ColumnWidth;
 import com.alibaba.excel.annotation.write.style.HeadRowHeight;
@@ -48,7 +49,7 @@ public class User extends PublicEntity implements Serializable {
     /**
      * 用户类型（00系统用户）
      */
-    @ExcelProperty(value = "用户类型（00系统用户）")
+    @ExcelIgnore
     @TableField(value = "user_type")
     private String userType;
     /**

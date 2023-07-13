@@ -46,4 +46,9 @@ public interface PostService extends IService<Post> {
      * 岗位信息excel导入
      */
     Result importPost(MultipartFile file);
+
+    /**
+     * 所属岗位下拉数据
+     */
+    Result getPostList(PostSelectDto postSelectDto);
 }

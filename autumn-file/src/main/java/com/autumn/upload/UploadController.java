@@ -44,7 +44,7 @@ public class UploadController {
     }
 
     @GetMapping("/parse")
-    public Result parse(@RequestParam("filesId") @NotBlank(message = "filesId不能为空") String fileIds) throws Exception {
+    public Result parse(@RequestParam("fileIds") @NotBlank(message = "fileIds不能为空") String fileIds) throws Exception {
         return uploadUtil.parse(fileIds);
     }
 

@@ -1,6 +1,7 @@
 package com.autumn.post.controller;
 
 import cn.dev33.satoken.annotation.SaCheckPermission;
+import com.autumn.dept.entity.DeptSelectDto;
 import com.autumn.post.entity.PostInsertDto;
 import com.autumn.post.entity.PostSelectDto;
 import com.autumn.post.entity.PostUpdateDto;
@@ -34,6 +35,14 @@ public class PostController {
     @SaCheckPermission("post.select")
     public Result selectPost(@RequestBody PostSelectDto postSelectDto) {
         return postService.selectPost(postSelectDto);
+    }
+
+    /**
+     * 所属岗位下拉数据
+     */
+    @PostMapping("/getPostList")
+    public Result getPostList(@RequestBody PostSelectDto postSelectDto) {
+        return postService.getPostList(postSelectDto);
     }
 
     /**

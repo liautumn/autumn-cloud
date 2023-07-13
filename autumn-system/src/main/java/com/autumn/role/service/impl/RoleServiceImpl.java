@@ -2,6 +2,7 @@ package com.autumn.role.service.impl;
 
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.fastjson2.JSON;
+import com.autumn.dictionary.Dictionary;
 import com.autumn.easyExcel.CustomRowHeightColWidthHandler;
 import com.autumn.easyExcel.RowHeightColWidthModel;
 import com.autumn.easyExcel.listener.ImportExcelListener;
@@ -196,9 +197,14 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
         return Result.success();
     }
 
+    /**
+     * 获取所属角色下拉数据
+     */
     @Override
     public Result getRoleList(RoleSelectDto roleSelectDto) {
-        LambdaQueryWrapper<Role> queryWrapper = new LambdaQueryWrapper<Role>().orderByDesc(Role::getCreateTime);
+        LambdaQueryWrapper<Role> queryWrapper = new LambdaQueryWrapper<Role>()
+                .eq(Role::getStatus, Dictionary.NO)
+                .orderByDesc(Role::getCreateTime);
         List<Role> roleList = roleMapper.selectList(queryWrapper);
         List<LabelValue> list = new ArrayList<>();
         if (!CollectionUtils.isEmpty(roleList)) {

@@ -3,6 +3,7 @@ package com.autumn.user.entity;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -27,12 +28,18 @@ public class UserInsertDto implements Serializable {
      */
     private List roleList;
     /**
+     * 所属岗位
+     */
+    private List postList;
+    /**
      * 用户账号
      */
+    @NotBlank(message = "用户账号不能为空")
     private String userName;
     /**
      * 用户昵称
      */
+    @NotBlank(message = "用户昵称不能为空")
     private String nickName;
     /**
      * 用户类型（00系统用户）
@@ -57,6 +64,7 @@ public class UserInsertDto implements Serializable {
     /**
      * 密码
      */
+    @NotBlank(message = "密码不能为空")
     private String password;
     /**
      * 备注
@@ -66,6 +74,5 @@ public class UserInsertDto implements Serializable {
      * 帐号状态（0正常 1停用）
      */
     private String status;
-
 
 }

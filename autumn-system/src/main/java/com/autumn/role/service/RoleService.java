@@ -47,5 +47,8 @@ public interface RoleService extends IService<Role> {
      */
     Result importRole(MultipartFile file);
 
+    /**
+     * 获取所属角色下拉数据
+     */
     Result getRoleList(RoleSelectDto roleSelectDto);
 }
