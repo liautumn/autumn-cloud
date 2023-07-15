@@ -18,7 +18,6 @@ public class MenuInsertDto implements Serializable {
     /**
      * 路由地址
      */
-    @NotBlank(message = "路由地址不能为空")
     private String path;
 
     /**
@@ -95,7 +94,6 @@ public class MenuInsertDto implements Serializable {
     /**
      * 权限标识
      */
-    @NotBlank(message = "权限标识不能为空")
     private String perms;
 
     /**
