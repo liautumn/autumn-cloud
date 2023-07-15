@@ -26,12 +26,6 @@ public class Dept extends TreePublic implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
-     * 父部门id
-     */
-    @ExcelProperty(value = "父部门id")
-    @TableField(value = "parent_id")
-    private String parentId;
-    /**
      * 祖级列表
      */
     @ExcelProperty(value = "祖级列表")

@@ -15,6 +15,7 @@ import com.autumn.page.ResData;
 import com.autumn.publicEntity.LabelValue;
 import com.autumn.result.Result;
 import com.autumn.role.entity.Role;
+import com.autumn.tree.TreePublic;
 import com.autumn.tree.TreeUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -146,12 +147,15 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements De
         if (!CollectionUtils.isEmpty(deptList)) {
             for (Dept dept : deptList) {
                 LabelValue labelValue = new LabelValue();
+                labelValue.setId(dept.getId());
+                labelValue.setParentId(dept.getParentId());
                 labelValue.setLabel(dept.getDeptName());
                 labelValue.setValue(dept.getId());
                 list.add(labelValue);
             }
         }
-        return Result.successData(list);
+        List treeList =TreeUtil.buildTree(list);
+        return Result.successData(treeList);
     }
 
 }

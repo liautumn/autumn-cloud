@@ -67,6 +67,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public Result selectUser(UserSelectDto userSelectDto) {
         Page<User> page = PageHelper.startPage(userSelectDto.getPageNum(), userSelectDto.getPageSize());
         LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<User>()
+                .eq(!StringUtils.isEmpty(userSelectDto.getDeptId()), User::getDeptId, userSelectDto.getDeptId())
                 .orderByDesc(User::getUserType)
                 .orderByDesc(User::getCreateTime);
         List<User> userList = userMapper.selectList(queryWrapper);
