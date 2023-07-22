@@ -37,10 +37,3 @@ build/
 /.mvn
 
 ### resources ###
-
-### Docker ###
-/Docker/minio/data/
-/Docker/mysql/data/
-/Docker/mysql/logs/
-/Docker/nacos/logs/
-/Docker/redis/data/

@@ -1,4 +1,4 @@
-version : '2.0'
+version: '3.8'
 networks:
   autumn_net:
 services:
@@ -19,6 +19,7 @@ services:
       MYSQL_ROOT_PASSWORD: zhuang2001
     networks:
       - autumn_net
+    restart: always
 
   autumn-redis:
     hostname: "autumn-redis"
@@ -34,6 +35,46 @@ services:
     command: redis-server /home/autumn/redis/redis.conf
     networks:
       - autumn_net
+    restart: always
+
+  autumn-nginx:
+    container_name: autumn-nginx
+    image: autumn-nginx:latest
+    build:
+      context: ./nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/html/dist:/home/autumn/projects/dist
+      - ./nginx/conf/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/logs:/var/log/nginx
+      - ./nginx/conf.d:/etc/nginx/conf.d
+    networks:
+      - autumn_net
+    restart: always
+
+  autumn-nacos:
+    hostname: "autumn-nacos"
+    container_name: autumn-nacos
+    image: nacos/nacos-server:v2.1.0
+    build:
+      context: ./nacos
+    environment:
+      - MODE=standalone
+    volumes:
+      - ./nacos/logs/:/home/nacos/logs
+      - ./nacos/conf/application.properties:/home/nacos/conf/application.properties
+    ports:
+      - "8848:8848"
+      - "9848:9848"
+      - "9849:9849"
+    depends_on:
+      - autumn-mysql
+    links:
+      - autumn-mysql
+    networks:
+      - autumn_net
+    restart: always
 
   autumn-minio:
     hostname: "autumn-minio"
@@ -51,37 +92,112 @@ services:
     command: server --console-address ':9001' /data
     networks:
       - autumn_net
+    restart: always
 
-  autumn-nginx:
-    container_name: autumn-nginx
-    image: autumn-nginx:latest
+  autumn-system:
+    hostname: "autumn-system"
+    container_name: autumn-system
+    image: autumn-system:latest
     build:
-      context: ./nginx
+      context: ./autumn/system
+      dockerfile: dockerfile
     ports:
-      - "80:80"
-    volumes:
-      - ./nginx/html/dist:/home/autumn/projects/autumn-ui
-      - ./nginx/conf/nginx.conf:/etc/nginx/nginx.conf
-      - ./nginx/logs:/var/log/nginx
-      - ./nginx/conf.d:/etc/nginx/conf.d
+      - "8082:8082"
+    depends_on:
+      - autumn-redis
+      - autumn-mysql
+      - autumn-nacos
+    links:
+      - autumn-redis
+      - autumn-mysql
+      - autumn-nacos
     networks:
       - autumn_net
+    restart: always
 
-  autumn-nacos:
-    hostname: "autumn-nacos"
-    container_name: autumn-nacos
-    image: nacos/nacos-server:v2.1.0
+  autumn-auth:
+    hostname: "autumn-auth"
+    container_name: autumn-auth
+    image: autumn-auth:latest
     build:
-      context: ./nacos
-    environment:
-      - MODE=standalone
-    volumes:
-      - ./nacos/logs/:/home/nacos/logs
-      - ./nacos/conf/application.properties:/home/nacos/conf/application.properties
+      context: ./autumn/auth
+      dockerfile: dockerfile
     ports:
-      - "8848:8848"
-      - "9848:9848"
-      - "9849:9849"
+      - "8081:8081"
+    depends_on:
+      - autumn-redis
+      - autumn-mysql
+      - autumn-nacos
+    links:
+      - autumn-redis
+      - autumn-mysql
+      - autumn-nacos
     networks:
       - autumn_net
+    restart: always
+
+  autumn-gateway:
+    hostname: "autumn-gateway"
+    container_name: autumn-gateway
+    image: autumn-gateway:latest
+    build:
+      context: ./autumn/gateway
+      dockerfile: dockerfile
+    ports:
+      - "8088:8088"
+    depends_on:
+      - autumn-redis
+      - autumn-mysql
+      - autumn-nacos
+    links:
+      - autumn-redis
+      - autumn-mysql
+      - autumn-nacos
+    networks:
+      - autumn_net
+    restart: always
+
+  autumn-file:
+    hostname: "autumn-file"
+    container_name: autumn-file
+    image: autumn-file:latest
+    build:
+      context: ./autumn/file
+      dockerfile: dockerfile
+    ports:
+      - "8084:8084"
+    depends_on:
+      - autumn-redis
+      - autumn-mysql
+      - autumn-nacos
+      - autumn-minio
+    links:
+      - autumn-redis
+      - autumn-mysql
+      - autumn-nacos
+      - autumn-minio
+    networks:
+      - autumn_net
+    restart: always
+
+  autumn-generate:
+    hostname: "autumn-generate"
+    container_name: autumn-generate
+    image: autumn-generate:latest
+    build:
+      context: ./autumn/generate
+      dockerfile: dockerfile
+    ports:
+      - "8083:8083"
+    depends_on:
+      - autumn-redis
+      - autumn-mysql
+      - autumn-nacos
+    links:
+      - autumn-redis
+      - autumn-mysql
+      - autumn-nacos
+    networks:
+      - autumn_net
+    restart: always
 
