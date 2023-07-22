@@ -3,6 +3,7 @@ package com.autumn.role.entity;
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.alibaba.excel.annotation.write.style.ColumnWidth;
 import com.alibaba.excel.annotation.write.style.HeadRowHeight;
+import com.autumn.easyExcel.converter.DictConverter;
 import com.autumn.publicEntity.PublicEntity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -46,19 +47,19 @@ public class Role extends PublicEntity implements Serializable {
     /**
      * 数据范围（1：全部数据权限 2：自定数据权限 3：本部门数据权限 4：本部门及以下数据权限）
      */
-    @ExcelProperty(value = "数据范围（1：全部数据权限 2：自定数据权限 3：本部门数据权限 4：本部门及以下数据权限）")
+    @ExcelProperty(value = "数据范围")
     @TableField(value = "data_scope")
     private String dataScope;
     /**
      * 菜单树选择项是否关联显示（0是 1否）
      */
-    @ExcelProperty(value = "菜单树选择项是否关联显示（0是 1否）")
+    @ExcelProperty(value = "菜单树选择项是否关联显示")
     @TableField(value = "menu_check_strictly")
     private String menuCheckStrictly;
     /**
      * 部门树选择项是否关联显示（0是 1否）
      */
-    @ExcelProperty(value = "部门树选择项是否关联显示（0是 1否）")
+    @ExcelProperty(value = "部门树选择项是否关联显示")
     @TableField(value = "dept_check_strictly")
     private String deptCheckStrictly;
     /**
@@ -70,7 +71,7 @@ public class Role extends PublicEntity implements Serializable {
     /**
      * 是否停用（0是 1否）
      */
-    @ExcelProperty(value = "是否停用（0是 1否）")
+    @ExcelProperty(value = "是否停用", converter = DictConverter.class, dictCode = "whether")
     @TableField(value = "status")
     private String status;
 

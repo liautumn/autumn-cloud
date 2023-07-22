@@ -4,6 +4,7 @@ import com.alibaba.excel.annotation.ExcelIgnore;
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.alibaba.excel.annotation.write.style.ColumnWidth;
 import com.alibaba.excel.annotation.write.style.HeadRowHeight;
+import com.autumn.easyExcel.converter.DictConverter;
 import com.autumn.publicEntity.PublicEntity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -67,7 +68,7 @@ public class User extends PublicEntity implements Serializable {
     /**
      * 用户性别（0男 1女 2未知）
      */
-    @ExcelProperty(value = "用户性别（0男 1女 2未知）")
+    @ExcelProperty(value = "用户性别", converter = DictConverter.class, dictCode = "sex")
     @TableField(value = "sex")
     private String sex;
     /**
@@ -91,7 +92,7 @@ public class User extends PublicEntity implements Serializable {
     /**
      * 帐号状态（0正常 1停用）
      */
-    @ExcelProperty(value = "帐号状态（0正常 1停用）")
+    @ExcelProperty(value = "是否停用", converter = DictConverter.class, dictCode = "whether")
     @TableField(value = "status")
     private String status;
     /**

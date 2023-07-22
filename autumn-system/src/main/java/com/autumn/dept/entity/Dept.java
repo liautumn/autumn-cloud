@@ -3,6 +3,7 @@ package com.autumn.dept.entity;
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.alibaba.excel.annotation.write.style.ColumnWidth;
 import com.alibaba.excel.annotation.write.style.HeadRowHeight;
+import com.autumn.easyExcel.converter.DictConverter;
 import com.autumn.tree.TreePublic;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -64,7 +65,7 @@ public class Dept extends TreePublic implements Serializable {
     /**
      * 是否停用（0是 1否）
      */
-    @ExcelProperty(value = "是否停用（0是 1否）")
+    @ExcelProperty(value = "是否停用", converter = DictConverter.class, dictCode = "whether")
     @TableField(value = "status")
     private String status;
 

@@ -57,6 +57,9 @@ public class DeptSelectDto extends Page implements Serializable {
      * 模板标记
      */
     private Boolean tempFlag = false;
-
+    /**
+     * 是否要根节点
+     */
+    private Boolean isGetRoot = false;
 
 }

@@ -155,6 +155,13 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements De
             }
         }
         List treeList =TreeUtil.buildTree(list);
+        if (deptSelectDto.getIsGetRoot()) {
+            LabelValue labelValue = new LabelValue();
+            labelValue.setId(Dictionary.ROOTID);
+            labelValue.setLabel(Dictionary.ROOTTITLE);
+            labelValue.setValue(Dictionary.ROOTID);
+            treeList.add(0, labelValue);
+        }
         return Result.successData(treeList);
     }
 

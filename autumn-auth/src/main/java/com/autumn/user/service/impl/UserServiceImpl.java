@@ -68,7 +68,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public Result login(LoginDto login) {
         String password = login.getPassword();
         String userName = login.getUserName();
-        LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<User>().eq(User::getUserName, userName);
+        LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<User>().eq(User::getUserName, userName).eq(User::getStatus, Dictionary.NO);
         User user = userMapper.selectOne(queryWrapper);
         if (user != null) {
             String pass = SecureUtil.pbkdf2(password.toCharArray(), salt.getBytes());
@@ -92,7 +92,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                 return Result.failMsg("密码错误");
             }
         } else {
-            return Result.failMsg("用户不存在");
+            return Result.failMsg("用户不存在或用户已被停用");
         }
     }
 
