@@ -5,6 +5,10 @@ import com.autumn.dictData.entity.DictDataSelectDto;
 import com.autumn.dictData.entity.DictDataUpdateDto;
 import com.autumn.dictData.service.DictDataService;
 import com.autumn.result.Result;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,6 +33,7 @@ public class DictDataController {
     /**
      * 测试生成表查询
      */
+    @Cacheable(value = "dictData")
     @PostMapping("/select")
     public Result selectDictData(@RequestBody DictDataSelectDto dictDataSelectDto) {
         return dictDataService.selectDictData(dictDataSelectDto);
@@ -37,6 +42,7 @@ public class DictDataController {
     /**
      * 测试生成表新增
      */
+    @CacheEvict(value = "dictData", allEntries = true)
     @PostMapping("/insert")
     public Result insertDictData(@RequestBody @Validated DictDataInsertDto dictDataInsertDto) {
         return dictDataService.insertDictData(dictDataInsertDto);
@@ -45,6 +51,7 @@ public class DictDataController {
     /**
      * 测试生成表修改
      */
+    @CacheEvict(value = "dictData", allEntries = true)
     @PostMapping("/update")
     public Result updateDictData(@RequestBody @Validated DictDataUpdateDto dictDataUpdateDto) {
         return dictDataService.updateDictData(dictDataUpdateDto);
@@ -53,6 +60,7 @@ public class DictDataController {
     /**
      * 测试生成表删除
      */
+    @CacheEvict(value = "dictData", allEntries = true)
     @GetMapping("/delete")
     public Result deleteDictData(@RequestParam("ids") @NotBlank(message = "ids不能为空") String ids) {
         return dictDataService.deleteDictData(ids);
@@ -69,6 +77,7 @@ public class DictDataController {
     /**
      * 菜单excel导入
      */
+    @CacheEvict(value = "dictData", allEntries = true)
     @PostMapping("/import")
     public Result importDictData(MultipartFile file) {
         return dictDataService.importDictData(file);
