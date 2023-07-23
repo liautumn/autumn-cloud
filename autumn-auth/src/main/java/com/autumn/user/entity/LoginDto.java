@@ -1,5 +1,6 @@
 package com.autumn.user.entity;
 
+import com.anji.captcha.model.vo.CaptchaVO;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
@@ -29,6 +30,10 @@ public class LoginDto implements Serializable {
      * 记住我标记（true记住 false不记住）
      */
     private Boolean isRemember = false;
+    /**
+     * 验证码参数
+     */
+    private String captchaVerification;
 
     private static final long serialVersionUID = 1L;
 }

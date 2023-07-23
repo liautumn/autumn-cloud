@@ -47,6 +47,7 @@
         <shardingsphere.version>5.3.1</shardingsphere.version>
         <minio.version>8.2.1</minio.version>
         <easyexcel.version>3.1.1</easyexcel.version>
+        <captcha.version>1.3.0</captcha.version>
 
         <autumn-core.version>1.0</autumn-core.version>
         <autumn-common.version>1.0</autumn-common.version>
@@ -162,6 +163,12 @@
                 <version>${easyexcel.version}</version>
             </dependency>
 
+            <dependency>
+            <groupId>com.anji-plus</groupId>
+            <artifactId>spring-boot-starter-captcha</artifactId>
+            <version>${captcha.version}</version>
+        </dependency>
+
         </dependencies>
     </dependencyManagement>
 
@@ -188,6 +195,7 @@
                     <include>**/*.jpg</include>
                     <include>**/*.png</include>
                     <include>**/*.ftl</include>
+                    <include>META-INF/**</include>
                 </includes>
                 <filtering>true</filtering>
             </resource>

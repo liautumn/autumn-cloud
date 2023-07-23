@@ -5,6 +5,9 @@ import cn.dev33.satoken.stp.SaLoginModel;
 import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.crypto.SecureUtil;
+import com.anji.captcha.model.common.ResponseModel;
+import com.anji.captcha.model.vo.CaptchaVO;
+import com.anji.captcha.service.CaptchaService;
 import com.autumn.dictionary.Dictionary;
 import com.autumn.result.Result;
 import com.autumn.saToken.LoginInfoData;
@@ -36,6 +39,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Value("${autumn.password.salt}")
     private String salt;
+    @Resource
+    private CaptchaService captchaService;
 
     @Override
     public Result deleteUser(String id) {
@@ -66,6 +71,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public Result login(LoginDto login) {
+        CaptchaVO captchaVO = new CaptchaVO();
+        captchaVO.setCaptchaVerification(login.getCaptchaVerification());
+        ResponseModel response = captchaService.verification(captchaVO);
+        if (response.isSuccess() == false) {
+            return Result.failMsg("验证码校验失败");
+        }
         String password = login.getPassword();
         String userName = login.getUserName();
         LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<User>().eq(User::getUserName, userName).eq(User::getStatus, Dictionary.NO);

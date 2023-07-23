@@ -16,7 +16,7 @@ public class WebMvcConfigure implements WebMvcConfigurer {
         // 注册 Sa-Token 拦截器，校验规则为 StpUtil.checkLogin() 登录校验。
         registry.addInterceptor(new SaInterceptor(handle -> StpUtil.checkLogin()))
                 .addPathPatterns("/**")
-                .excludePathPatterns("/login", "/logout", "/signUp");
+                .excludePathPatterns("/login", "/logout", "/signUp", "/captcha/get", "/captcha/check");
         /**
          * @SaCheckLogin: 登录校验 —— 只有登录之后才能进入该方法。
          * @SaCheckRole("admin"): 角色校验 —— 必须具有指定角色标识才能进入该方法。
