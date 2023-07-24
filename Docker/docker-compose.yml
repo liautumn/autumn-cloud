@@ -180,6 +180,25 @@ services:
       - autumn_net
     restart: always
 
+  autumn-xxl-job:
+    hostname: "autumn-xxl-job"
+    container_name: autumn-xxl-job
+    image: autumn-xxl-job:latest
+    build:
+      context: ./autumn/file
+      dockerfile: dockerfile
+    ports:
+      - "8086:8086"
+    depends_on:
+      - autumn-mysql
+      - autumn-nacos
+    links:
+      - autumn-mysql
+      - autumn-nacos
+    networks:
+      - autumn_net
+    restart: always
+
   autumn-generate:
     hostname: "autumn-generate"
     container_name: autumn-generate

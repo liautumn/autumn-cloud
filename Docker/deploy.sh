@@ -8,7 +8,20 @@ usage() {
 
 # 开启所需端口
 port(){
-	firewall-cmd --add-port=8080/tcp --permanent
+	firewall-cmd --add-port=8887/tcp --permanent
+	firewall-cmd --add-port=9997/tcp --permanent
+	firewall-cmd --add-port=9999/tcp --permanent
+	firewall-cmd --add-port=9001/tcp --permanent
+	firewall-cmd --add-port=9000/tcp --permanent
+	firewall-cmd --add-port=8848/tcp --permanent
+	firewall-cmd --add-port=6379/tcp --permanent
+	firewall-cmd --add-port=3306/tcp --permanent
+	firewall-cmd --add-port=8808/tcp --permanent
+	firewall-cmd --add-port=8088/tcp --permanent
+	firewall-cmd --add-port=8081/tcp --permanent
+	firewall-cmd --add-port=8082/tcp --permanent
+	firewall-cmd --add-port=8083/tcp --permanent
+	firewall-cmd --add-port=8084/tcp --permanent
 	service firewalld restart
 }
 
@@ -18,10 +31,12 @@ base(){
 }
 
 admin(){
-  gateway
-  auth
   system
+  auth
+  gateway
   file
+  generate
+  xxl-job
 }
 
 # 启动系统服务
@@ -58,6 +73,15 @@ file(){
   docker rmi -f autumn-file:latest
   docker-compose build autumn-file
 	docker-compose up -d autumn-file
+}
+
+# 任务调度服务
+xxl-job(){
+  docker-compose stop autumn-xxl-job
+  docker-compose rm -f autumn-xxl-job
+  docker rmi -f autumn-xxl-job:latest
+  docker-compose build autumn-xxl-job
+	docker-compose up -d autumn-xxl-job
 }
 
 # 启动代码生成服务
