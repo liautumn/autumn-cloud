@@ -100,11 +100,8 @@
                     <include>**/*.jpg</include>
                     <include>**/*.png</include>
                     <include>**/*.ftl</include>
-                    <include>META-INF/**</include>
                     <include>i18n/**</include>
-                    <include>mybatis-mapper/**</include>
                     <include>static/**</include>
-                    <include>templates/**</include>
                 </includes>
                 <filtering>true</filtering>
             </resource>
