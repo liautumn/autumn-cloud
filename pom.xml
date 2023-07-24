@@ -17,6 +17,7 @@
         <module>autumn-api</module>
         <module>autumn-file</module>
         <module>autumn-generate</module>
+        <module>autumn-xxl-job</module>
         <module>autumn-demo</module>
     </modules>
 
@@ -48,6 +49,7 @@
         <minio.version>8.2.1</minio.version>
         <easyexcel.version>3.1.1</easyexcel.version>
         <captcha.version>1.3.0</captcha.version>
+        <xxl-job.version>2.4.0</xxl-job.version>
 
         <autumn-core.version>1.0</autumn-core.version>
         <autumn-common.version>1.0</autumn-common.version>
@@ -164,10 +166,16 @@
             </dependency>
 
             <dependency>
-            <groupId>com.anji-plus</groupId>
-            <artifactId>spring-boot-starter-captcha</artifactId>
-            <version>${captcha.version}</version>
-        </dependency>
+                <groupId>com.anji-plus</groupId>
+                <artifactId>spring-boot-starter-captcha</artifactId>
+                <version>${captcha.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.xuxueli</groupId>
+                <artifactId>xxl-job-core</artifactId>
+                <version>${xxl-job.version}</version>
+            </dependency>
 
         </dependencies>
     </dependencyManagement>
