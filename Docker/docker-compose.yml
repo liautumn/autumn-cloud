@@ -185,7 +185,7 @@ services:
     container_name: autumn-xxl-job
     image: autumn-xxl-job:latest
     build:
-      context: ./autumn/file
+      context: ./autumn/xxl-job
       dockerfile: dockerfile
     ports:
       - "8086:8086"

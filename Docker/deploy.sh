@@ -35,8 +35,8 @@ admin(){
   auth
   gateway
   file
+  xxlJob
   generate
-  xxl-job
 }
 
 # 启动系统服务
@@ -76,7 +76,7 @@ file(){
 }
 
 # 任务调度服务
-xxl-job(){
+xxlJob(){
   docker-compose stop autumn-xxl-job
   docker-compose rm -f autumn-xxl-job
   docker rmi -f autumn-xxl-job:latest
