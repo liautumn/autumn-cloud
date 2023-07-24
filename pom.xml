@@ -51,7 +51,6 @@
         <captcha.version>1.3.0</captcha.version>
         <xxl-job.version>2.4.0</xxl-job.version>
 
-        <autumn-core.version>1.0</autumn-core.version>
         <autumn-common.version>1.0</autumn-common.version>
         <autumn-api.version>1.0</autumn-api.version>
     </properties>
