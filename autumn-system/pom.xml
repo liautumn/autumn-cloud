@@ -8,8 +8,9 @@
         <artifactId>autumn-cloud</artifactId>
         <version>1.0</version>
     </parent>
-    <packaging>jar</packaging>
     <artifactId>autumn-system</artifactId>
+    <version>1.0</version>
+    <packaging>jar</packaging>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -47,23 +48,22 @@
     </dependencies>
 
     <build>
-        <finalName>${project.artifactId}</finalName>
         <plugins>
-<!--            <plugin>-->
-<!--                <groupId>org.springframework.boot</groupId>-->
-<!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
-<!--                <configuration>-->
-<!--                    <mainClass>com.autumn.SystemApplication</mainClass> &lt;!&ndash; 指定启动主类 &ndash;&gt;-->
-<!--                    <includeSystemScope>true</includeSystemScope> &lt;!&ndash; 打包 将外部jar包打包进项目中 &ndash;&gt;-->
-<!--                </configuration>-->
-<!--                <executions>-->
-<!--                    <execution>-->
-<!--                        <goals>-->
-<!--                            <goal>repackage</goal>-->
-<!--                        </goals>-->
-<!--                    </execution>-->
-<!--                </executions>-->
-<!--            </plugin>-->
+            <!--            <plugin>-->
+            <!--                <groupId>org.springframework.boot</groupId>-->
+            <!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
+            <!--                <configuration>-->
+            <!--                    <mainClass>com.autumn.SystemApplication</mainClass> &lt;!&ndash; 指定启动主类 &ndash;&gt;-->
+            <!--                    <includeSystemScope>true</includeSystemScope> &lt;!&ndash; 打包 将外部jar包打包进项目中 &ndash;&gt;-->
+            <!--                </configuration>-->
+            <!--                <executions>-->
+            <!--                    <execution>-->
+            <!--                        <goals>-->
+            <!--                            <goal>repackage</goal>-->
+            <!--                        </goals>-->
+            <!--                    </execution>-->
+            <!--                </executions>-->
+            <!--            </plugin>-->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
