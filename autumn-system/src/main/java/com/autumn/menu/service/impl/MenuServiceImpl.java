@@ -147,7 +147,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         //清空redis
         redisUtil.remove(roleKey);
         //判断是否管理员
-        List<Role> roleList = roleMapper.getRoleKeysByLoginId(LoginInfoData.getUserInfo().getId());
+        List<Role> roleList;
         if (Dictionary.ADMINFLAG.equals(userInfo.getUserType())) {
             LambdaQueryWrapper<Role> queryWrapper = new LambdaQueryWrapper<Role>().eq(Role::getStatus, Dictionary.NO);
             roleList = roleMapper.selectList(queryWrapper);

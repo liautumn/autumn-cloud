@@ -49,24 +49,13 @@
 
     <build>
         <plugins>
-            <!--            <plugin>-->
-            <!--                <groupId>org.springframework.boot</groupId>-->
-            <!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
-            <!--                <configuration>-->
-            <!--                    <mainClass>com.autumn.SystemApplication</mainClass> &lt;!&ndash; 指定启动主类 &ndash;&gt;-->
-            <!--                    <includeSystemScope>true</includeSystemScope> &lt;!&ndash; 打包 将外部jar包打包进项目中 &ndash;&gt;-->
-            <!--                </configuration>-->
-            <!--                <executions>-->
-            <!--                    <execution>-->
-            <!--                        <goals>-->
-            <!--                            <goal>repackage</goal>-->
-            <!--                        </goals>-->
-            <!--                    </execution>-->
-            <!--                </executions>-->
-            <!--            </plugin>-->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>com.autumn.SystemApplication</mainClass> <!-- 指定启动主类 -->
+                    <includeSystemScope>true</includeSystemScope> <!-- 打包 将外部jar包打包进项目中 -->
+                </configuration>
                 <executions>
                     <execution>
                         <goals>
