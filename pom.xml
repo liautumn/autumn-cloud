@@ -17,7 +17,6 @@
         <module>autumn-api</module>
         <module>autumn-file</module>
         <module>autumn-generate</module>
-        <module>autumn-xxl-job</module>
         <module>autumn-demo</module>
     </modules>
 
