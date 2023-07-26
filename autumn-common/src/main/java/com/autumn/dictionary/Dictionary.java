@@ -11,10 +11,12 @@ public class Dictionary {
     //设备
     public static final String PC = "PC";
 
+    //System
+    public static final String SYSTEM = "SYSTEM";
     //权限缓存标识
-    public static final String PERMS = "_PERMS";
+    public static final String PERMS = "PERMS";
     //角色缓存标识
-    public static final String ROLES = "_ROLES";
+    public static final String ROLES = "ROLES";
 
     //根节点ID
     public static final String ROOTID = "0";

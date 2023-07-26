@@ -135,7 +135,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
             }
         }
         //清空redis
-        String premKey = LoginInfoData.getUserInfo().getId() + Dictionary.PERMS;
+        String premKey = Dictionary.SYSTEM + ":" + Dictionary.PERMS + ":" + LoginInfoData.getUserInfo().getId();
         redisUtil.remove(premKey);
         //存入redis
         redisUtil.set(premKey, JSON.toJSONString(prems));
@@ -143,7 +143,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         stpInterface.getPermissionList(LoginInfoData.getUserInfo().getId(), null);
 
         //角色权限处理
-        String roleKey = LoginInfoData.getUserInfo().getId() + Dictionary.ROLES;
+        String roleKey = Dictionary.SYSTEM + ":" + Dictionary.ROLES + ":" + LoginInfoData.getUserInfo().getId();
         //清空redis
         redisUtil.remove(roleKey);
         //判断是否管理员

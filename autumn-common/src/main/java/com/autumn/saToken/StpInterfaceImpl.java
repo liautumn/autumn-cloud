@@ -25,7 +25,8 @@ public class StpInterfaceImpl implements StpInterface {
      */
     @Override
     public List<String> getPermissionList(Object loginId, String loginType) {
-        Object data = redisUtil.get(loginId + Dictionary.PERMS);
+        String premKey = Dictionary.SYSTEM + ":" + Dictionary.PERMS + ":" + loginId;
+        Object data = redisUtil.get(premKey);
         List<String> list = data != null ? JSON.parseObject(String.valueOf(data), List.class) : new ArrayList<>();
         return list;
     }
@@ -35,7 +36,8 @@ public class StpInterfaceImpl implements StpInterface {
      */
     @Override
     public List<String> getRoleList(Object loginId, String loginType) {
-        Object data = redisUtil.get(loginId + Dictionary.ROLES);
+        String roleKey = Dictionary.SYSTEM + ":" + Dictionary.ROLES + ":" + loginId;
+        Object data = redisUtil.get(roleKey);
         List<String> list = data != null ? JSON.parseObject(String.valueOf(data), List.class) : new ArrayList<>();
         return list;
     }
