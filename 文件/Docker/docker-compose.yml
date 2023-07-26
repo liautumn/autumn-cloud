@@ -180,10 +180,10 @@ services:
       - autumn_net
     restart: always
 
-  autumn-xxl-job:
-    hostname: "autumn-xxl-job"
-    container_name: autumn-xxl-job
-    image: autumn-xxl-job:latest
+  xxl-job-admin:
+    hostname: "xxl-job-admin"
+    container_name: xxl-job-admin
+    image: xxl-job-admin:latest
     build:
       context: ./autumn/xxl-job
       dockerfile: dockerfile
@@ -191,10 +191,8 @@ services:
       - "8086:8086"
     depends_on:
       - autumn-mysql
-      - autumn-nacos
     links:
       - autumn-mysql
-      - autumn-nacos
     networks:
       - autumn_net
     restart: always

@@ -10,6 +10,6 @@ RUN mkdir -p /home/autumn
 # 指定路径
 WORKDIR /home/autumn
 # 复制jar文件到路径
-COPY ./jar/autumn-xxl-job-1.0.jar /home/autumn/autumn-xxl-job.jar
+COPY ./jar/xxl-job-admin-1.0.jar /home/autumn/xxl-job-admin.jar
 # 启动系统服务
-ENTRYPOINT ["java","-jar","autumn-xxl-job.jar"]
+ENTRYPOINT ["java","-jar","xxl-job-admin.jar"]
