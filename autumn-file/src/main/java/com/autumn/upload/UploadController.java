@@ -1,6 +1,8 @@
 package com.autumn.upload;
 
 import com.autumn.result.Result;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,11 +23,6 @@ public class UploadController {
     @Resource
     private UploadUtil uploadUtil;
 
-    @GetMapping("/view")
-    public Result view(@RequestParam("filesIds") @NotBlank(message = "filesIds不能为空") String filesIds) {
-        return Result.successData(uploadUtil.filesIdsTofiles(filesIds));
-    }
-
     @GetMapping("/delete")
     public Result delete(@RequestParam("filesId") @NotBlank(message = "filesId不能为空") String filesId) {
         Result remove = uploadUtil.remove(filesId);
@@ -33,9 +30,8 @@ public class UploadController {
     }
 
     @GetMapping("/download")
-    public Result download(@RequestParam("filesId") @NotBlank(message = "filesId不能为空") String filesId, HttpServletResponse response) {
+    public void download(@RequestParam("filesId") @NotBlank(message = "filesId不能为空") String filesId, HttpServletResponse response) {
         uploadUtil.download(filesId, response);
-        return Result.success();
     }
 
     @PostMapping("/upload")
