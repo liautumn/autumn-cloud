@@ -180,10 +180,10 @@ services:
       - autumn_net
     restart: always
 
-  xxl-job-admin:
-    hostname: "xxl-job-admin"
-    container_name: xxl-job-admin
-    image: xxl-job-admin:latest
+  autumn-xxl-job:
+    hostname: "autumn-xxl-job"
+    container_name: autumn-xxl-job
+    image: autumn-xxl-job:latest
     build:
       context: ./autumn/xxl-job
       dockerfile: dockerfile

@@ -64,11 +64,11 @@ file(){
 
 # 任务调度服务
 xxlJob(){
-  docker-compose stop xxl-job-admin
-  docker-compose rm -f xxl-job-admin
-  docker rmi -f xxl-job-admin:latest
-  docker-compose build xxl-job-admin
-	docker-compose up -d xxl-job-admin
+  docker-compose stop autumn-xxl-job
+  docker-compose rm -f autumn-xxl-job
+  docker rmi -f autumn-xxl-job:latest
+  docker-compose build autumn-xxl-job
+	docker-compose up -d autumn-xxl-job
 }
 
 # 启动代码生成服务
