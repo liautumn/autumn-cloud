@@ -109,8 +109,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public Result getOneUser(String id) {
-        User user = userMapper.selectById(id);
-        user.setPassword(null);
+        Map user = userMapper.getInfoById(id);
         return Result.successData(user);
     }
 
