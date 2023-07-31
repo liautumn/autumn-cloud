@@ -33,4 +33,7 @@ public class Dictionary {
     public static final String MENU = "1";
     public static final String BUTTEN = "2";
 
+    //websocker缓存标识
+    public static final String WEBSOCKET = "WEBSOCKET";
+
 }
