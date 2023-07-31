@@ -1,7 +1,10 @@
 package com.autumn.auth.controller;
 
 import cn.dev33.satoken.stp.StpUtil;
+import com.autumn.dictionary.Dictionary;
+import com.autumn.redis.RedisUtil;
 import com.autumn.result.Result;
+import com.autumn.saToken.LoginInfoData;
 import com.autumn.user.entity.LoginDto;
 import com.autumn.user.entity.PasswordDto;
 import com.autumn.user.entity.UserInsertDto;
@@ -18,6 +21,8 @@ public class LoginController {
 
     @Resource
     private UserService userService;
+    @Resource
+    private RedisUtil redisUtil;
 
     /**
      * 登录
@@ -37,6 +42,13 @@ public class LoginController {
      */
     @PostMapping("/logout")
     public Result logout() {
+        // 清空缓存权限
+        String loginId = LoginInfoData.getUserInfo().getId();
+        String premKey = Dictionary.SYSTEM + ":" + Dictionary.PERMS + ":" + loginId;
+        redisUtil.remove(premKey);
+        String roleKey = Dictionary.SYSTEM + ":" + Dictionary.ROLES + ":" + loginId;
+        redisUtil.remove(roleKey);
+        // 登出
         StpUtil.logout();
         return Result.success();
     }
