@@ -1,5 +1,6 @@
 package com.autumn.dictData.controller;
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.autumn.dictData.entity.DictDataInsertDto;
 import com.autumn.dictData.entity.DictDataSelectDto;
 import com.autumn.dictData.entity.DictDataUpdateDto;
@@ -35,6 +36,7 @@ public class DictDataController {
      */
     @Cacheable(value = "dictData")
     @PostMapping("/select")
+    @SaCheckPermission("dictData.select")
     public Result selectDictData(@RequestBody DictDataSelectDto dictDataSelectDto) {
         return dictDataService.selectDictData(dictDataSelectDto);
     }
@@ -44,6 +46,7 @@ public class DictDataController {
      */
     @CacheEvict(value = "dictData", allEntries = true)
     @PostMapping("/insert")
+    @SaCheckPermission("dictData.insert")
     public Result insertDictData(@RequestBody @Validated DictDataInsertDto dictDataInsertDto) {
         return dictDataService.insertDictData(dictDataInsertDto);
     }
@@ -53,6 +56,7 @@ public class DictDataController {
      */
     @CacheEvict(value = "dictData", allEntries = true)
     @PostMapping("/update")
+    @SaCheckPermission("dictData.update")
     public Result updateDictData(@RequestBody @Validated DictDataUpdateDto dictDataUpdateDto) {
         return dictDataService.updateDictData(dictDataUpdateDto);
     }
@@ -62,6 +66,7 @@ public class DictDataController {
      */
     @CacheEvict(value = "dictData", allEntries = true)
     @GetMapping("/delete")
+    @SaCheckPermission("dictData.delete")
     public Result deleteDictData(@RequestParam("ids") @NotBlank(message = "ids不能为空") String ids) {
         return dictDataService.deleteDictData(ids);
     }
@@ -70,6 +75,7 @@ public class DictDataController {
      * 菜单excel导出
      */
     @PostMapping("/export")
+    @SaCheckPermission("dictData.export")
     public void exportDictData(@RequestBody DictDataSelectDto dictDataSelectDto, HttpServletResponse response) {
         dictDataService.exportDictData(dictDataSelectDto, response);
     }
@@ -79,6 +85,7 @@ public class DictDataController {
      */
     @CacheEvict(value = "dictData", allEntries = true)
     @PostMapping("/import")
+    @SaCheckPermission("dictData.import")
     public Result importDictData(MultipartFile file) {
         return dictDataService.importDictData(file);
     }

@@ -1,5 +1,6 @@
 package com.autumn.dictType.controller;
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.autumn.dictType.entity.DictTypeInsertDto;
 import com.autumn.dictType.entity.DictTypeSelectDto;
 import com.autumn.dictType.entity.DictTypeUpdateDto;
@@ -33,6 +34,7 @@ public class DictTypeController {
      */
     @Cacheable(value = "dictType")
     @PostMapping("/select")
+    @SaCheckPermission("dictType.select")
     public Result selectDictType(@RequestBody DictTypeSelectDto dictTypeSelectDto) {
         return dictTypeService.selectDictType(dictTypeSelectDto);
     }
@@ -42,6 +44,7 @@ public class DictTypeController {
      */
     @CacheEvict(value = "dictType", allEntries = true)
     @PostMapping("/insert")
+    @SaCheckPermission("dictType.insert")
     public Result insertDictType(@RequestBody @Validated DictTypeInsertDto dictTypeInsertDto) {
         return dictTypeService.insertDictType(dictTypeInsertDto);
     }
@@ -51,6 +54,7 @@ public class DictTypeController {
      */
     @CacheEvict(value = "dictType", allEntries = true)
     @PostMapping("/update")
+    @SaCheckPermission("dictType.update")
     public Result updateDictType(@RequestBody @Validated DictTypeUpdateDto dictTypeUpdateDto) {
         return dictTypeService.updateDictType(dictTypeUpdateDto);
     }
@@ -60,6 +64,7 @@ public class DictTypeController {
      */
     @CacheEvict(value = "dictType", allEntries = true)
     @GetMapping("/delete")
+    @SaCheckPermission("dictType.delete")
     public Result deleteDictType(@RequestParam("ids") @NotBlank(message = "ids不能为空") String ids) {
         return dictTypeService.deleteDictType(ids);
     }
@@ -77,6 +82,7 @@ public class DictTypeController {
      * 字典类型excel导出
      */
     @PostMapping("/export")
+    @SaCheckPermission("dictType.export")
     public void exportDictType(@RequestBody DictTypeSelectDto dictTypeSelectDto, HttpServletResponse response) {
         dictTypeService.exportDictType(dictTypeSelectDto, response);
     }
@@ -86,6 +92,7 @@ public class DictTypeController {
      */
     @CacheEvict(value = "dictType", allEntries = true)
     @PostMapping("/import")
+    @SaCheckPermission("dictType.import")
     public Result importDictType(MultipartFile file) {
         return dictTypeService.importDictType(file);
     }

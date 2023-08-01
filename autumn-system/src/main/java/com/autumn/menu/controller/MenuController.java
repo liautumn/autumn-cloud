@@ -1,5 +1,6 @@
 package com.autumn.menu.controller;
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.autumn.menu.entity.MenuInsertDto;
 import com.autumn.menu.entity.MenuSelectDto;
 import com.autumn.menu.entity.MenuTreeDto;
@@ -39,6 +40,7 @@ public class MenuController {
      * 菜单查询
      */
     @PostMapping("/select")
+    @SaCheckPermission("menu.select")
     public Result selectMenu(@RequestBody MenuSelectDto menuSelectDto) {
         return menuService.selectMenu(menuSelectDto);
     }
@@ -55,6 +57,7 @@ public class MenuController {
      * 菜单新增
      */
     @PostMapping("/insert")
+    @SaCheckPermission("menu.insert")
     public Result insertMenu(@RequestBody @Validated MenuInsertDto menuInsertDto) {
         return menuService.insertMenu(menuInsertDto);
     }
@@ -63,6 +66,7 @@ public class MenuController {
      * 菜单修改
      */
     @PostMapping("/update")
+    @SaCheckPermission("menu.update")
     public Result updateMenu(@RequestBody @Validated MenuUpdateDto menuUpdateDto) {
         return menuService.updateMenu(menuUpdateDto);
     }
@@ -71,6 +75,7 @@ public class MenuController {
      * 菜单删除
      */
     @GetMapping("/delete")
+    @SaCheckPermission("menu.delete")
     public Result deleteMenu(@RequestParam("ids") @NotBlank(message = "ids不能为空") String ids) {
         return menuService.deleteMenu(ids);
     }
@@ -79,6 +84,7 @@ public class MenuController {
      * 菜单excel导出
      */
     @PostMapping("/export")
+    @SaCheckPermission("menu.export")
     public void exportMenu(@RequestBody MenuSelectDto menuSelectDto, HttpServletResponse response) {
         menuService.exportMenu(menuSelectDto, response);
     }
@@ -87,6 +93,7 @@ public class MenuController {
      * 菜单excel导入
      */
     @PostMapping("/import")
+    @SaCheckPermission("menu.import")
     public Result importMenu(MultipartFile file) {
         return menuService.importMenu(file);
     }

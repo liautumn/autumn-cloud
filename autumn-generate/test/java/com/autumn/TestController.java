@@ -26,9 +26,9 @@ public class TestController {
     public void getTest() {
         GenDto genDto = new GenDto();
         genDto.setAuthor("lqz");
-        genDto.setTitle("用户角色关系表");
+        genDto.setTitle("消息记录表");
         genDto.setDatabaseName("autumn_cloud");
-        genDto.setTableName("sys_user_role");
+        genDto.setTableName("sys_message");
         genDto.setRootPath("com.autumn");
         genDto.setSystemCode("system");
         Result generate = generateService.generate(genDto);

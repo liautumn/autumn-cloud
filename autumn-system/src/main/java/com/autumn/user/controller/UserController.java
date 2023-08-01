@@ -1,5 +1,6 @@
 package com.autumn.user.controller;
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.autumn.result.Result;
 import com.autumn.user.entity.UserInsertDto;
 import com.autumn.user.entity.UserSelectDto;
@@ -31,6 +32,7 @@ public class UserController {
      * 用户信息查询
      */
     @PostMapping("/select")
+    @SaCheckPermission("user.select")
     public Result selectUser(@RequestBody UserSelectDto userSelectDto) {
         return userService.selectUser(userSelectDto);
     }
@@ -39,6 +41,7 @@ public class UserController {
      * 用户信息新增
      */
     @PostMapping("/insert")
+    @SaCheckPermission("user.insert")
     public Result insertUser(@RequestBody @Validated UserInsertDto userInsertDto) {
         return userService.insertUser(userInsertDto);
     }
@@ -47,6 +50,7 @@ public class UserController {
      * 用户信息修改
      */
     @PostMapping("/update")
+    @SaCheckPermission("user.update")
     public Result updateUser(@RequestBody @Validated UserUpdateDto userUpdateDto) {
         return userService.updateUser(userUpdateDto);
     }
@@ -55,6 +59,7 @@ public class UserController {
      * 用户信息删除
      */
     @GetMapping("/delete")
+    @SaCheckPermission("user.delete")
     public Result deleteUser(@RequestParam("ids") @NotBlank(message = "ids不能为空") String ids) {
         return userService.deleteUser(ids);
     }
@@ -63,6 +68,7 @@ public class UserController {
      * 用户信息excel导出
      */
     @PostMapping("/export")
+    @SaCheckPermission("user.export")
     public void exportUser(@RequestBody UserSelectDto userSelectDto, HttpServletResponse response) {
         userService.exportUser(userSelectDto, response);
     }
@@ -71,6 +77,7 @@ public class UserController {
      * 用户信息excel导入
      */
     @PostMapping("/import")
+    @SaCheckPermission("user.import")
     public Result importUser(MultipartFile file) {
         return userService.importUser(file);
     }

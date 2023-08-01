@@ -1,5 +1,6 @@
 package com.autumn.role.controller;
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.autumn.result.Result;
 import com.autumn.role.entity.RoleInsertDto;
 import com.autumn.role.entity.RoleSelectDto;
@@ -30,6 +31,7 @@ public class RoleController {
      * 角色信息查询
      */
     @PostMapping("/select")
+    @SaCheckPermission("role.select")
     public Result selectRole(@RequestBody RoleSelectDto roleSelectDto) {
         return roleService.selectRole(roleSelectDto);
     }
@@ -46,6 +48,7 @@ public class RoleController {
      * 角色信息新增
      */
     @PostMapping("/insert")
+    @SaCheckPermission("role.insert")
     public Result insertRole(@RequestBody @Validated RoleInsertDto roleInsertDto) {
         return roleService.insertRole(roleInsertDto);
     }
@@ -54,6 +57,7 @@ public class RoleController {
      * 角色信息修改
      */
     @PostMapping("/update")
+    @SaCheckPermission("role.update")
     public Result updateRole(@RequestBody @Validated RoleUpdateDto roleUpdateDto) {
         return roleService.updateRole(roleUpdateDto);
     }
@@ -62,6 +66,7 @@ public class RoleController {
      * 角色信息删除
      */
     @GetMapping("/delete")
+    @SaCheckPermission("role.delete")
     public Result deleteRole(@RequestParam("ids") @NotBlank(message = "ids不能为空") String ids) {
         return roleService.deleteRole(ids);
     }
@@ -70,6 +75,7 @@ public class RoleController {
      * 角色信息excel导出
      */
     @PostMapping("/export")
+    @SaCheckPermission("role.export")
     public void exportRole(@RequestBody RoleSelectDto roleSelectDto, HttpServletResponse response) {
         roleService.exportRole(roleSelectDto, response);
     }
@@ -78,6 +84,7 @@ public class RoleController {
      * 角色信息excel导入
      */
     @PostMapping("/import")
+    @SaCheckPermission("role.import")
     public Result importRole(MultipartFile file) {
         return roleService.importRole(file);
     }

@@ -1,5 +1,6 @@
 package com.autumn.dept.controller;
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.autumn.dept.entity.DeptInsertDto;
 import com.autumn.dept.entity.DeptSelectDto;
 import com.autumn.dept.entity.DeptUpdateDto;
@@ -30,6 +31,7 @@ public class DeptController {
      * 部门信息查询
      */
     @PostMapping("/select")
+    @SaCheckPermission("dept.select")
     public Result selectDept(@RequestBody DeptSelectDto deptSelectDto) {
         return deptService.selectDept(deptSelectDto);
     }
@@ -46,6 +48,7 @@ public class DeptController {
      * 部门信息新增
      */
     @PostMapping("/insert")
+    @SaCheckPermission("dept.insert")
     public Result insertDept(@RequestBody @Validated DeptInsertDto deptInsertDto) {
         return deptService.insertDept(deptInsertDto);
     }
@@ -54,6 +57,7 @@ public class DeptController {
      * 部门信息修改
      */
     @PostMapping("/update")
+    @SaCheckPermission("dept.update")
     public Result updateDept(@RequestBody @Validated DeptUpdateDto deptUpdateDto) {
         return deptService.updateDept(deptUpdateDto);
     }
@@ -62,6 +66,7 @@ public class DeptController {
      * 部门信息删除
      */
     @GetMapping("/delete")
+    @SaCheckPermission("dept.delete")
     public Result deleteDept(@RequestParam("ids") @NotBlank(message = "ids不能为空") String ids) {
         return deptService.deleteDept(ids);
     }
@@ -70,6 +75,7 @@ public class DeptController {
      * 部门信息excel导出
      */
     @PostMapping("/export")
+    @SaCheckPermission("dept.export")
     public void exportDept(@RequestBody DeptSelectDto deptSelectDto, HttpServletResponse response) {
         deptService.exportDept(deptSelectDto, response);
     }
@@ -78,6 +84,7 @@ public class DeptController {
      * 部门信息excel导入
      */
     @PostMapping("/import")
+    @SaCheckPermission("dept.import")
     public Result importDept(MultipartFile file) {
         return deptService.importDept(file);
     }

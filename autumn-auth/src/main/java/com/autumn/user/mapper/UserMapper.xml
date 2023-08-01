@@ -38,22 +38,22 @@
 
     <select id="getInfoById" resultType="java.util.Map">
         select user.id,
-               dept.dept_name deptName,
-               user.user_name userName,
-               user.nick_name nickName,
-               user.user_type userType,
+               dept.dept_name   deptName,
+               user.user_name   userName,
+               user.nick_name   nickName,
+               user.user_type   userType,
                user.email,
                user.phonenumber,
                user.sex,
                user.avatar,
                user.status,
-               user.login_ip loginIp,
-               user.login_date loginDate,
-               user.create_by createBy,
+               user.login_ip    loginIp,
+               user.login_date  loginDate,
+               user.create_by   createBy,
                user.create_time createTime,
                user.remark
-        from autumn_cloud.sys_user user
-                 left join autumn_cloud.sys_dept dept on user.dept_id = dept.id
+        from sys_user user
+                 left join sys_dept dept on user.dept_id = dept.id
         where user.status = '1'
           and user.del_flag = '1'
           and dept.status = '1'

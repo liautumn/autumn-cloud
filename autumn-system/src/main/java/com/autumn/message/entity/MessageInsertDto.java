@@ -1,0 +1,47 @@
+package com.autumn.message.entity;
+
+import com.alibaba.excel.annotation.ExcelProperty;
+import com.baomidou.mybatisplus.annotation.TableField;
+import lombok.Data;
+import lombok.experimental.Accessors;
+
+import java.io.Serializable;
+
+/**
+ * @author lqz
+ * @date 2023-07-31 20:57:25
+ * 消息记录表 InsertDto
+ */
+@Data
+@Accessors
+public class MessageInsertDto implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+    /**
+     * 用户ID
+     */
+    private String userId;
+    /**
+     * 标题
+     */
+    private String title;
+    /**
+     * 内容
+     */
+    private String content;
+    /**
+     * 页面路径
+     */
+    private String path;
+    /**
+     * 类型（1通知 2消息 3代办）
+     */
+    private String type;
+    /**
+     * 状态（1未读 2已读）
+     */
+    private String status;
+
+
+}
