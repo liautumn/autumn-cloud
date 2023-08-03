@@ -9,6 +9,7 @@ import com.anji.captcha.model.common.ResponseModel;
 import com.anji.captcha.model.vo.CaptchaVO;
 import com.anji.captcha.service.CaptchaService;
 import com.autumn.dictionary.Dictionary;
+import com.autumn.rabbitmq.MessageRabbitMQ;
 import com.autumn.result.Result;
 import com.autumn.saToken.LoginInfoData;
 import com.autumn.saToken.entity.User;
@@ -41,10 +42,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     private String salt;
     @Resource
     private CaptchaService captchaService;
+    @Resource
+    private MessageRabbitMQ messageRabbitMQ;
 
     @Override
     public Result deleteUser(String id) {
         int i = userMapper.deleteById(id);
+        messageRabbitMQ.delete(id);
         return i > 0 ? Result.success() : Result.fail();
     }
 
@@ -58,7 +62,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             userInsertDto.setPassword(pass);
             User user = new User();
             BeanUtils.copyProperties(userInsertDto, user);
-            return userMapper.insert(user) > 0 ? Result.success() : Result.fail();
+            int i = userMapper.insert(user);
+            //创建消息队列
+            messageRabbitMQ.createMQ(user.getId());
+            return i > 0 ? Result.success() : Result.fail();
         }
     }
 
@@ -98,6 +105,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                 us.setLoginIp(login.getLoginIp());
                 us.setLoginDate(LocalDateTime.now());
                 userMapper.updateById(us);
+                //创建消息队列
+                messageRabbitMQ.createMQ(user.getId());
                 return Result.successData(data);
             } else {
                 return Result.failMsg("密码错误");
