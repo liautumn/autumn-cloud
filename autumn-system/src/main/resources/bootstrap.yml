@@ -55,12 +55,3 @@ spring:
           - data-id: global-config.yml
             group: DEFAULT_GROUP
             refresh: true
-  rabbitmq:
-    username: admin
-    password: zhuang2001
-    virtual-host: /
-    # 单服务使用
-    host: 10.144.100.1
-    port: 5672
-    # 集群使用
-#    addresses:
