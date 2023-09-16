@@ -21,8 +21,8 @@
     <dependencies>
 
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-openfeign</artifactId>
+            <groupId>com.autumn</groupId>
+            <artifactId>autumn-common</artifactId>
         </dependency>
 
     </dependencies>

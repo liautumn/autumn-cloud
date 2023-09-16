@@ -47,37 +47,12 @@ public class MinioUtil {
     private FilesService filesService;
 
     /**
-     * 根据fileIds获取files
-     */
-    public List<FilesVo> filesIdsTofiles(String filesIds) {
-        if (StringUtils.isEmpty(filesIds)) {
-            return null;
-        }
-        List<String> idList = Arrays.asList(filesIds.split(","));
-        FilesMapper filesMapper = StaticMethodGetBean.getBean(FilesMapper.class);
-        LambdaQueryWrapper<Files> queryWrapper = new LambdaQueryWrapper<Files>()
-                .in(Files::getId, idList).orderByDesc(Files::getCreateTime);
-        List<Files> files = filesMapper.selectList(queryWrapper);
-        List<FilesVo> filesVos = new ArrayList<>();
-        if (!StringUtils.isEmpty(files)) {
-            for (Files file : files) {
-                FilesVo filesVo = new FilesVo();
-                filesVo.setFileId(file.getId());
-                filesVo.setName(file.getFileNameBefore());
-                filesVo.setUrl(endpoint + "/" + bucketName + "/" + file.getFileNameAfter());
-                filesVos.add(filesVo);
-            }
-        }
-        return filesVos;
-    }
-
-    /**
      * 解析id
      *
      * @param fileIds
      * @return
      */
-    public Result parse(String fileIds) {
+    public List<FilesVo> parse(String fileIds) {
         List<String> ids = Arrays.asList(fileIds.split(","));
         FilesService filesService = StaticMethodGetBean.getBean(FilesService.class);
         List<Files> files = filesService.listByIds(ids);
@@ -91,9 +66,7 @@ public class MinioUtil {
                 list.add(filesVo);
             }
         }
-        Map res = new HashMap();
-        res.put("list", list);
-        return Result.successData(res);
+        return list;
     }
 
     /**
@@ -102,15 +75,15 @@ public class MinioUtil {
      * @param file 文件
      * @return Boolean
      */
-    public Result uploadWeb(MultipartFile file) {
+    public FilesVo uploadWeb(MultipartFile file) {
         String originalFilename = file.getOriginalFilename();
         if (StringUtils.isEmpty(originalFilename)) {
-            return Result.failMsg("上传文件为空");
+            throw new RuntimeException("上传文件为空");
         }
         //判断桶是否存在
         if (!bucketExists(bucketName)) {
             if (!makeBucket(bucketName)) {
-                return Result.failMsg("Minio创建桶失败");
+                throw new RuntimeException("Minio创建桶失败");
             }
         }
         String objectName = DateUtil.format(DateUtil.date(), "yyyyMMddHHmmss") + "-" + UUID.fastUUID() +
@@ -129,7 +102,7 @@ public class MinioUtil {
                 String updateBy = LoginInfoData.getUserInfo().getUpdateBy();
                 insertDto.setUploadBy(updateBy);
             } catch (Exception e) {
-                return Result.failMsg("登录失效");
+                throw new RuntimeException("登录失效");
             }
             Result result = filesService.insertFiles(insertDto);
             Files files = (Files) result.getData();
@@ -137,9 +110,9 @@ public class MinioUtil {
             filesVo.setFileId(files.getId());
             filesVo.setName(files.getFileNameBefore());
             filesVo.setUrl(endpoint + "/" + bucketName + "/" + files.getFileNameAfter());
-            return result.getCode() == StatusCode.SUCCESS.getCode() ? Result.successData(filesVo) : Result.failMsg("Minio文件记录失败");
+            return filesVo;
         } catch (Exception e) {
-            return Result.failMsg("Minio文件上传失败" + e.getMessage());
+            throw new RuntimeException("Minio文件上传失败" + e.getMessage());
         }
     }
 

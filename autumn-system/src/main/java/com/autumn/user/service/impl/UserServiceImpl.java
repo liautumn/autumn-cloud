@@ -224,7 +224,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         //查询是否是管理员
         for (String s : idList) {
             User user = userMapper.selectById(s);
-            if (Dictionary.ADMINFLAG.equals(user.getUserType())){
+            if (Dictionary.ADMINFLAG.equals(user.getUserType())) {
                 return Result.failMsg(user.getUserName() + "管理员不能删除");
             }
         }

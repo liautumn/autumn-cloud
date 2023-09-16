@@ -41,8 +41,8 @@
         </dependency>
 
         <dependency>
-            <groupId>com.autumn</groupId>
-            <artifactId>autumn-api</artifactId>
+            <groupId>io.minio</groupId>
+            <artifactId>minio</artifactId>
         </dependency>
 
     </dependencies>
