@@ -154,7 +154,7 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements De
                 list.add(labelValue);
             }
         }
-        List treeList =TreeUtil.buildTree(list);
+        List treeList = TreeUtil.buildTree(list);
         if (deptSelectDto.getIsGetRoot()) {
             LabelValue labelValue = new LabelValue();
             labelValue.setId(Dictionary.ROOTID);
