@@ -180,7 +180,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         BeanUtils.copyProperties(menuInsertDto, menu);
         if (!Dictionary.BUTTEN.equals(menuInsertDto.getMenuType())) {
             String path = menu.getPath();
-            String name = path.substring(path.lastIndexOf("/") + 1, path.indexOf("Manage"));
+            String name = path.substring(path.lastIndexOf("/") + 1, path.length());
             menu.setName(name);
         }
         if (Dictionary.BUTTEN.equals(menuInsertDto.getMenuType())) {
@@ -194,6 +194,11 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     public Result updateMenu(MenuUpdateDto menuUpdateDto) {
         Menu menu = new Menu();
         BeanUtils.copyProperties(menuUpdateDto, menu);
+        if (!Dictionary.BUTTEN.equals(menu.getMenuType())) {
+            String path = menu.getPath();
+            String name = path.substring(path.lastIndexOf("/") + 1, path.length());
+            menu.setName(name);
+        }
         int i = menuMapper.updateById(menu);
         return i > 0 ? Result.success() : Result.fail();
     }
