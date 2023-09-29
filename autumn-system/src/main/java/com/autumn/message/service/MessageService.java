@@ -20,7 +20,7 @@ public interface MessageService extends IService<Message> {
     /**
      * 消息记录表查询
      */
-    Result selectMessage();
+    Result selectMessage(MessageSelectDto messageSelectDto);
 
     /**
      * 消息记录表新增
@@ -46,5 +46,11 @@ public interface MessageService extends IService<Message> {
      * 消息记录表excel导入
      */
     Result importMessage(MultipartFile file);
+
+    /**
+     * 获取未读数量
+     * @return
+     */
+    Result getUnreadNum();
 
 }

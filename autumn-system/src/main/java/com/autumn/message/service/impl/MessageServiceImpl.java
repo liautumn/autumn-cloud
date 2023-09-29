@@ -1,6 +1,7 @@
 package com.autumn.message.service.impl;
 
 import com.alibaba.excel.EasyExcel;
+import com.autumn.dictionary.Dictionary;
 import com.autumn.easyExcel.CustomRowHeightColWidthHandler;
 import com.autumn.easyExcel.RowHeightColWidthModel;
 import com.autumn.easyExcel.listener.ImportExcelListener;
@@ -10,10 +11,14 @@ import com.autumn.message.entity.MessageSelectDto;
 import com.autumn.message.entity.MessageUpdateDto;
 import com.autumn.message.mapper.MessageMapper;
 import com.autumn.message.service.MessageService;
+import com.autumn.page.ResData;
+import com.autumn.post.entity.Post;
 import com.autumn.result.Result;
 import com.autumn.saToken.LoginInfoData;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -37,23 +42,31 @@ public class MessageServiceImpl extends ServiceImpl<MessageMapper, Message> impl
     private MessageService messageService;
 
     /**
+     * 获取未读数量
+     * @return
+     */
+    @Override
+    public Result getUnreadNum() {
+        String userId = LoginInfoData.getUserInfo().getId();
+        LambdaQueryWrapper<Message> queryWrapper = new LambdaQueryWrapper<Message>()
+                .eq(Message::getUserId, userId)
+                .eq(Message::getStatus, Dictionary.NO);
+        List<Message> messageList = messageMapper.selectList(queryWrapper);
+        return Result.successData(messageList.size());
+    }
+
+    /**
      * 消息记录表查询
      */
     @Override
-    public Result selectMessage() {
+    public Result selectMessage(MessageSelectDto messageSelectDto) {
         String userId = LoginInfoData.getUserInfo().getId();
+        Page<Post> page = PageHelper.startPage(messageSelectDto.getPageNum(), messageSelectDto.getPageSize());
         LambdaQueryWrapper<Message> queryWrapper = new LambdaQueryWrapper<Message>()
                 .eq(Message::getUserId, userId)
                 .orderByDesc(Message::getCreateTime);
         List<Message> messageList = messageMapper.selectList(queryWrapper);
-        queryWrapper = new LambdaQueryWrapper<Message>()
-                .eq(Message::getUserId, userId)
-                .eq(Message::getStatus, "1");
-        int size = messageMapper.selectList(queryWrapper).size();
-        Map res = new HashMap();
-        res.put("list", messageList);
-        res.put("num", size);
-        return Result.successData(res);
+        return ResData.setDataTotal(page, messageList);
     }
 
     /**

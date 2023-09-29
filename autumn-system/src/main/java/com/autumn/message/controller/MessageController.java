@@ -25,11 +25,19 @@ public class MessageController {
     private MessageService messageService;
 
     /**
+     * 未读消息数量查询
+     */
+    @GetMapping("/getUnreadNum")
+    public Result getUnreadNum() {
+        return messageService.getUnreadNum();
+    }
+
+    /**
      * 消息记录表查询
      */
     @PostMapping("/select")
-    public Result selectMessage() {
-        return messageService.selectMessage();
+    public Result selectMessage(@RequestBody MessageSelectDto messageSelectDto) {
+        return messageService.selectMessage(messageSelectDto);
     }
 
     /**
