@@ -1,4 +1,4 @@
-package com.autumn;
+package com.autumn.service;
 
 import com.autumn.result.Result;
 import org.springframework.cloud.openfeign.FeignClient;
