@@ -27,8 +27,3 @@ SpringBoot, SpringCloud AliBaBa, Mybatis-Plus, Mysql, Redis, sa-token, redisson,
 2.  新建 autumn-cloud-xxx 分支
 3.  提交代码
 4.  新建 Pull Request
-
-
-#### 特技
-
-1.[GVP](https://gitee.com/gvp) 全称是 Gitee 最有价值开源项目，是综合评定出的优秀开源项目
