@@ -13,7 +13,6 @@ import com.autumn.easyExcel.listener.ImportExcelListener;
 import com.autumn.easyExcel.mapper.DictDataMapper;
 import com.autumn.easyExcel.mapper.DictTypeMapper;
 import com.autumn.page.ResData;
-import com.autumn.post.entity.Post;
 import com.autumn.result.Result;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -28,10 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author Administrator
@@ -45,6 +41,8 @@ public class DictTypeServiceImpl extends ServiceImpl<DictTypeMapper, DictType> i
     private DictTypeMapper dictTypeMapper;
     @Resource
     private DictDataMapper dictDataMapper;
+    @Resource
+    private DictTypeService dictTypeService;
 
     @Override
     public Result selectDictType(DictTypeSelectDto dictTypeSelectDto) {
@@ -82,7 +80,30 @@ public class DictTypeServiceImpl extends ServiceImpl<DictTypeMapper, DictType> i
     }
 
     @Override
-    public Result parseDictType(String dictType) {
+    public Result parseDictType(String dictTypes) {
+        String[] split = dictTypes.split(",");
+        Map res = new HashMap();
+        for (String dictType : split) {
+            LambdaQueryWrapper<DictData> queryWrapper = new LambdaQueryWrapper<DictData>()
+                    .eq(DictData::getDictType, dictType)
+                    .orderByAsc(DictData::getDictSort);
+            List<DictData> dictData = dictDataMapper.selectList(queryWrapper);
+            List data = new ArrayList();
+            if (!CollectionUtils.isEmpty(dictData)) {
+                for (DictData dict : dictData) {
+                    HashMap map = new HashMap();
+                    map.put("label", dict.getDictLabel());
+                    map.put("value", dict.getDictValue());
+                    data.add(map);
+                }
+            }
+            res.put(dictType, data);
+        }
+        return Result.successData(res);
+    }
+
+    @Override
+    public Result parseOneDictType(String dictType) {
         LambdaQueryWrapper<DictData> queryWrapper = new LambdaQueryWrapper<DictData>()
                 .eq(DictData::getDictType, dictType)
                 .orderByAsc(DictData::getDictSort);
@@ -125,9 +146,6 @@ public class DictTypeServiceImpl extends ServiceImpl<DictTypeMapper, DictType> i
             e.getMessage();
         }
     }
-
-    @Resource
-    private DictTypeService dictTypeService;
 
     @Override
     public Result importDictType(MultipartFile file) {

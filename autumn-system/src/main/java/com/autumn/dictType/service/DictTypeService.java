@@ -30,4 +30,6 @@ public interface DictTypeService extends IService<DictType> {
     void exportDictType(DictTypeSelectDto dictTypeSelectDto, HttpServletResponse response);
 
     Result importDictType(MultipartFile file);
+
+    Result parseOneDictType(String dictType);
 }
