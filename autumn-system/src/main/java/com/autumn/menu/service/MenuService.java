@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public interface MenuService extends IService<Menu> {
 
-    Result getMenuList();
+    Result getMenuList(MenuSelectDto menuSelectDto);
 
     Result getBtnsList();
 

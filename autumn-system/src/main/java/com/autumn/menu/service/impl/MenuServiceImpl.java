@@ -52,7 +52,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     private StpInterfaceImpl stpInterface;
 
     @Override
-    public Result getMenuList() {
+    public Result getMenuList(MenuSelectDto menuSelectDto) {
         //获取当前用户id
         User userInfo = LoginInfoData.getUserInfo();
         if (userInfo == null) {
@@ -72,7 +72,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
             BeanUtils.copyProperties(menu, menuVo);
             Meta meta = new Meta();
             meta.setIcon(menu.getIcon());
-            meta.setTitle(menu.getTitle());
+            meta.setTitle(menuSelectDto.getLanguage().equals("zh") ? menu.getTitle() : menuSelectDto.getLanguage().equals("en") ? menu.getEnTitle() : null);
             meta.setActiveMenu(menu.getActiveMenu());
             meta.setIsLink(menu.getIsLink().equals(Dictionary.YES) ? menu.getPath() : null);
             meta.setIsHide(menu.getIsHide().equals(Dictionary.YES) ? true : false);

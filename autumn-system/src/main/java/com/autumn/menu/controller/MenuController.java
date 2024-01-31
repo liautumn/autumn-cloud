@@ -32,8 +32,8 @@ public class MenuController {
      * @return
      */
     @GetMapping("/list")
-    public Result getMenuList() {
-        return menuService.getMenuList();
+    public Result getMenuList(MenuSelectDto menuSelectDto) {
+        return menuService.getMenuList(menuSelectDto);
     }
 
     /**

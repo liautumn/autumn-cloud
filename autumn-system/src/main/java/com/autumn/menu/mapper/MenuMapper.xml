@@ -35,7 +35,7 @@
     <sql id="Base_Column_List">
         id,parent_id,path,
         name,redirect,component,
-        icon,title,active_menu,is_link,
+        icon,title,en_title,active_menu,is_link,
         is_hide,is_full,is_affix,
         is_keep_alive,order_num,menu_type,
         status,perms,query,
@@ -46,7 +46,7 @@
     <sql id="getMenuList_Column_List">
         menu.id,menu.parent_id,menu.path,
         menu.name,menu.redirect,menu.component,
-        menu.icon,menu.title,menu.active_menu,menu.is_link,
+        menu.icon,menu.title,menu.en_title,menu.active_menu,menu.is_link,
         menu.is_hide,menu.is_full,menu.is_affix,
         menu.is_keep_alive,menu.order_num,menu.menu_type,
         menu.status,menu.perms,menu.query,
