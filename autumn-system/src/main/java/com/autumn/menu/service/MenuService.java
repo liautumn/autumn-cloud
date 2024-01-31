@@ -31,4 +31,6 @@ public interface MenuService extends IService<Menu> {
     Result importMenu(MultipartFile file);
 
     Result getMenuTree(MenuTreeDto menuTreeDto);
+
+    Result selectNoTree(MenuSelectDto menuSelectDto);
 }

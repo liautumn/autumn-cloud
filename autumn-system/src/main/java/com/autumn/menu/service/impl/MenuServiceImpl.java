@@ -166,6 +166,13 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     }
 
     @Override
+    public Result selectNoTree(MenuSelectDto menuSelectDto) {
+        LambdaQueryWrapper<Menu> queryWrapper = new LambdaQueryWrapper<Menu>().eq(!StringUtils.isEmpty(menuSelectDto.getMenuType()), Menu::getMenuType, menuSelectDto.getMenuType()).eq(!StringUtils.isEmpty(menuSelectDto.getStatus()), Menu::getStatus, menuSelectDto.getStatus()).orderByAsc(Menu::getOrderNum);
+        List<Menu> menus = menuMapper.selectList(queryWrapper);
+        return Result.successData(menus);
+    }
+
+    @Override
     public Result selectMenu(MenuSelectDto menuSelectDto) {
         LambdaQueryWrapper<Menu> queryWrapper = new LambdaQueryWrapper<Menu>().like(!StringUtils.isEmpty(menuSelectDto.getTitle()), Menu::getTitle, "%" + menuSelectDto.getTitle() + "%").eq(!StringUtils.isEmpty(menuSelectDto.getStatus()), Menu::getStatus, menuSelectDto.getStatus()).orderByAsc(Menu::getOrderNum);
         List<Menu> menus = menuMapper.selectList(queryWrapper);

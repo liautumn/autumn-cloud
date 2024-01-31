@@ -46,6 +46,14 @@ public class MenuController {
     }
 
     /**
+     * 菜单查询
+     */
+    @PostMapping("/selectNoTree")
+    public Result selectNoTree(@RequestBody MenuSelectDto menuSelectDto) {
+        return menuService.selectNoTree(menuSelectDto);
+    }
+
+    /**
      * 菜单树列表数据
      */
     @PostMapping("/getMenuTree")

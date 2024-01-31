@@ -17,6 +17,10 @@ public class MenuSelectDto implements Serializable {
      */
     private String status;
     /**
+     * 菜单类型
+     */
+    private String menuType;
+    /**
      * 语言 zh en
      */
     private String language = "zh";
